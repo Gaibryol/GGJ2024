@@ -14,18 +14,18 @@ public class GameSystem : MonoBehaviour
     private float dayStartTime;
     private bool isDayStarted;
 
-    private int numberOfCharacteristicsToSelect = 2;
-
     private List<RecipeItems> mixerItems;
     #endregion
 
     #region Initialization Constants
-    [SerializeField] private List<Constants.Animals.AnimalType> possibleAnimalTypes;
-    [SerializeField] private List<AnimalCharacteristic> possibleAnimalCharacteristics;
+    [SerializeField] private List<Animal> possibleAnimals;  // Stores specific animal recipies, weight, height, etc.
+    [SerializeField] private List<Constants.Animals.AnimalType> possibleAnimalTypes;    // Linking agent between Animal, AnimalCharacterstic, AnimalSpriteInfo
+    [SerializeField] private List<AnimalCharacteristic> possibleAnimalCharacteristics;  // "Costumes"
     [SerializeField] private AnimalSystem animalSystem;
     #endregion
 
     #region Animal State
+    private Animal currentAnimal;
     private Constants.Animals.AnimalType currentAnimalType;
     private AnimalCharacteristic currentAnimalCharacteristic;
     #endregion
@@ -69,7 +69,7 @@ public class GameSystem : MonoBehaviour
         }
 
         // Get mixer items
-        List<RecipeItems> requiredItems = CompileRecipeItems(currentAnimalCharacteristic);
+        List<RecipeItems> requiredItems = CompileRecipeItems(currentAnimal, currentAnimalCharacteristic);
 
         // Compare required items with items in mixer
         // Call either animal success or animal fail
@@ -152,7 +152,7 @@ public class GameSystem : MonoBehaviour
 
         AnimalCharacteristic selectedCharacteristic = possibleAnimalCharacteristics[random.Next(possibleAnimalCharacteristics.Count)];
 
-        AnimalSpriteInfo spriteInfo = selectedCharacteristic.animalSprites.First(animalSprite => animalSprite.AnimalType == animalType);
+        AnimalSpriteInfo spriteInfo = selectedCharacteristic.animalSprites.Find(animalSprite => animalSprite.AnimalType == animalType);
 
         return selectedCharacteristic;
     }
@@ -163,14 +163,19 @@ public class GameSystem : MonoBehaviour
 
         return possibleAnimalTypes[random.Next(possibleAnimalTypes.Count)];
     }
+
+    private Animal GetAnimalFromAnimalType(Constants.Animals animalType)
+    {
+        return possibleAnimals.Find(animal => animal.animalType.Equals(animalType));
+    }
     #endregion
 
     #region Recipe
-    private List<RecipeItems> CompileRecipeItems(AnimalCharacteristic animalCharacteristic)
+    private List<RecipeItems> CompileRecipeItems(Animal animal, AnimalCharacteristic animalCharacteristic)
     {
         List<RecipeItems> recipeItems = new List<RecipeItems>();
 
-
+        recipeItems.AddRange(animal.recipeItems);
         recipeItems.AddRange(animalCharacteristic.recipeItems);
 
         return recipeItems;
