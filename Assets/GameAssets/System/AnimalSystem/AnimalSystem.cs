@@ -8,9 +8,6 @@ public class AnimalSystem : MonoBehaviour
 
 	[SerializeField] private GameObject animal;
 	[SerializeField] private SpriteRenderer animalSR;
-	[SerializeField] private SpriteRenderer hatSR;
-	[SerializeField] private SpriteRenderer shirtSR;
-	[SerializeField] private SpriteRenderer pantsSR;
 
 	[SerializeField, Header("Animal Sprites")] private Sprite hyenaSprite;
 	[SerializeField] private Sprite pigSprite;
@@ -31,9 +28,9 @@ public class AnimalSystem : MonoBehaviour
 		animalScale = animal.transform.localScale;
     }
 
-	private void Spawn(Constants.Animals.AnimalType animalType, List<AnimalCharacteristic> characteristics)
+	private void Spawn(Constants.Animals.AnimalType animalType, AnimalSpriteInfo spriteInfo)
 	{
-		switch (animalType)
+		switch (spriteInfo.animalType)
 		{
 			case Constants.Animals.AnimalType.Hyena:
 				animalSR.sprite = hyenaSprite;
@@ -74,24 +71,6 @@ public class AnimalSystem : MonoBehaviour
 			case Constants.Animals.AnimalType.Fish:
 				animalSR.sprite = fishSprite;
 				break;
-		}
-
-		foreach (AnimalCharacteristic characteristic in characteristics)
-		{
-			switch (characteristic.characteristicType)
-			{
-				case AnimalCharacteristicType.Hat:
-					hatSR.sprite = characteristic.sprite;
-					break;
-
-				case AnimalCharacteristicType.Shirt:
-					shirtSR.sprite = characteristic.sprite;
-					break;
-
-				case AnimalCharacteristicType.Pants:
-					pantsSR.sprite = characteristic.sprite;
-					break;
-			}
 		}
 	}
 

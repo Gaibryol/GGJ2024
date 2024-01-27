@@ -13,6 +13,8 @@ public class AnimalCharacteristic : ScriptableObject
 [System.Serializable]
 public class AnimalSpriteInfo
 {
-    public Constants.Animals.AnimalType animalType;
-    public Sprite Sprite;
+    public Constants.Animals.AnimalType AnimalType;
+    public Sprite Neutral;
+	public Sprite Happy;
+	public Sprite Sad;
 }
