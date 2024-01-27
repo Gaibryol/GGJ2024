@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameSystem : MonoBehaviour
@@ -24,13 +25,13 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private AnimalSystem animalSystem;
     #endregion
 
-    private List<AnimalCharacteristic> activeAnimalCharacteristics;
-    private Dictionary<AnimalCharacteristicType, List<AnimalCharacteristic>> sortedPossibleAnimalCharacteristics;
-
+    #region Animal State
+    private Constants.Animals.AnimalType currentAnimalType;
+    private AnimalCharacteristic currentAnimalCharacteristic;
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
-        ProcessPossibleAnimalCharacteristics();
         StartDay();
     }
 
@@ -44,19 +45,6 @@ public class GameSystem : MonoBehaviour
             EndDay();
         }
 
-    }
-
-    private void ProcessPossibleAnimalCharacteristics()
-    {
-        sortedPossibleAnimalCharacteristics = new Dictionary<AnimalCharacteristicType, List<AnimalCharacteristic>>();
-        foreach (AnimalCharacteristic characteristic in possibleAnimalCharacteristics)
-        {
-            if (!sortedPossibleAnimalCharacteristics.ContainsKey(characteristic.characteristicType))
-            {
-                sortedPossibleAnimalCharacteristics.Add(characteristic.characteristicType, new List<AnimalCharacteristic>());
-            }
-            sortedPossibleAnimalCharacteristics[characteristic.characteristicType].Add(characteristic);
-        }
     }
 
     #region Events
@@ -81,7 +69,7 @@ public class GameSystem : MonoBehaviour
         }
 
         // Get mixer items
-        List<RecipeItems> requiredItems = CompileRecipeItems(activeAnimalCharacteristics);
+        List<RecipeItems> requiredItems = CompileRecipeItems(currentAnimalCharacteristic);
 
         // Compare required items with items in mixer
         // Call either animal success or animal fail
@@ -145,7 +133,8 @@ public class GameSystem : MonoBehaviour
             return;
         }
         // Determine what animal to Spawn
-        activeAnimalCharacteristics = CompileAnimalCharacterisitcs();
+        currentAnimalType = GetRandomAnimalType();
+        currentAnimalCharacteristic = GetRandomAnimalCharacteristic(currentAnimalType);
 
         // Spawn in Animal
         // Pass in AnimalCharacterisics to
@@ -154,54 +143,36 @@ public class GameSystem : MonoBehaviour
     private void DespawnAnimal()
     {
         // Destroy animal
-        activeAnimalCharacteristics.Clear();
+        currentAnimalCharacteristic = null;
     }
 
-    private List<AnimalCharacteristic> CompileAnimalCharacterisitcs()
+    private AnimalCharacteristic GetRandomAnimalCharacteristic(Constants.Animals.AnimalType animalType)
     {
-        List<AnimalCharacteristic> characteristics = new List<AnimalCharacteristic>();
-
-        // Get all possible animal characteristic types (hat, shirt, etc)
-        List<AnimalCharacteristicType> characteristicTypes = Enum.GetValues(typeof(AnimalCharacteristicType)).Cast<AnimalCharacteristicType>().ToList();
-
         System.Random random = new System.Random();
-        
-        for (int i = 0; i < numberOfCharacteristicsToSelect; i++)
-        {
-            // Select a random animal characteristic type
-            AnimalCharacteristicType characteristicType = (AnimalCharacteristicType)random.Next(characteristicTypes.Count);
-            List<AnimalCharacteristic> possibleAnimalCharacteristic = sortedPossibleAnimalCharacteristics[characteristicType];
-            AnimalCharacteristic selectedCharacteristic = possibleAnimalCharacteristic[random.Next(possibleAnimalCharacteristic.Count)];
-            characteristics.Add(selectedCharacteristic);
 
-            characteristicTypes.Remove(characteristicType);
-        }
+        AnimalCharacteristic selectedCharacteristic = possibleAnimalCharacteristics[random.Next(possibleAnimalCharacteristics.Count)];
 
+        AnimalSpriteInfo spriteInfo = selectedCharacteristic.animalSprites.First(animalSprite => animalSprite.animalType == animalType);
 
-        if (characteristics.Count == 0)
-        {
-            Debug.Log("There are no characteristics that match");
-        }
+        return selectedCharacteristic;
+    }
 
-        return characteristics;
+    private Constants.Animals.AnimalType GetRandomAnimalType()
+    {
+        System.Random random = new System.Random();
+
+        return possibleAnimalTypes[random.Next(possibleAnimalTypes.Count)];
     }
     #endregion
 
     #region Recipe
-    private List<RecipeItems> CompileRecipeItems(List<AnimalCharacteristic> animalCharacteristics)
+    private List<RecipeItems> CompileRecipeItems(AnimalCharacteristic animalCharacteristic)
     {
         List<RecipeItems> recipeItems = new List<RecipeItems>();
 
-        if (animalCharacteristics.Count == 0)
-        {
-            Debug.LogError("This animal has no characterisitcs!");
-            return recipeItems;
-        }
 
-        foreach (AnimalCharacteristic characteristic in animalCharacteristics)
-        {
-            recipeItems.AddRange(characteristic.recipeItems);
-        }
+        recipeItems.AddRange(animalCharacteristic.recipeItems);
+
         return recipeItems;
     }
 

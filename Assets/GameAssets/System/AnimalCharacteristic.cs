@@ -6,7 +6,6 @@ using UnityEngine;
 public class AnimalCharacteristic : ScriptableObject
 {
     public List<RecipeItems> recipeItems;
-    public AnimalCharacteristicType characteristicType;
 
     public List<AnimalSpriteInfo> animalSprites;
 }

@@ -1,1 +1,0 @@
-public enum AnimalCharacteristicType { Hat, Shirt, Pants, }
