@@ -11,10 +11,11 @@ public class GameSystem : MonoBehaviour
     private EventBrokerComponent eventBrokerComponent = new EventBrokerComponent();
 
     #region GameState Variables
-    private int day;
-    private float secondsPerDay = 300;
-    private float dayStartTime;
-    private bool isDayStarted;
+    private int day;    // current day
+    private float dayStartTime; // current game time the day started at
+    private bool isDayStarted;  // has the day started yet or is in waiting to start?
+
+    private Constants.GameSystem.Progression gameProgression;
 
     private List<Constants.GameSystem.RecipeItems> mixerItems;
     #endregion
@@ -23,7 +24,6 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private List<Animal> possibleAnimals;  // Stores specific animal recipies, weight, height, etc.
     [SerializeField] private List<Constants.Animals.AnimalType> possibleAnimalTypes;    // Linking agent between Animal, AnimalCostume, AnimalSpriteInfo
     [SerializeField] private List<AnimalCostume> possibleAnimalCostumes;  // "Costumes"
-    [SerializeField] private AnimalSystem animalSystem;
     #endregion
 
     #region Current Animal State
@@ -31,11 +31,12 @@ public class GameSystem : MonoBehaviour
     private Constants.Animals.AnimalType currentAnimalType;
     private AnimalCostume currentAnimalCostume;
     private int currentAnimalWeight;
-    private int currentAnimalHeight;
     #endregion
-    // Start is called before the first frame update
+    
+
     void Start()
     {
+        gameProgression = Constants.GameSystem.Progression.Animal;
         StartDay();
     }
 
@@ -71,13 +72,6 @@ public class GameSystem : MonoBehaviour
 
     private void OnAnimalSprayed(BrokerEvent<GameSystemEvents.AnimalSprayed> @event)
     {
-        // TODO: spray time
-        if (animalSystem == null)
-        {
-            Debug.LogError("animal system doesn't exist");
-            return;
-        }
-
         if (!isDayStarted)
         {
             Debug.Log("Tried to spray when day is over");
@@ -86,14 +80,14 @@ public class GameSystem : MonoBehaviour
 
         if (currentAnimal == null)
         {
-            Debug.LogError("animal doesn't exist");
+            Debug.Log("animal doesn't exist");
             return;
         }
 
         if (mixerItems.Count == 0)
         {
             Debug.Log("There are no items in the mixer");
-            return;
+            //return;
         }
 
         // Get mixer items
@@ -124,12 +118,6 @@ public class GameSystem : MonoBehaviour
     {
         dayStartTime = Time.time;
 
-        if (animalSystem == null)
-        {
-            Debug.LogError("Animal system does not exist");
-            return;
-        }
-
         mixerItems = new List<Constants.GameSystem.RecipeItems>();
 
         eventBrokerComponent.Publish(this, new GameSystemEvents.StartDay(day, dayStartTime));
@@ -147,6 +135,11 @@ public class GameSystem : MonoBehaviour
         // Increment day
         day += 1;
 
+        if (ShouldAdvanceProgress())
+        {
+            gameProgression++;
+        }
+
         // Tell animal to leave
         DespawnAnimal(Constants.GameSystem.AnimalDespawnReason.OutOfTime);
         // Show progress UI
@@ -156,7 +149,14 @@ public class GameSystem : MonoBehaviour
 
     private bool IsDayOver()
     {
-        return Time.time - dayStartTime >= secondsPerDay;
+        return Time.time - dayStartTime >= Constants.GameSystem.SecondsPerDay;
+    }
+
+    private bool ShouldAdvanceProgress()
+    {
+        if (day >= Constants.GameSystem.MinDayToUnlockWeight && gameProgression == Constants.GameSystem.Progression.Costume) return true;
+        if (day >= Constants.GameSystem.MinDayToUnlockCostume && gameProgression == Constants.GameSystem.Progression.Animal) return true;
+        return false;
     }
 
     #endregion
@@ -164,12 +164,6 @@ public class GameSystem : MonoBehaviour
     #region Animal
     private void SpawnAnimal()
     {
-        if (animalSystem == null) 
-        {
-            Debug.LogError("Animal system does not exist");
-            return;
-        }
-
         if (currentAnimal != null)
         {
             Debug.LogError("An animal is already spawned...");
@@ -224,7 +218,6 @@ public class GameSystem : MonoBehaviour
             return;
         }
         currentAnimalWeight = UnityEngine.Random.Range(animal.weightRange.x, animal.weightRange.y);
-        currentAnimalHeight = UnityEngine.Random.Range(animal.heightRange.x, animal.heightRange.y);
     }
     #endregion
 
@@ -234,7 +227,12 @@ public class GameSystem : MonoBehaviour
         List<Constants.GameSystem.RecipeItems> recipeItems = new List<Constants.GameSystem.RecipeItems>();
 
         recipeItems.AddRange(animal.recipeItems);
-        recipeItems.AddRange(animalCostume.recipeItems);
+
+        // We only care about costumes after it is unlocked
+        if (gameProgression > Constants.GameSystem.Progression.Animal)
+        {
+            recipeItems.AddRange(animalCostume.recipeItems);
+        }
 
         return recipeItems;
     }
@@ -258,10 +256,11 @@ public class GameSystem : MonoBehaviour
 
     private bool IsCorrectSprayDuration(Constants.GameSystem.SprayLevel sprayLevel, Animal animal)
     {
+        // We only care if the spray duration is correct after Weight is unlocked
+        if (gameProgression < Constants.GameSystem.Progression.Weight) return true;
         SprayRanges sprayRange = animal.sprayRanges.Find(range => range.sprayLevel == sprayLevel);
 
         if (currentAnimalWeight < sprayRange.weightRange.x || currentAnimalWeight  > sprayRange.weightRange.y) { return false; }
-        if (currentAnimalHeight < sprayRange.heightRange.x || currentAnimalWeight  > sprayRange.heightRange.y) { return false; }
 
         return true;
     }
