@@ -10,16 +10,20 @@ public class UIManager : MonoBehaviour
 	private EventBrokerComponent eventBroker = new EventBrokerComponent();
 
 	[SerializeField] private TMP_Text timeText;
+	[SerializeField] private TMP_Text scoreText;
 
 	private DateTime currentDateTime;
 	private bool middleOfDay;
 
 	private float timer;
 
+	private int score;
+
 	private void Awake()
 	{
 		middleOfDay = false;
 		timer = 0f;
+		score = 0;
 	}
 
 	// Start is called before the first frame update
@@ -27,6 +31,7 @@ public class UIManager : MonoBehaviour
 	{
 		currentDateTime = Constants.GameSystem.startingDateTime;
 		timeText.text = FormatCurrentTime();
+		scoreText.text = score.ToString();
 	}
 
 	// Update is called once per frame
@@ -43,6 +48,10 @@ public class UIManager : MonoBehaviour
 				timer = 0f;
 			}
 		}
+
+
+
+
     }
 
 	private string  FormatCurrentTime()
@@ -78,15 +87,29 @@ public class UIManager : MonoBehaviour
 		middleOfDay = false;
 	}
 
+	private void DespawnAnimalHandler(BrokerEvent<GameSystemEvents.DespawnAnimal> inEvent)
+	{
+		
+		if (inEvent.Payload.AnimalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Fail)
+		{
+			score += 1;
+			scoreText.text = score.ToString();
+		}
+	}
+
 	private void OnEnable()
 	{
 		eventBroker.Subscribe<GameSystemEvents.StartDay>(StartDayHandler);
 		eventBroker.Subscribe<GameSystemEvents.EndDay>(EndDayHandler);
+
+		eventBroker.Subscribe<GameSystemEvents.DespawnAnimal>(DespawnAnimalHandler);
 	}
 
 	private void OnDisable()
 	{
 		eventBroker.Unsubscribe<GameSystemEvents.StartDay>(StartDayHandler);
 		eventBroker.Unsubscribe<GameSystemEvents.EndDay>(EndDayHandler);
+
+		eventBroker.Unsubscribe<GameSystemEvents.DespawnAnimal>(DespawnAnimalHandler);
 	}
 }
