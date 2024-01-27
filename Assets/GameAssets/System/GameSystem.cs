@@ -30,6 +30,8 @@ public class GameSystem : MonoBehaviour
     private Animal currentAnimal;
     private Constants.Animals.AnimalType currentAnimalType;
     private AnimalCostume currentAnimalCostume;
+    private int currentAnimalWeight;
+    private int currentAnimalHeight;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -97,6 +99,8 @@ public class GameSystem : MonoBehaviour
         // Get mixer items
         List<Constants.GameSystem.RecipeItems> requiredItems = CompileRecipeItems(currentAnimal, currentAnimalCostume);
 
+
+
         // Compare required items with items in mixer
         // Call either animal success or animal fail
         Constants.GameSystem.AnimalDespawnReason animalDespawnReason = IsCorrectRecipe(requiredItems, mixerItems) ? Constants.GameSystem.AnimalDespawnReason.Success : Constants.GameSystem.AnimalDespawnReason.Fail;
@@ -109,7 +113,8 @@ public class GameSystem : MonoBehaviour
         // Delay
 
         // Spawn in next animal
-        SpawnAnimal();
+        Invoke("SpawnAnimal", 3f);
+        //SpawnAnimal();
 
     }
     #endregion
@@ -174,11 +179,14 @@ public class GameSystem : MonoBehaviour
         // Determine what animal to Spawn
         currentAnimalType = GetRandomAnimalType();
         currentAnimal = GetAnimalFromAnimalType(currentAnimalType);
+
         currentAnimalCostume = GetRandomAnimalCostume(currentAnimalType);
+        InitializeRandomWeightHeight(currentAnimal);
 
         // Spawn in Animal
         // Pass in AnimalCostume to AnimalSystem
         eventBrokerComponent.Publish(this, new GameSystemEvents.SpawnAnimal(GetAnimalSpriteInfoFromAnimalType(currentAnimalType, currentAnimalCostume)));
+        //TODO: Need to pass weight/height to UI
     }
 
     private void DespawnAnimal(Constants.GameSystem.AnimalDespawnReason animalDespawnReason)
@@ -215,6 +223,17 @@ public class GameSystem : MonoBehaviour
     {
         return possibleAnimals.Find(animal => animal.animalType.Equals(animalType));
     }
+
+    private void InitializeRandomWeightHeight(Animal animal)
+    {
+        if (animal == null)
+        {
+            Debug.LogError("tried to initialize animal but animal is null");
+            return;
+        }
+        currentAnimalWeight = UnityEngine.Random.Range(animal.weightRange.x, animal.weightRange.y);
+        currentAnimalHeight = UnityEngine.Random.Range(animal.heightRange.x, animal.heightRange.y);
+    }
     #endregion
 
     #region Recipe
@@ -244,5 +263,12 @@ public class GameSystem : MonoBehaviour
         return counter.Sum() == 0;
     }
 
+
+    private bool IsCorrectSprayDuration(Constants.GameSystem.SprayLevel sprayLevel, Animal animal)
+    {
+        SprayRanges sprayRange = animal.sprayRanges.Find(range => range.sprayLevel == sprayLevel);
+
+        return true;
+    }
     #endregion
 }
