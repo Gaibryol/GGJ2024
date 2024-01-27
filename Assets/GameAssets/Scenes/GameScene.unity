@@ -1107,12 +1107,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   possibleAnimals:
+  - {fileID: 11400000, guid: 92c5b7a356ea66c46a86851588d60182, type: 2}
+  - {fileID: 11400000, guid: bd9bb7a325b1ea44fbd192e24d37c802, type: 2}
+  - {fileID: 11400000, guid: 9b602562d925cd546b00c1aceb8b118b, type: 2}
   - {fileID: 11400000, guid: fe74d0d5ae225eb4cbd4f4fba4755e91, type: 2}
+  - {fileID: 11400000, guid: e7a903329e470094bbfe2e122f86d096, type: 2}
   - {fileID: 11400000, guid: d39649292a1282841ac11717c9f1ac99, type: 2}
-  possibleAnimalTypes: 0300000005000000
+  - {fileID: 11400000, guid: e0eb2d0fd5e35264aa4e1c62c8167944, type: 2}
+  possibleAnimalTypes: 0300000001000000060000000200000000000000040000000500000006000000
   possibleAnimalCostumes:
+  - {fileID: 11400000, guid: bd6b07b9aecd85a478522c61e9062c60, type: 2}
+  - {fileID: 11400000, guid: df1315a74a48bf347b742f627f144699, type: 2}
+  - {fileID: 11400000, guid: 6d8b3184fa5e1ac4ab784f41b5dc37d2, type: 2}
+  - {fileID: 11400000, guid: c4d68c28a5dfb99438d70c9e1e94db29, type: 2}
   - {fileID: 11400000, guid: 52b8d7a07a88b2d479aafcbcc179b311, type: 2}
-  animalSystem: {fileID: 619174627}
 --- !u!1 &1048446580
 GameObject:
   m_ObjectHideFlags: 0

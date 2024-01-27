@@ -12,17 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32772955d8d860b4f8d1f9d988ed185e, type: 3}
   m_Name: Rabbit
   m_EditorClassIdentifier: 
-  recipeItems: 00000000
-  animalType: 5
-  weightRange: {x: 5, y: 25}
-  heightRange: {x: 1, y: 3}
+  recipeItems: 04000000
+  animalType: 4
+  weightRange: {x: 2, y: 8}
   sprayRanges:
   - sprayLevel: 0
-    weightRange: {x: 5, y: 12}
-    heightRange: {x: 1, y: 1}
+    weightRange: {x: 2, y: 4}
   - sprayLevel: 1
-    weightRange: {x: 12, y: 18}
-    heightRange: {x: 2, y: 2}
+    weightRange: {x: 4, y: 6}
   - sprayLevel: 2
-    weightRange: {x: 18, y: 25}
-    heightRange: {x: 3, y: 3}
+    weightRange: {x: 6, y: 8}
