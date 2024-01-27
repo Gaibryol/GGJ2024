@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class InstantiateItem : MonoBehaviour
 {
-    public Constants.GameSystem.RecipeItems item;
-    public Sprite itemSprite;
-    public GameObject itemPrefab;
+    [SerializeField] private Constants.GameSystem.RecipeItems item;
+    [SerializeField] private Sprite itemSprite;
+    [SerializeField] private GameObject itemPrefab;
 
 
     private void OnMouseDown()

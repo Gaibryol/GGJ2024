@@ -20,6 +20,7 @@ public class GameSystem : MonoBehaviour
     private List<Constants.GameSystem.RecipeItems> mixerItems;
 
     private int currentDayQuota;
+	private float currentAnimalPatience = 12f;
     #endregion
 
     #region Initialization Constants
@@ -167,6 +168,7 @@ public class GameSystem : MonoBehaviour
 
     private bool ShouldAdvanceProgress()
     {
+		if (day >= Constants.GameSystem.MinDayToUnlockPatience && gameProgression == Constants.GameSystem.Progression.Weight) return true;
         if (day >= Constants.GameSystem.MinDayToUnlockWeight && gameProgression == Constants.GameSystem.Progression.Costume) return true;
         if (day >= Constants.GameSystem.MinDayToUnlockCostume && gameProgression == Constants.GameSystem.Progression.Animal) return true;
         return false;
@@ -190,19 +192,50 @@ public class GameSystem : MonoBehaviour
         currentAnimalCostume = GetRandomAnimalCostume();
         InitializeRandomWeightHeight(currentAnimal);
 
+		Debug.Log("Spawning in a " + currentAnimalType + " in a " + currentAnimalCostume.name + " costume");
+
         // Spawn in Animal
         // Pass in AnimalCostume to AnimalSystem
         eventBrokerComponent.Publish(this, new GameSystemEvents.SpawnAnimal(GetAnimalSpriteInfoFromAnimalType(currentAnimalType, currentAnimalCostume), currentAnimalWeight));
+
+		// Check if progression has unlocked patience or gone past it
+		if (gameProgression >= Constants.GameSystem.Progression.Patience)
+		{
+			StartCoroutine(AnimalPatienceHandler(currentAnimalPatience));
+		}
+
     }
 
     private void DespawnAnimal(Constants.GameSystem.AnimalDespawnReason animalDespawnReason)
     {
-        // Destroy animal
+		// Destroy animal
         eventBrokerComponent.Publish(this, new GameSystemEvents.DespawnAnimal(animalDespawnReason));
         eventBrokerComponent.Publish(this, new GameSystemEvents.ClearTable());
         currentAnimal = null;
         currentAnimalCostume = null;
     }
+
+	private IEnumerator AnimalPatienceHandler(float patienceTime)
+	{
+		float timer = 0f;
+
+		// Run timer while there is a current animal
+		while (currentAnimal != null)
+		{
+			// Increment patience timer
+			timer += Time.deltaTime;
+
+			// If timer goes over max patience of the animal
+			if (timer >= patienceTime)
+			{
+				// Despawn animal
+				Debug.Log("Ran out of patience! Next animal");
+				DespawnAnimal(Constants.GameSystem.AnimalDespawnReason.OutOfTime);
+				Invoke("SpawnAnimal", 3f);
+			}
+			yield return null;
+		}
+	}
 
     private AnimalCostume GetRandomAnimalCostume()
     {

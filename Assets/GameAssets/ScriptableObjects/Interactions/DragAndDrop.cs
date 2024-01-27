@@ -8,6 +8,7 @@ public class DragAndDrop : MonoBehaviour
     private bool isDragging = true;
     private bool inDropZone = false;
     private Vector2 offset;
+    private EventBrokerComponent eventBrokerComponent = new EventBrokerComponent();
 
     // Update is called once per frame
     void Update()
@@ -17,6 +18,7 @@ public class DragAndDrop : MonoBehaviour
             // Update the object's position based on the mouse position
             transform.position = GetMouseWorldPos() + offset;
         }
+
         if (Input.GetMouseButtonUp(0))
         {
             isDragging = false;
@@ -27,13 +29,15 @@ public class DragAndDrop : MonoBehaviour
             {
                 gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             }
-            else if(hit.collider != null && hit.collider.gameObject == gameObject)
-            {
-                Destroy(gameObject);
-            }
         }
+  
     }
-     private void OnTriggerEnter2D(Collider2D collision)
+
+    private void OnMouseDown()
+    {
+        isDragging = true;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         // Check if the other GameObject has the specified name
         if (collision.gameObject.tag == "DropZone")
