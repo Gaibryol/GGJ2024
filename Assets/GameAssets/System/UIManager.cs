@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
 
 	[SerializeField] private TMP_Text timeText;
 	[SerializeField] private TMP_Text scoreText;
+	[SerializeField] private TMP_Text weightText;
 
 	private DateTime currentDateTime;
 	private bool middleOfDay;
@@ -18,12 +19,14 @@ public class UIManager : MonoBehaviour
 	private float timer;
 
 	private int score;
+	private int weight;
 
 	private void Awake()
 	{
 		middleOfDay = false;
 		timer = 0f;
 		score = 0;
+		weight = 0;
 	}
 
 	// Start is called before the first frame update
@@ -32,6 +35,7 @@ public class UIManager : MonoBehaviour
 		currentDateTime = Constants.GameSystem.startingDateTime;
 		timeText.text = FormatCurrentTime();
 		scoreText.text = score.ToString();
+		weightText.text = weight.ToString();
 	}
 
 	// Update is called once per frame
@@ -49,12 +53,9 @@ public class UIManager : MonoBehaviour
 			}
 		}
 
-
-
-
     }
 
-	private string  FormatCurrentTime()
+	private string FormatCurrentTime()
 	{
 		if (currentDateTime.Hour < 12)
 		{
@@ -90,12 +91,19 @@ public class UIManager : MonoBehaviour
 	private void DespawnAnimalHandler(BrokerEvent<GameSystemEvents.DespawnAnimal> inEvent)
 	{
 		
-		if (inEvent.Payload.AnimalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Fail)
+		if (inEvent.Payload.AnimalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Success)
 		{
 			score += 1;
 			scoreText.text = score.ToString();
 		}
 	}
+
+	private void SpawnAnimalHandler(BrokerEvent<GameSystemEvents.SpawnAnimal> inEvent) 
+	{
+		weight = inEvent.Payload.AnimalWeight;
+	}
+
+	
 
 	private void OnEnable()
 	{
@@ -103,6 +111,7 @@ public class UIManager : MonoBehaviour
 		eventBroker.Subscribe<GameSystemEvents.EndDay>(EndDayHandler);
 
 		eventBroker.Subscribe<GameSystemEvents.DespawnAnimal>(DespawnAnimalHandler);
+		eventBroker.Subscribe<GameSystemEvents.SpawnAnimal>(SpawnAnimalHandler);
 	}
 
 	private void OnDisable()
@@ -111,5 +120,7 @@ public class UIManager : MonoBehaviour
 		eventBroker.Unsubscribe<GameSystemEvents.EndDay>(EndDayHandler);
 
 		eventBroker.Unsubscribe<GameSystemEvents.DespawnAnimal>(DespawnAnimalHandler);
+		eventBroker.Subscribe<GameSystemEvents.SpawnAnimal>(SpawnAnimalHandler);
+
 	}
 }
