@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class AddItem : MonoBehaviour
 {
-    public ItemsManager IM;
+    private EventBrokerComponent eventBroker = new EventBrokerComponent();
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Ingredient")
         {
             GameObject collisionGO = collision.gameObject;
-            IM.AddItem(collisionGO.GetComponent<Item>().GetItem());
+            eventBroker.Publish(this, new GameSystemEvents.ItemDroppedInMixer(collisionGO.GetComponent<Item>().GetItem()));
             Destroy(collisionGO);
         }
     }
