@@ -18,6 +18,8 @@ public class GameSystem : MonoBehaviour
     private Constants.GameSystem.Progression gameProgression;
 
     private List<Constants.GameSystem.RecipeItems> mixerItems;
+
+    private int currentDayQuota;
     #endregion
 
     #region Initialization Constants
@@ -99,6 +101,12 @@ public class GameSystem : MonoBehaviour
         // Call either animal success or animal fail
         Constants.GameSystem.AnimalDespawnReason animalDespawnReason = IsCorrectRecipe(requiredItems, mixerItems) && isCorrectSprayDuration ? Constants.GameSystem.AnimalDespawnReason.Success : Constants.GameSystem.AnimalDespawnReason.Fail;
 
+        // Increment the day quota if a success
+        if (animalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Success)
+        {
+            currentDayQuota++;
+        }
+
         // clear items
         mixerItems.Clear();
 
@@ -119,6 +127,8 @@ public class GameSystem : MonoBehaviour
         dayStartTime = Time.time;
 
         mixerItems = new List<Constants.GameSystem.RecipeItems>();
+
+        currentDayQuota = 0;
 
         eventBrokerComponent.Publish(this, new GameSystemEvents.StartDay(day, dayStartTime));
 
@@ -143,7 +153,10 @@ public class GameSystem : MonoBehaviour
         // Tell animal to leave
         DespawnAnimal(Constants.GameSystem.AnimalDespawnReason.OutOfTime);
         // Show progress UI
-        eventBrokerComponent.Publish(this, new GameSystemEvents.EndDay());
+
+        Constants.GameSystem.DayEndCode dayEndCode = currentDayQuota >= Constants.GameSystem.RequiredQuotaPerDay ? Constants.GameSystem.DayEndCode.Success : Constants.GameSystem.DayEndCode.Fail;
+
+        eventBrokerComponent.Publish(this, new GameSystemEvents.EndDay(dayEndCode));
 
     }
 

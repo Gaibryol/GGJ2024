@@ -51,8 +51,11 @@ public class GameSystemEvents
 
     public class EndDay
     {
-        public EndDay()
+        public readonly Constants.GameSystem.DayEndCode DayEndCode;
+
+        public EndDay(Constants.GameSystem.DayEndCode dayEndCode)
         {
+            DayEndCode = dayEndCode;
         }
     }
 
