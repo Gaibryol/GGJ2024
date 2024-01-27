@@ -21,22 +21,26 @@ public class AnimalSystem : MonoBehaviour
 
 	private void Spawn(AnimalSpriteInfo spriteInfo)
 	{
+		// Assign new animal sprite
 		currentSpriteInfo = spriteInfo;
 		animalSR.sprite = currentSpriteInfo.Neutral;
 	}
 
 	private void Success()
 	{
+		// Make animal laugh
 		animalSR.sprite = currentSpriteInfo.Happy;
 	}
 
 	private void Failure()
 	{
+		// Make animal sad
 		animalSR.sprite = currentSpriteInfo.Sad;
 	}
 
 	private IEnumerator SizeIn()
 	{
+		// Lerp animal into view
 		float targetY = animal.transform.localScale.y;
 
 		animalScale = new Vector3(animalScale.x, 0f, animalScale.z);
@@ -51,6 +55,7 @@ public class AnimalSystem : MonoBehaviour
 
 	private IEnumerator SizeOut()
 	{
+		// Lerp animal out of view
 		while (animalScale.y > 0)
 		{
 			animalScale = new Vector3(animalScale.x, animalScale.y - Time.deltaTime, animalScale.z);

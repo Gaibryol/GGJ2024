@@ -21,7 +21,8 @@ public partial class Constants
 
 		public class SFX
 		{
-
+			public const string Drawer = "Drawer";
+			public const string Spray = "Spray";
 		}
 	}
 }

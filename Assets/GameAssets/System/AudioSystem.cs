@@ -10,16 +10,9 @@ public class AudioSystem : MonoBehaviour
 	[SerializeField] private AudioSource sfxSource;
 
 	//[SerializeField, Header("Music")] private AudioClip mainMenuTrack;
-	//[SerializeField] private AudioClip bossTrack;
-	//[SerializeField] private AudioClip tutorialTrack;
 
-	//[SerializeField, Header("SFX")] private AudioClip death;
-	//[SerializeField] private AudioClip dash;
-	//[SerializeField] private AudioClip healthPack;
-	//[SerializeField] private AudioClip slashJump;
-	//[SerializeField] private AudioClip slashNorm;
-	//[SerializeField] private AudioClip slashUp;
-	//[SerializeField] private AudioClip levelDone;
+	[SerializeField, Header("SFX")] private AudioClip drawer;
+	[SerializeField] private AudioClip spray;
 
 	private float musicVolume;
 	private float sfxVolume;
@@ -36,16 +29,9 @@ public class AudioSystem : MonoBehaviour
 	{
 		// Set up music and sfx dictionaries
 		//music.Add(Constants.Audio.Music.Main, mainMenuTrack);
-		//music.Add(Constants.Audio.Music.Boss, bossTrack);
-		//music.Add(Constants.Audio.Music.Tutorial, tutorialTrack);
 
-		//sfx.Add(Constants.Audio.SFX.Death, death);
-		//sfx.Add(Constants.Audio.SFX.Dash, dash);
-		//sfx.Add(Constants.Audio.SFX.HealthPack, healthPack);
-		//sfx.Add(Constants.Audio.SFX.SlashJump, slashJump);
-		//sfx.Add(Constants.Audio.SFX.SlashNorm, slashNorm);
-		//sfx.Add(Constants.Audio.SFX.SlashUp, slashUp);
-		//sfx.Add(Constants.Audio.SFX.LevelDone, levelDone);
+		sfx.Add(Constants.Audio.SFX.Drawer, drawer);
+		sfx.Add(Constants.Audio.SFX.Spray, spray);
 	}
 
 	private void OnEnable()
