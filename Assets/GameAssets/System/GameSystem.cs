@@ -8,9 +8,11 @@ using UnityEngine;
 
 public class GameSystem : MonoBehaviour
 {
+    private EventBrokerComponent eventBrokerComponent = new EventBrokerComponent();
+
     #region GameState Variables
     private int day;
-    private float secondsPerDay = 28800; // 3600 * hours per day
+    private float secondsPerDay = 300;
     private float dayStartTime;
     private bool isDayStarted;
 
@@ -24,7 +26,7 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private AnimalSystem animalSystem;
     #endregion
 
-    #region Animal State
+    #region Current Animal State
     private Animal currentAnimal;
     private Constants.Animals.AnimalType currentAnimalType;
     private AnimalCharacteristic currentAnimalCharacteristic;
@@ -47,18 +49,36 @@ public class GameSystem : MonoBehaviour
 
     }
 
-    #region Events
-    private void OnItemDropped()
+    private void OnEnable()
     {
-        //RecipeItems item;
-        //mixerItems.Add(item);
+        eventBrokerComponent.Subscribe<GameSystemEvents.AnimalSprayed>(OnAnimalSprayed);
+        eventBrokerComponent.Subscribe<GameSystemEvents.ItemDroppedInMixer>(OnItemDropped);
     }
 
-    private void OnAnimalSprayed()
+    private void OnDisable()
     {
+        eventBrokerComponent.Unsubscribe<GameSystemEvents.AnimalSprayed>(OnAnimalSprayed);
+        eventBrokerComponent.Unsubscribe<GameSystemEvents.ItemDroppedInMixer>(OnItemDropped);
+    }
+
+    #region Events
+    private void OnItemDropped(BrokerEvent<GameSystemEvents.ItemDroppedInMixer> @event)
+    {
+        mixerItems.Add(@event.Payload.RecipeItem);
+    }
+
+    private void OnAnimalSprayed(BrokerEvent<GameSystemEvents.AnimalSprayed> @event)
+    {
+        // TODO: spray time
         if (animalSystem == null)
         {
             Debug.LogError("animal system doesn't exist");
+            return;
+        }
+
+        if (currentAnimal == null)
+        {
+            Debug.LogError("animal doesn't exist");
             return;
         }
 
@@ -73,15 +93,12 @@ public class GameSystem : MonoBehaviour
 
         // Compare required items with items in mixer
         // Call either animal success or animal fail
-        if (IsCorrectRecipe(requiredItems, mixerItems))
-        {
+        Constants.GameSystem.AnimalDespawnReason animalDespawnReason = IsCorrectRecipe(requiredItems, mixerItems) ? Constants.GameSystem.AnimalDespawnReason.Success : Constants.GameSystem.AnimalDespawnReason.Fail;
 
-        }
-        
         // clear items
         mixerItems.Clear();
 
-        DespawnAnimal();
+        DespawnAnimal(animalDespawnReason);
 
         // Delay
 
@@ -91,6 +108,7 @@ public class GameSystem : MonoBehaviour
     }
     #endregion
 
+    #region Day Logic
     private void StartDay()
     {
         dayStartTime = Time.time;
@@ -102,9 +120,13 @@ public class GameSystem : MonoBehaviour
         }
 
         mixerItems = new List<RecipeItems>();
-        SpawnAnimal();
+
+        eventBrokerComponent.Publish(this, new GameSystemEvents.StartDay(day));
 
         isDayStarted = true;
+        
+        SpawnAnimal();
+
     }
     
     private void EndDay()
@@ -114,15 +136,19 @@ public class GameSystem : MonoBehaviour
         // Increment day
         day += 1;
 
-        DespawnAnimal();
         // Tell animal to leave
+        DespawnAnimal(Constants.GameSystem.AnimalDespawnReason.OutOfTime);
         // Show progress UI
+        eventBrokerComponent.Publish(this, new GameSystemEvents.EndDay());
+
     }
 
     private bool IsDayOver()
     {
         return Time.time - dayStartTime >= secondsPerDay;
     }
+
+    #endregion
 
     #region Animal
     private void SpawnAnimal()
@@ -132,17 +158,28 @@ public class GameSystem : MonoBehaviour
             Debug.LogError("Animal system does not exist");
             return;
         }
+
+        if (currentAnimal != null)
+        {
+            Debug.LogError("An animal is already spawned...");
+            return;
+        }
+
         // Determine what animal to Spawn
         currentAnimalType = GetRandomAnimalType();
+        currentAnimal = GetAnimalFromAnimalType(currentAnimalType);
         currentAnimalCharacteristic = GetRandomAnimalCharacteristic(currentAnimalType);
 
         // Spawn in Animal
         // Pass in AnimalCharacterisics to
+        eventBrokerComponent.Publish(this, new GameSystemEvents.SpawnAnimal(GetAnimalSpriteInfoFromAnimalType(currentAnimalType, currentAnimalCharacteristic)));
     }
 
-    private void DespawnAnimal()
+    private void DespawnAnimal(Constants.GameSystem.AnimalDespawnReason animalDespawnReason)
     {
         // Destroy animal
+        eventBrokerComponent.Publish(this, new GameSystemEvents.DespawnAnimal(animalDespawnReason));
+        currentAnimal = null;
         currentAnimalCharacteristic = null;
     }
 
@@ -152,7 +189,6 @@ public class GameSystem : MonoBehaviour
 
         AnimalCharacteristic selectedCharacteristic = possibleAnimalCharacteristics[random.Next(possibleAnimalCharacteristics.Count)];
 
-        AnimalSpriteInfo spriteInfo = selectedCharacteristic.animalSprites.Find(animalSprite => animalSprite.AnimalType == animalType);
 
         return selectedCharacteristic;
     }
@@ -164,7 +200,12 @@ public class GameSystem : MonoBehaviour
         return possibleAnimalTypes[random.Next(possibleAnimalTypes.Count)];
     }
 
-    private Animal GetAnimalFromAnimalType(Constants.Animals animalType)
+    private AnimalSpriteInfo GetAnimalSpriteInfoFromAnimalType(Constants.Animals.AnimalType animalType, AnimalCharacteristic animalCharacteristic)
+    {
+        return animalCharacteristic.animalSprites.Find(animalSprite => animalSprite.AnimalType == animalType);
+    }
+
+    private Animal GetAnimalFromAnimalType(Constants.Animals.AnimalType animalType)
     {
         return possibleAnimals.Find(animal => animal.animalType.Equals(animalType));
     }
