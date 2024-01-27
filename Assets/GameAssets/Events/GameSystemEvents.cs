@@ -24,11 +24,11 @@ public class GameSystemEvents
 
     public class AnimalSprayed
     {
-        public readonly float Duration;
+        public readonly Constants.GameSystem.SprayLevel SprayLevel;
 
-        public AnimalSprayed(float duration)
+        public AnimalSprayed(Constants.GameSystem.SprayLevel sprayLevel)
         {
-            Duration = duration;
+            SprayLevel = sprayLevel;
         }
     }
 

@@ -99,11 +99,11 @@ public class GameSystem : MonoBehaviour
         // Get mixer items
         List<Constants.GameSystem.RecipeItems> requiredItems = CompileRecipeItems(currentAnimal, currentAnimalCostume);
 
-
+        bool isCorrectSprayDuration = IsCorrectSprayDuration(@event.Payload.SprayLevel, currentAnimal);
 
         // Compare required items with items in mixer
         // Call either animal success or animal fail
-        Constants.GameSystem.AnimalDespawnReason animalDespawnReason = IsCorrectRecipe(requiredItems, mixerItems) ? Constants.GameSystem.AnimalDespawnReason.Success : Constants.GameSystem.AnimalDespawnReason.Fail;
+        Constants.GameSystem.AnimalDespawnReason animalDespawnReason = IsCorrectRecipe(requiredItems, mixerItems) && isCorrectSprayDuration ? Constants.GameSystem.AnimalDespawnReason.Success : Constants.GameSystem.AnimalDespawnReason.Fail;
 
         // clear items
         mixerItems.Clear();
@@ -267,6 +267,9 @@ public class GameSystem : MonoBehaviour
     private bool IsCorrectSprayDuration(Constants.GameSystem.SprayLevel sprayLevel, Animal animal)
     {
         SprayRanges sprayRange = animal.sprayRanges.Find(range => range.sprayLevel == sprayLevel);
+
+        if (currentAnimalWeight < sprayRange.weightRange.x || currentAnimalWeight  > sprayRange.weightRange.y) { return false; }
+        if (currentAnimalHeight < sprayRange.heightRange.x || currentAnimalWeight  > sprayRange.heightRange.y) { return false; }
 
         return true;
     }
