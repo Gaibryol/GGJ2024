@@ -5,9 +5,13 @@ public class GameSystemEvents
     public class SpawnAnimal
     {
         public readonly AnimalSpriteInfo AnimalSpriteInfo;
-        public SpawnAnimal(AnimalSpriteInfo animalSpriteInfo) 
+        public readonly int AnimalWeight;
+        public readonly int AnimalHeight;
+        public SpawnAnimal(AnimalSpriteInfo animalSpriteInfo, int animalWeight, int animalHeight) 
         { 
             AnimalSpriteInfo = animalSpriteInfo;
+            AnimalWeight = animalWeight;
+            AnimalHeight = animalHeight;
         }
     }
 
@@ -36,10 +40,12 @@ public class GameSystemEvents
     public class StartDay
     {
         public readonly int Day;
+        public readonly float StartTime;
 
-        public StartDay(int day)
+        public StartDay(int day, float startTime)
         {
             Day = day;
+            StartTime = startTime;
         }
     }
 

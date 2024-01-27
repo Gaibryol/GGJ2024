@@ -132,7 +132,7 @@ public class GameSystem : MonoBehaviour
 
         mixerItems = new List<Constants.GameSystem.RecipeItems>();
 
-        eventBrokerComponent.Publish(this, new GameSystemEvents.StartDay(day));
+        eventBrokerComponent.Publish(this, new GameSystemEvents.StartDay(day, dayStartTime));
 
         isDayStarted = true;
         
@@ -185,8 +185,7 @@ public class GameSystem : MonoBehaviour
 
         // Spawn in Animal
         // Pass in AnimalCostume to AnimalSystem
-        eventBrokerComponent.Publish(this, new GameSystemEvents.SpawnAnimal(GetAnimalSpriteInfoFromAnimalType(currentAnimalType, currentAnimalCostume)));
-        //TODO: Need to pass weight/height to UI
+        eventBrokerComponent.Publish(this, new GameSystemEvents.SpawnAnimal(GetAnimalSpriteInfoFromAnimalType(currentAnimalType, currentAnimalCostume), currentAnimalWeight, currentAnimalHeight));
     }
 
     private void DespawnAnimal(Constants.GameSystem.AnimalDespawnReason animalDespawnReason)
