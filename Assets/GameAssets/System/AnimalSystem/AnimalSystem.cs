@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -65,13 +66,26 @@ public class AnimalSystem : MonoBehaviour
 		animalScale = new Vector3(animalScale.x, 0, animalScale.z);
 	}
 
+	private void HandleSpawnAnimal(BrokerEvent<GameSystemEvents.SpawnAnimal> inEvent)
+	{
+		Spawn(inEvent.Payload.AnimalSpriteInfo);
+		SizeIn();
+	}
+
+	private void HandleDespawnAnimal(BrokerEvent<GameSystemEvents.DespawnAnimal> inEvent)
+	{
+		SizeOut();
+	}
+
 	private void OnEnable()
 	{
-		
+		eventBroker.Subscribe<GameSystemEvents.SpawnAnimal>(HandleSpawnAnimal);
+		eventBroker.Subscribe<GameSystemEvents.DespawnAnimal>(HandleDespawnAnimal);
 	}
 
 	private void OnDisable()
 	{
-		
+		eventBroker.Unsubscribe<GameSystemEvents.SpawnAnimal>(HandleSpawnAnimal);
+		eventBroker.Unsubscribe<GameSystemEvents.DespawnAnimal>(HandleDespawnAnimal);
 	}
 }

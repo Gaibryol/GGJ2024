@@ -16,20 +16,20 @@ public class GameSystem : MonoBehaviour
     private float dayStartTime;
     private bool isDayStarted;
 
-    private List<RecipeItems> mixerItems;
+    private List<Constants.GameSystem.RecipeItems> mixerItems;
     #endregion
 
     #region Initialization Constants
     [SerializeField] private List<Animal> possibleAnimals;  // Stores specific animal recipies, weight, height, etc.
-    [SerializeField] private List<Constants.Animals.AnimalType> possibleAnimalTypes;    // Linking agent between Animal, AnimalCharacterstic, AnimalSpriteInfo
-    [SerializeField] private List<AnimalCharacteristic> possibleAnimalCharacteristics;  // "Costumes"
+    [SerializeField] private List<Constants.Animals.AnimalType> possibleAnimalTypes;    // Linking agent between Animal, AnimalCostume, AnimalSpriteInfo
+    [SerializeField] private List<AnimalCostume> possibleAnimalCostumes;  // "Costumes"
     [SerializeField] private AnimalSystem animalSystem;
     #endregion
 
     #region Current Animal State
     private Animal currentAnimal;
     private Constants.Animals.AnimalType currentAnimalType;
-    private AnimalCharacteristic currentAnimalCharacteristic;
+    private AnimalCostume currentAnimalCostume;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -95,7 +95,7 @@ public class GameSystem : MonoBehaviour
         }
 
         // Get mixer items
-        List<RecipeItems> requiredItems = CompileRecipeItems(currentAnimal, currentAnimalCharacteristic);
+        List<Constants.GameSystem.RecipeItems> requiredItems = CompileRecipeItems(currentAnimal, currentAnimalCostume);
 
         // Compare required items with items in mixer
         // Call either animal success or animal fail
@@ -125,7 +125,7 @@ public class GameSystem : MonoBehaviour
             return;
         }
 
-        mixerItems = new List<RecipeItems>();
+        mixerItems = new List<Constants.GameSystem.RecipeItems>();
 
         eventBrokerComponent.Publish(this, new GameSystemEvents.StartDay(day));
 
@@ -174,11 +174,11 @@ public class GameSystem : MonoBehaviour
         // Determine what animal to Spawn
         currentAnimalType = GetRandomAnimalType();
         currentAnimal = GetAnimalFromAnimalType(currentAnimalType);
-        currentAnimalCharacteristic = GetRandomAnimalCharacteristic(currentAnimalType);
+        currentAnimalCostume = GetRandomAnimalCostume(currentAnimalType);
 
         // Spawn in Animal
-        // Pass in AnimalCharacterisics to
-        eventBrokerComponent.Publish(this, new GameSystemEvents.SpawnAnimal(GetAnimalSpriteInfoFromAnimalType(currentAnimalType, currentAnimalCharacteristic)));
+        // Pass in AnimalCostume to AnimalSystem
+        eventBrokerComponent.Publish(this, new GameSystemEvents.SpawnAnimal(GetAnimalSpriteInfoFromAnimalType(currentAnimalType, currentAnimalCostume)));
     }
 
     private void DespawnAnimal(Constants.GameSystem.AnimalDespawnReason animalDespawnReason)
@@ -186,17 +186,17 @@ public class GameSystem : MonoBehaviour
         // Destroy animal
         eventBrokerComponent.Publish(this, new GameSystemEvents.DespawnAnimal(animalDespawnReason));
         currentAnimal = null;
-        currentAnimalCharacteristic = null;
+        currentAnimalCostume = null;
     }
 
-    private AnimalCharacteristic GetRandomAnimalCharacteristic(Constants.Animals.AnimalType animalType)
+    private AnimalCostume GetRandomAnimalCostume(Constants.Animals.AnimalType animalType)
     {
         System.Random random = new System.Random();
 
-        AnimalCharacteristic selectedCharacteristic = possibleAnimalCharacteristics[random.Next(possibleAnimalCharacteristics.Count)];
+        AnimalCostume selectedCostume = possibleAnimalCostumes[random.Next(possibleAnimalCostumes.Count)];
 
 
-        return selectedCharacteristic;
+        return selectedCostume;
     }
 
     private Constants.Animals.AnimalType GetRandomAnimalType()
@@ -206,9 +206,9 @@ public class GameSystem : MonoBehaviour
         return possibleAnimalTypes[random.Next(possibleAnimalTypes.Count)];
     }
 
-    private AnimalSpriteInfo GetAnimalSpriteInfoFromAnimalType(Constants.Animals.AnimalType animalType, AnimalCharacteristic animalCharacteristic)
+    private AnimalSpriteInfo GetAnimalSpriteInfoFromAnimalType(Constants.Animals.AnimalType animalType, AnimalCostume animalCostume)
     {
-        return animalCharacteristic.animalSprites.Find(animalSprite => animalSprite.AnimalType == animalType);
+        return animalCostume.animalSprites.Find(animalSprite => animalSprite.AnimalType == animalType);
     }
 
     private Animal GetAnimalFromAnimalType(Constants.Animals.AnimalType animalType)
@@ -218,22 +218,22 @@ public class GameSystem : MonoBehaviour
     #endregion
 
     #region Recipe
-    private List<RecipeItems> CompileRecipeItems(Animal animal, AnimalCharacteristic animalCharacteristic)
+    private List<Constants.GameSystem.RecipeItems> CompileRecipeItems(Animal animal, AnimalCostume animalCostume)
     {
-        List<RecipeItems> recipeItems = new List<RecipeItems>();
+        List<Constants.GameSystem.RecipeItems> recipeItems = new List<Constants.GameSystem.RecipeItems>();
 
         recipeItems.AddRange(animal.recipeItems);
-        recipeItems.AddRange(animalCharacteristic.recipeItems);
+        recipeItems.AddRange(animalCostume.recipeItems);
 
         return recipeItems;
     }
 
 
-    private bool IsCorrectRecipe(List<RecipeItems> a, List<RecipeItems> b)
+    private bool IsCorrectRecipe(List<Constants.GameSystem.RecipeItems> a, List<Constants.GameSystem.RecipeItems> b)
     {
         if (a.Count != b.Count) return false;
 
-        int[] counter = new int[Enum.GetNames(typeof(RecipeItems)).Length];
+        int[] counter = new int[Enum.GetNames(typeof(Constants.GameSystem.RecipeItems)).Length];
 
         for (int i = 0; i < a.Count; i++)
         {

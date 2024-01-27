@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class AnimalCharacteristic : ScriptableObject
+public class AnimalCostume : ScriptableObject
 {
-    public List<RecipeItems> recipeItems;
+    public List<Constants.GameSystem.RecipeItems> recipeItems;
 
     public List<AnimalSpriteInfo> animalSprites;
 }

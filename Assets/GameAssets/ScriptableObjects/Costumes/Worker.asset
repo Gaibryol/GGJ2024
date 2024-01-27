@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b94ec7adaa10d2445acc9b7bdc46ff61, type: 3}
+  m_Name: Worker
+  m_EditorClassIdentifier: 
+  recipeItems: 00000000
+  animalSprites:
+  - AnimalType: 3
+    Neutral: {fileID: 21300000, guid: 8512da98e7864024f84cdd57aa9d0e93, type: 3}
+    Happy: {fileID: 21300000, guid: 02eb7832e5db0494ea8d3eca131f46a3, type: 3}
+    Sad: {fileID: 0}
+  - AnimalType: 5
+    Neutral: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
+    Happy: {fileID: 21300000, guid: a63b4c416d1fb8c448c00bf1b79f6ef4, type: 3}
+    Sad: {fileID: 0}

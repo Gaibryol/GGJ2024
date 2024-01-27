@@ -52,9 +52,9 @@ public class GameSystemEvents
 
     public class ItemDroppedInMixer
     {
-        public readonly RecipeItems RecipeItem;
+        public readonly Constants.GameSystem.RecipeItems RecipeItem;
 
-        public ItemDroppedInMixer(RecipeItems recipeItem)
+        public ItemDroppedInMixer(Constants.GameSystem.RecipeItems recipeItem)
         {
             RecipeItem = recipeItem;
         }
