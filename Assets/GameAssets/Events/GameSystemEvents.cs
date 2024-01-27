@@ -6,7 +6,7 @@ public class GameSystemEvents
     {
         public readonly AnimalSpriteInfo AnimalSpriteInfo;
         public readonly int AnimalWeight;
-        public SpawnAnimal(AnimalSpriteInfo animalSpriteInfo, int animalWeight, int animalHeight) 
+        public SpawnAnimal(AnimalSpriteInfo animalSpriteInfo, int animalWeight) 
         { 
             AnimalSpriteInfo = animalSpriteInfo;
             AnimalWeight = animalWeight;
