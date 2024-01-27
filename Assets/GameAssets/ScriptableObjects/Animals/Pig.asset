@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32772955d8d860b4f8d1f9d988ed185e, type: 3}
-  m_Name: Hippo
+  m_Name: Pig
   m_EditorClassIdentifier: 
-  recipeItems: 02000000
-  animalType: 2
-  weightRange: {x: 1500, y: 3200}
+  recipeItems: 00000000
+  animalType: 1
+  weightRange: {x: 50, y: 350}
   sprayRanges:
   - sprayLevel: 0
-    weightRange: {x: 1500, y: 2000}
+    weightRange: {x: 50, y: 150}
   - sprayLevel: 1
-    weightRange: {x: 2000, y: 2700}
+    weightRange: {x: 150, y: 250}
   - sprayLevel: 2
-    weightRange: {x: 2700, y: 3200}
+    weightRange: {x: 250, y: 350}
