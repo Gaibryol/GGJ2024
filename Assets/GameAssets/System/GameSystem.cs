@@ -76,6 +76,12 @@ public class GameSystem : MonoBehaviour
             return;
         }
 
+        if (!isDayStarted)
+        {
+            Debug.Log("Tried to spray when day is over");
+            return;
+        }
+
         if (currentAnimal == null)
         {
             Debug.LogError("animal doesn't exist");

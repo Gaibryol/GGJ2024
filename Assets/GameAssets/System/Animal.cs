@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu]
 public class Animal : ScriptableObject
 {
     public List<RecipeItems> recipeItems;
