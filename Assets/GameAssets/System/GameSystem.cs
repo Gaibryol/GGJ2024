@@ -180,7 +180,7 @@ public class GameSystem : MonoBehaviour
         currentAnimalType = GetRandomAnimalType();
         currentAnimal = GetAnimalFromAnimalType(currentAnimalType);
 
-        currentAnimalCostume = GetRandomAnimalCostume(currentAnimalType);
+        currentAnimalCostume = GetRandomAnimalCostume();
         InitializeRandomWeightHeight(currentAnimal);
 
         // Spawn in Animal
@@ -196,21 +196,14 @@ public class GameSystem : MonoBehaviour
         currentAnimalCostume = null;
     }
 
-    private AnimalCostume GetRandomAnimalCostume(Constants.Animals.AnimalType animalType)
+    private AnimalCostume GetRandomAnimalCostume()
     {
-        System.Random random = new System.Random();
-
-        AnimalCostume selectedCostume = possibleAnimalCostumes[random.Next(possibleAnimalCostumes.Count)];
-
-
-        return selectedCostume;
+        return possibleAnimalCostumes[UnityEngine.Random.Range(0, possibleAnimalCostumes.Count - 1)];
     }
 
     private Constants.Animals.AnimalType GetRandomAnimalType()
     {
-        System.Random random = new System.Random();
-
-        return possibleAnimalTypes[random.Next(possibleAnimalTypes.Count)];
+        return possibleAnimalTypes[UnityEngine.Random.Range(0, possibleAnimalCostumes.Count - 1)];
     }
 
     private AnimalSpriteInfo GetAnimalSpriteInfoFromAnimalType(Constants.Animals.AnimalType animalType, AnimalCostume animalCostume)
