@@ -12,6 +12,17 @@ public class AnimalSystem : MonoBehaviour
 	[SerializeField] private SpriteRenderer shirtSR;
 	[SerializeField] private SpriteRenderer pantsSR;
 
+	[SerializeField, Header("Animal Sprites")] private Sprite hyenaSprite;
+	[SerializeField] private Sprite pigSprite;
+	[SerializeField] private Sprite duckSprite;
+	[SerializeField] private Sprite hippoSprite;
+	[SerializeField] private Sprite cowSprite;
+	[SerializeField] private Sprite rabbitSprite;
+	[SerializeField] private Sprite polarBearSprite;
+	[SerializeField] private Sprite chickenSprite;
+	[SerializeField] private Sprite snakeSprite;
+	[SerializeField] private Sprite fishSprite;
+
 	private Vector3 animalScale;
 
     // Start is called before the first frame update
@@ -19,6 +30,70 @@ public class AnimalSystem : MonoBehaviour
     {
 		animalScale = animal.transform.localScale;
     }
+
+	private void Spawn(Constants.Animals.AnimalType animalType, List<AnimalCharacteristic> characteristics)
+	{
+		switch (animalType)
+		{
+			case Constants.Animals.AnimalType.Hyena:
+				animalSR.sprite = hyenaSprite;
+				break;
+
+			case Constants.Animals.AnimalType.Pig:
+				animalSR.sprite = pigSprite;
+				break;
+
+			case Constants.Animals.AnimalType.Duck:
+				animalSR.sprite = duckSprite;
+				break;
+
+			case Constants.Animals.AnimalType.Hippo:
+				animalSR.sprite = hippoSprite;
+				break;
+
+			case Constants.Animals.AnimalType.Cow:
+				animalSR.sprite = cowSprite;
+				break;
+
+			case Constants.Animals.AnimalType.Rabbit:
+				animalSR.sprite = rabbitSprite;
+				break;
+
+			case Constants.Animals.AnimalType.PolarBear:
+				animalSR.sprite = polarBearSprite;
+				break;
+
+			case Constants.Animals.AnimalType.Chicken:
+				animalSR.sprite = chickenSprite;
+				break;
+
+			case Constants.Animals.AnimalType.Snake:
+				animalSR.sprite = snakeSprite;
+				break;
+
+			case Constants.Animals.AnimalType.Fish:
+				animalSR.sprite = fishSprite;
+				break;
+		}
+
+		foreach (AnimalCharacteristic characteristic in characteristics)
+		{
+			switch (characteristic.characteristicType)
+			{
+				case AnimalCharacteristicType.Hat:
+					hatSR.sprite = characteristic.sprite;
+					break;
+
+				case AnimalCharacteristicType.Shirt:
+					shirtSR.sprite = characteristic.sprite;
+					break;
+
+				case AnimalCharacteristicType.Pants:
+					pantsSR.sprite = characteristic.sprite;
+					break;
+			}
+		}
+	}
 
 	private IEnumerator SizeIn()
 	{
