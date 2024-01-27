@@ -6,6 +6,7 @@ using UnityEngine;
 public class AnimalCostume : ScriptableObject
 {
     public List<Constants.GameSystem.RecipeItems> recipeItems;
+    public Constants.Animals.AnimalCostumeType CostumeType;
 
     public List<AnimalSpriteInfo> animalSprites;
 }

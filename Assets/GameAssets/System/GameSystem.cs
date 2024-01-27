@@ -196,7 +196,8 @@ public class GameSystem : MonoBehaviour
 
         // Spawn in Animal
         // Pass in AnimalCostume to AnimalSystem
-        eventBrokerComponent.Publish(this, new GameSystemEvents.SpawnAnimal(GetAnimalSpriteInfoFromAnimalType(currentAnimalType, currentAnimalCostume), currentAnimalWeight));
+        eventBrokerComponent.Publish(this, new GameSystemEvents.SpawnAnimal(GetAnimalSpriteInfoFromAnimalType(currentAnimalType, currentAnimalCostume), 
+            currentAnimalWeight, currentAnimalCostume.CostumeType, currentAnimal.animalDiet, currentAnimal.animalType));
 
 		// Check if progression has unlocked patience or gone past it
 		if (gameProgression >= Constants.GameSystem.Progression.Patience)
