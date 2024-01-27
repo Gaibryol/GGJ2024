@@ -199,6 +199,7 @@ public class GameSystem : MonoBehaviour
     {
         // Destroy animal
         eventBrokerComponent.Publish(this, new GameSystemEvents.DespawnAnimal(animalDespawnReason));
+        eventBrokerComponent.Publish(this, new GameSystemEvents.ClearTable());
         currentAnimal = null;
         currentAnimalCostume = null;
     }

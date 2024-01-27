@@ -6,12 +6,10 @@ public class GameSystemEvents
     {
         public readonly AnimalSpriteInfo AnimalSpriteInfo;
         public readonly int AnimalWeight;
-        public readonly int AnimalHeight;
         public SpawnAnimal(AnimalSpriteInfo animalSpriteInfo, int animalWeight, int animalHeight) 
         { 
             AnimalSpriteInfo = animalSpriteInfo;
             AnimalWeight = animalWeight;
-            AnimalHeight = animalHeight;
         }
     }
 
@@ -67,5 +65,10 @@ public class GameSystemEvents
         {
             RecipeItem = recipeItem;
         }
+    }
+
+    public class ClearTable
+    {
+        public ClearTable() { }
     }
 }
