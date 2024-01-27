@@ -99,11 +99,11 @@ public class GameSystem : MonoBehaviour
         // Get mixer items
         List<Constants.GameSystem.RecipeItems> requiredItems = CompileRecipeItems(currentAnimal, currentAnimalCostume);
 
-
+        bool isCorrectSprayDuration = IsCorrectSprayDuration(@event.Payload.SprayLevel, currentAnimal);
 
         // Compare required items with items in mixer
         // Call either animal success or animal fail
-        Constants.GameSystem.AnimalDespawnReason animalDespawnReason = IsCorrectRecipe(requiredItems, mixerItems) ? Constants.GameSystem.AnimalDespawnReason.Success : Constants.GameSystem.AnimalDespawnReason.Fail;
+        Constants.GameSystem.AnimalDespawnReason animalDespawnReason = IsCorrectRecipe(requiredItems, mixerItems) && isCorrectSprayDuration ? Constants.GameSystem.AnimalDespawnReason.Success : Constants.GameSystem.AnimalDespawnReason.Fail;
 
         // clear items
         mixerItems.Clear();
@@ -132,7 +132,7 @@ public class GameSystem : MonoBehaviour
 
         mixerItems = new List<Constants.GameSystem.RecipeItems>();
 
-        eventBrokerComponent.Publish(this, new GameSystemEvents.StartDay(day));
+        eventBrokerComponent.Publish(this, new GameSystemEvents.StartDay(day, dayStartTime));
 
         isDayStarted = true;
         
@@ -180,13 +180,12 @@ public class GameSystem : MonoBehaviour
         currentAnimalType = GetRandomAnimalType();
         currentAnimal = GetAnimalFromAnimalType(currentAnimalType);
 
-        currentAnimalCostume = GetRandomAnimalCostume(currentAnimalType);
+        currentAnimalCostume = GetRandomAnimalCostume();
         InitializeRandomWeightHeight(currentAnimal);
 
         // Spawn in Animal
         // Pass in AnimalCostume to AnimalSystem
-        eventBrokerComponent.Publish(this, new GameSystemEvents.SpawnAnimal(GetAnimalSpriteInfoFromAnimalType(currentAnimalType, currentAnimalCostume)));
-        //TODO: Need to pass weight/height to UI
+        eventBrokerComponent.Publish(this, new GameSystemEvents.SpawnAnimal(GetAnimalSpriteInfoFromAnimalType(currentAnimalType, currentAnimalCostume), currentAnimalWeight, currentAnimalHeight));
     }
 
     private void DespawnAnimal(Constants.GameSystem.AnimalDespawnReason animalDespawnReason)
@@ -197,21 +196,14 @@ public class GameSystem : MonoBehaviour
         currentAnimalCostume = null;
     }
 
-    private AnimalCostume GetRandomAnimalCostume(Constants.Animals.AnimalType animalType)
+    private AnimalCostume GetRandomAnimalCostume()
     {
-        System.Random random = new System.Random();
-
-        AnimalCostume selectedCostume = possibleAnimalCostumes[random.Next(possibleAnimalCostumes.Count)];
-
-
-        return selectedCostume;
+        return possibleAnimalCostumes[UnityEngine.Random.Range(0, possibleAnimalCostumes.Count - 1)];
     }
 
     private Constants.Animals.AnimalType GetRandomAnimalType()
     {
-        System.Random random = new System.Random();
-
-        return possibleAnimalTypes[random.Next(possibleAnimalTypes.Count)];
+        return possibleAnimalTypes[UnityEngine.Random.Range(0, possibleAnimalCostumes.Count - 1)];
     }
 
     private AnimalSpriteInfo GetAnimalSpriteInfoFromAnimalType(Constants.Animals.AnimalType animalType, AnimalCostume animalCostume)
@@ -267,6 +259,9 @@ public class GameSystem : MonoBehaviour
     private bool IsCorrectSprayDuration(Constants.GameSystem.SprayLevel sprayLevel, Animal animal)
     {
         SprayRanges sprayRange = animal.sprayRanges.Find(range => range.sprayLevel == sprayLevel);
+
+        if (currentAnimalWeight < sprayRange.weightRange.x || currentAnimalWeight  > sprayRange.weightRange.y) { return false; }
+        if (currentAnimalHeight < sprayRange.heightRange.x || currentAnimalWeight  > sprayRange.heightRange.y) { return false; }
 
         return true;
     }
