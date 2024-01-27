@@ -102,9 +102,6 @@ public class UIManager : MonoBehaviour
 	{
 		weight = inEvent.Payload.AnimalWeight;
 	}
-
-	
-
 	private void OnEnable()
 	{
 		eventBroker.Subscribe<GameSystemEvents.StartDay>(StartDayHandler);
@@ -120,7 +117,7 @@ public class UIManager : MonoBehaviour
 		eventBroker.Unsubscribe<GameSystemEvents.EndDay>(EndDayHandler);
 
 		eventBroker.Unsubscribe<GameSystemEvents.DespawnAnimal>(DespawnAnimalHandler);
-		eventBroker.Subscribe<GameSystemEvents.SpawnAnimal>(SpawnAnimalHandler);
+		eventBroker.Unsubscribe<GameSystemEvents.SpawnAnimal>(SpawnAnimalHandler);
 
 	}
 }
