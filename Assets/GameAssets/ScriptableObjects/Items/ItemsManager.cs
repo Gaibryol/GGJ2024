@@ -13,7 +13,7 @@ public class ItemsManager : MonoBehaviour
         PublishItemChanged();
     }
 
-    public void ResetItem()
+    public void ResetItems()
     {
         currentItems = new List<Constants.GameSystem.RecipeItems>();
         PublishItemChanged();

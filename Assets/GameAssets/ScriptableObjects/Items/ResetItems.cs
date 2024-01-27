@@ -8,6 +8,6 @@ public class ResetItems : MonoBehaviour
 
     private void OnMouseDown()
     {
-        IM.ResetItem();
+        IM.ResetItems();
     }
 }
