@@ -42,16 +42,16 @@ public class AnimalSystem : MonoBehaviour
 	private IEnumerator SizeIn()
 	{
 		// Lerp animal into view
-		float targetY = animal.transform.localScale.y;
-
 		animalScale = new Vector3(animalScale.x, 0f, animalScale.z);
-		while (animalScale.y < targetY)
+		while (animalScale.y < 1f)
 		{
 			animalScale = new Vector3(animalScale.x, animalScale.y + Time.deltaTime, animalScale.z);
+			animal.transform.localScale = animalScale;
 			yield return null;
 		}
 
-		animalScale = new Vector3(animalScale.x, targetY, animalScale.z);
+		animalScale = new Vector3(animalScale.x, 1f, animalScale.z);
+		animal.transform.localScale = animalScale;
 	}
 
 	private IEnumerator SizeOut()
@@ -60,21 +60,23 @@ public class AnimalSystem : MonoBehaviour
 		while (animalScale.y > 0)
 		{
 			animalScale = new Vector3(animalScale.x, animalScale.y - Time.deltaTime, animalScale.z);
+			animal.transform.localScale = animalScale;
 			yield return null;
 		}
 
 		animalScale = new Vector3(animalScale.x, 0, animalScale.z);
+		animal.transform.localScale = animalScale;
 	}
 
 	private void HandleSpawnAnimal(BrokerEvent<GameSystemEvents.SpawnAnimal> inEvent)
 	{
 		Spawn(inEvent.Payload.AnimalSpriteInfo);
-		SizeIn();
+		StartCoroutine(SizeIn());
 	}
 
 	private void HandleDespawnAnimal(BrokerEvent<GameSystemEvents.DespawnAnimal> inEvent)
 	{
-		SizeOut();
+		StartCoroutine(SizeOut());
 	}
 
 	private void OnEnable()
