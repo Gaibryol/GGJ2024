@@ -152,7 +152,7 @@ public class GameSystem : MonoBehaviour
 
         AnimalCharacteristic selectedCharacteristic = possibleAnimalCharacteristics[random.Next(possibleAnimalCharacteristics.Count)];
 
-        AnimalSpriteInfo spriteInfo = selectedCharacteristic.animalSprites.First(animalSprite => animalSprite.animalType == animalType);
+        AnimalSpriteInfo spriteInfo = selectedCharacteristic.animalSprites.First(animalSprite => animalSprite.AnimalType == animalType);
 
         return selectedCharacteristic;
     }

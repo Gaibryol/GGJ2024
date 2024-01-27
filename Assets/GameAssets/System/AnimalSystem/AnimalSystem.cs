@@ -9,16 +9,7 @@ public class AnimalSystem : MonoBehaviour
 	[SerializeField] private GameObject animal;
 	[SerializeField] private SpriteRenderer animalSR;
 
-	[SerializeField, Header("Animal Sprites")] private Sprite hyenaSprite;
-	[SerializeField] private Sprite pigSprite;
-	[SerializeField] private Sprite duckSprite;
-	[SerializeField] private Sprite hippoSprite;
-	[SerializeField] private Sprite cowSprite;
-	[SerializeField] private Sprite rabbitSprite;
-	[SerializeField] private Sprite polarBearSprite;
-	[SerializeField] private Sprite chickenSprite;
-	[SerializeField] private Sprite snakeSprite;
-	[SerializeField] private Sprite fishSprite;
+	private AnimalSpriteInfo currentSpriteInfo;
 
 	private Vector3 animalScale;
 
@@ -28,50 +19,20 @@ public class AnimalSystem : MonoBehaviour
 		animalScale = animal.transform.localScale;
     }
 
-	private void Spawn(Constants.Animals.AnimalType animalType, AnimalSpriteInfo spriteInfo)
+	private void Spawn(AnimalSpriteInfo spriteInfo)
 	{
-		switch (spriteInfo.animalType)
-		{
-			case Constants.Animals.AnimalType.Hyena:
-				animalSR.sprite = hyenaSprite;
-				break;
+		currentSpriteInfo = spriteInfo;
+		animalSR.sprite = currentSpriteInfo.Neutral;
+	}
 
-			case Constants.Animals.AnimalType.Pig:
-				animalSR.sprite = pigSprite;
-				break;
+	private void Success()
+	{
+		animalSR.sprite = currentSpriteInfo.Happy;
+	}
 
-			case Constants.Animals.AnimalType.Duck:
-				animalSR.sprite = duckSprite;
-				break;
-
-			case Constants.Animals.AnimalType.Hippo:
-				animalSR.sprite = hippoSprite;
-				break;
-
-			case Constants.Animals.AnimalType.Cow:
-				animalSR.sprite = cowSprite;
-				break;
-
-			case Constants.Animals.AnimalType.Rabbit:
-				animalSR.sprite = rabbitSprite;
-				break;
-
-			case Constants.Animals.AnimalType.PolarBear:
-				animalSR.sprite = polarBearSprite;
-				break;
-
-			case Constants.Animals.AnimalType.Chicken:
-				animalSR.sprite = chickenSprite;
-				break;
-
-			case Constants.Animals.AnimalType.Snake:
-				animalSR.sprite = snakeSprite;
-				break;
-
-			case Constants.Animals.AnimalType.Fish:
-				animalSR.sprite = fishSprite;
-				break;
-		}
+	private void Failure()
+	{
+		animalSR.sprite = currentSpriteInfo.Sad;
 	}
 
 	private IEnumerator SizeIn()
