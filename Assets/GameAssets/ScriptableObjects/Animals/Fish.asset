@@ -20,6 +20,6 @@ MonoBehaviour:
   - sprayLevel: 0
     weightRange: {x: 1, y: 3}
   - sprayLevel: 1
-    weightRange: {x: 3, y: 7}
+    weightRange: {x: 4, y: 7}
   - sprayLevel: 2
-    weightRange: {x: 7, y: 10}
+    weightRange: {x: 8, y: 10}

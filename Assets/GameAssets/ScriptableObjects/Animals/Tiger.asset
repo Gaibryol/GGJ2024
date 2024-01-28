@@ -18,8 +18,8 @@ MonoBehaviour:
   weightRange: {x: 100, y: 300}
   sprayRanges:
   - sprayLevel: 0
-    weightRange: {x: 100, y: 165}
+    weightRange: {x: 100, y: 164}
   - sprayLevel: 1
-    weightRange: {x: 165, y: 235}
+    weightRange: {x: 165, y: 234}
   - sprayLevel: 2
     weightRange: {x: 235, y: 300}

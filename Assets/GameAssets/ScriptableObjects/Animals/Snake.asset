@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipeItems: 06000000
   animalType: 5
+  animalDiet: 0
   weightRange: {x: 10, y: 30}
   sprayRanges:
   - sprayLevel: 0
-    weightRange: {x: 10, y: 17}
+    weightRange: {x: 10, y: 16}
   - sprayLevel: 1
-    weightRange: {x: 17, y: 24}
+    weightRange: {x: 17, y: 23}
   - sprayLevel: 2
     weightRange: {x: 24, y: 30}
