@@ -58,10 +58,7 @@ public class GuideBookScript : MonoBehaviour, IPointerDownHandler
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		Debug.Log("pointer down close book: " + gameObject.activeSelf);
-
 		pageIndex = 0;
 		gameObject.SetActive(false);
-		this.enabled = false;
 	}
 }

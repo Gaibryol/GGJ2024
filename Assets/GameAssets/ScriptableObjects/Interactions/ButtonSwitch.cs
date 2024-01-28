@@ -12,10 +12,12 @@ public class ButtonSwitch : MonoBehaviour
     private void OnMouseDown()
     {
 		if (EventSystem.current.IsPointerOverGameObject()) return;
+		Invoke("OpenBook", 0.01f);
+	}
 
-		Debug.Log("open book: " + itemsGO.activeSelf);
+	private void OpenBook()
+	{
 		itemsGO.SetActive(true);
-		itemsGO.GetComponent<GuideBookScript>().enabled = true;
 	}
 
     private void DayEnd(BrokerEvent<GameSystemEvents.EndDay> @event)
