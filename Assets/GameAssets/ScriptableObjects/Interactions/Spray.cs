@@ -43,19 +43,13 @@ public class Spray : MonoBehaviour
             // Increment the timer while the button is pressed
             timer += Time.deltaTime;
 
-            switch (Mathf.Floor(timer))
-            {
-                case 1:
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
-                    break;
-                case 2:
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.green;
-                    break;
-                default:
-                    gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-                    break;
-  
-            }
+            if (timer < 1)
+                gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+            else if (timer < 2)
+                gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+            else
+                gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+
         }
     }
 
@@ -83,23 +77,14 @@ public class Spray : MonoBehaviour
 
         StartCoroutine(Flow(false, () =>
         {
-            float buttonPressDuration = Mathf.Clamp(timer, 1f, 3f);
+            float buttonPressDuration = timer;
 
-            switch (buttonPressDuration)
-            {
-                case 1:
-                    eventBrokerComponent.Publish(this, new GameSystemEvents.AnimalSprayed(Constants.GameSystem.SprayLevel.Low));
-                    break;
-                case 2:
-                    eventBrokerComponent.Publish(this, new GameSystemEvents.AnimalSprayed(Constants.GameSystem.SprayLevel.Medium));
-                    break;
-                case 3:
-                    eventBrokerComponent.Publish(this, new GameSystemEvents.AnimalSprayed(Constants.GameSystem.SprayLevel.High));
-                    break;
-                default:
-                    Debug.Log("Fail");
-                    break;
-            }
+            if(buttonPressDuration < 1)
+                eventBrokerComponent.Publish(this, new GameSystemEvents.AnimalSprayed(Constants.GameSystem.SprayLevel.Low));
+            else if(buttonPressDuration < 2)
+                eventBrokerComponent.Publish(this, new GameSystemEvents.AnimalSprayed(Constants.GameSystem.SprayLevel.Medium));
+            else
+                eventBrokerComponent.Publish(this, new GameSystemEvents.AnimalSprayed(Constants.GameSystem.SprayLevel.High));
 
             sprayTriggered = false;
         }));
