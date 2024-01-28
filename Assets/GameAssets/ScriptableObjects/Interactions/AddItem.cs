@@ -20,6 +20,7 @@ public class AddItem : MonoBehaviour
             GameObject collisionGO = collision.gameObject;
             StartCoroutine(collisionGO.GetComponent<Item>().DissolveSprite(.5f));
             eventBrokerComponent.Publish(this, new GameSystemEvents.ItemDroppedInMixer(collisionGO.GetComponent<Item>().GetItem()));
+			eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.Mixer));
         }
     }
 }

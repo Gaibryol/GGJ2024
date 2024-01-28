@@ -19,6 +19,22 @@ public class AudioSystem : MonoBehaviour
 	[SerializeField] private AudioClip reset;
 	[SerializeField] private AudioClip strawSpiral;
 
+	[SerializeField] private AudioClip duckLaugh;
+	[SerializeField] private AudioClip fishLaugh;
+	[SerializeField] private AudioClip hippoLaugh;
+	[SerializeField] private AudioClip pigLaugh;
+	[SerializeField] private AudioClip rabbitLaugh;
+	[SerializeField] private AudioClip snakeLaugh;
+	[SerializeField] private AudioClip tigerLaugh;
+
+	[SerializeField] private AudioClip duckWrong;
+	[SerializeField] private AudioClip fishWrong;
+	[SerializeField] private AudioClip hippoWrong;
+	[SerializeField] private AudioClip pigWrong;
+	[SerializeField] private AudioClip rabbitWrong;
+	[SerializeField] private AudioClip snakeWrong;
+	[SerializeField] private AudioClip tigerWrong;
+
 	private float musicVolume;
 	private float sfxVolume;
 
@@ -42,6 +58,22 @@ public class AudioSystem : MonoBehaviour
 		sfx.Add(Constants.Audio.SFX.Mixer, mixer);
 		sfx.Add(Constants.Audio.SFX.Reset, reset);
 		sfx.Add(Constants.Audio.SFX.StrawSpiral, strawSpiral);
+
+		sfx.Add(Constants.Audio.Animals.Laughs.Duck, duckLaugh);
+		sfx.Add(Constants.Audio.Animals.Laughs.Fish, fishLaugh);
+		sfx.Add(Constants.Audio.Animals.Laughs.Hippo, hippoLaugh);
+		sfx.Add(Constants.Audio.Animals.Laughs.Pig, pigLaugh);
+		sfx.Add(Constants.Audio.Animals.Laughs.Rabbit, rabbitLaugh);
+		sfx.Add(Constants.Audio.Animals.Laughs.Snake, snakeLaugh);
+		sfx.Add(Constants.Audio.Animals.Laughs.Tiger, tigerLaugh);
+
+		sfx.Add(Constants.Audio.Animals.Sad.Duck, duckWrong);
+		sfx.Add(Constants.Audio.Animals.Sad.Fish, fishWrong);
+		sfx.Add(Constants.Audio.Animals.Sad.Hippo, hippoWrong);
+		sfx.Add(Constants.Audio.Animals.Sad.Pig, pigWrong);
+		sfx.Add(Constants.Audio.Animals.Sad.Rabbit, rabbitWrong);
+		sfx.Add(Constants.Audio.Animals.Sad.Snake, snakeWrong);
+		sfx.Add(Constants.Audio.Animals.Sad.Tiger, tigerWrong);
 	}
 
 	private void OnEnable()

@@ -81,6 +81,7 @@ public class GameSystem : MonoBehaviour
     private void OnResetMixer(BrokerEvent<GameSystemEvents.ResetMixer> @event)
     {
         mixerItems.Clear();
+		eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.Reset));
     }
 
     private void OnAnimalSprayed(BrokerEvent<GameSystemEvents.AnimalSprayed> @event)
@@ -109,6 +110,7 @@ public class GameSystem : MonoBehaviour
 	private IEnumerator AnimalSprayed(Constants.GameSystem.SprayLevel sprayLevel)
 	{
 		smokeSystem.Play();
+		eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.Spray));
 
 		// Get mixer items
 		List<Constants.GameSystem.RecipeItems> requiredItems = CompileRecipeItems(currentAnimal, currentAnimalCostume);
@@ -119,14 +121,80 @@ public class GameSystem : MonoBehaviour
 		// Call either animal success or animal fail
 		Constants.GameSystem.AnimalDespawnReason animalDespawnReason = IsCorrectRecipe(requiredItems, mixerItems) && isCorrectSprayDuration ? Constants.GameSystem.AnimalDespawnReason.Success : Constants.GameSystem.AnimalDespawnReason.Fail;
 
+		yield return new WaitForSeconds(Constants.GameSystem.DelayBeforeResult);
+
 		eventBrokerComponent.Publish(this, new GameSystemEvents.ChangeAnimalSprite(animalDespawnReason));
 
 		// Increment the day quota if a success
 		if (animalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Success)
 		{
 			currentDayQuota++;
-		}
 
+			switch (currentAnimalType)
+			{
+				case Constants.Animals.AnimalType.Duck:
+					eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.Animals.Laughs.Duck));
+					break;
+
+				case Constants.Animals.AnimalType.Fish:
+					eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.Animals.Laughs.Fish));
+					break;
+
+				case Constants.Animals.AnimalType.Hippo:
+					eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.Animals.Laughs.Hippo));
+					break;
+
+				case Constants.Animals.AnimalType.Pig:
+					eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.Animals.Laughs.Pig));
+					break;
+
+				case Constants.Animals.AnimalType.Rabbit:
+					eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.Animals.Laughs.Rabbit));
+					break;
+
+				case Constants.Animals.AnimalType.Snake:
+					eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.Animals.Laughs.Snake));
+					break;
+
+				case Constants.Animals.AnimalType.Tiger:
+					eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.Animals.Laughs.Tiger));
+					break;
+			}
+		}
+		else
+		{
+			switch (currentAnimalType)
+			{
+				case Constants.Animals.AnimalType.Duck:
+					eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.Animals.Sad.Duck));
+					break;
+
+				case Constants.Animals.AnimalType.Fish:
+					eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.Animals.Sad.Fish));
+					break;
+
+				case Constants.Animals.AnimalType.Hippo:
+					eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.Animals.Sad.Hippo));
+					break;
+
+				case Constants.Animals.AnimalType.Pig:
+					eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.Animals.Sad.Pig));
+					break;
+
+				case Constants.Animals.AnimalType.Rabbit:
+					eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.Animals.Sad.Rabbit));
+					break;
+
+				case Constants.Animals.AnimalType.Snake:
+					eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.Animals.Sad.Snake));
+					break;
+
+				case Constants.Animals.AnimalType.Tiger:
+					eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.Animals.Sad.Tiger));
+					break;
+			}
+		}
+		
 		yield return new WaitForSeconds(Constants.GameSystem.DelayAfterSpray);
 
 		// clear items

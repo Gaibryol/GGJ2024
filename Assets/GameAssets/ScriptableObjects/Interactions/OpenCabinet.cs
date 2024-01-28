@@ -19,7 +19,10 @@ public class OpenCabinet : MonoBehaviour
                 child.gameObject.layer = 2;
             }
         }
+
+		eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.Drawer));
     }
+
     private void DayEnd(BrokerEvent<GameSystemEvents.EndDay> @event)
     {
         gameObject.SetActive(true);
@@ -33,6 +36,7 @@ public class OpenCabinet : MonoBehaviour
             }
         }
     }
+
     private void OnEnable()
     {
         eventBrokerComponent.Subscribe<GameSystemEvents.EndDay>(DayEnd);

@@ -9,8 +9,8 @@ public partial class Constants
 		public const string MusicVolumePP = "Music";
 		public const string SFXVolumePP = "SFX";
 
-		public const float DefaultMusicVolume = 0.25f;
-		public const float DefaultSFXVolume = 0.25f;
+		public const float DefaultMusicVolume = 0.15f;
+		public const float DefaultSFXVolume = 0.45f;
 
 		public const float MusicFadeSpeed = 0.25f;
 
@@ -28,6 +28,31 @@ public partial class Constants
 			public const string Mixer = "Mixer";
 			public const string Reset = "Reset";
 			public const string StrawSpiral = "StrawSpiral";
+		}
+
+		public class Animals
+		{
+			public class Laughs
+			{
+				public const string Duck = "DuckLaugh";
+				public const string Fish = "FishLaugh";
+				public const string Hippo = "HippoLaugh";
+				public const string Pig = "PigLaugh";
+				public const string Rabbit = "RabbitLaugh";
+				public const string Snake = "SnakeLaugh";
+				public const string Tiger = "TigerLaugh";
+			}
+
+			public class Sad
+			{
+				public const string Duck = "DuckWrong";
+				public const string Fish = "FishWrong";
+				public const string Hippo = "HippoWrong";
+				public const string Pig = "PigWrong";
+				public const string Rabbit = "RabbitWrong";
+				public const string Snake = "SnakeWrong";
+				public const string Tiger = "TigerWrong";
+			}
 		}
 	}
 }

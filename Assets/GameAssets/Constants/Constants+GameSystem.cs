@@ -23,6 +23,7 @@ public partial class Constants
 
 		public static DateTime startingDateTime = new DateTime(2024, 1, 1, 8, 0, 0);
 
+		public const float DelayBeforeResult = 0.5f;
 		public const float DelayAfterSpray = 1.5f;
 		public const float DelayForNextAnimal = 2f;
 	}
