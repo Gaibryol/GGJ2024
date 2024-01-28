@@ -36,6 +36,7 @@ public class GameSystem : MonoBehaviour
 	#endregion
 
 	[SerializeField] private ParticleSystem smokeSystem;
+    private List<Constants.Animals.AnimalType> randomAnimalTypesBag; // Used for fake random
 
     void Start()
     {
@@ -226,9 +227,9 @@ public class GameSystem : MonoBehaviour
 	#endregion
 
 	#region Day Logic
-	private void StartDay()
+	public void StartDay()
     {
-        dayStartTime = Time.time;
+        randomAnimalTypesBag = new List<Constants.Animals.AnimalType>();
 
         mixerItems = new List<Constants.GameSystem.RecipeItems>();
 
@@ -237,6 +238,8 @@ public class GameSystem : MonoBehaviour
         eventBrokerComponent.Publish(this, new GameSystemEvents.StartDay(day, dayStartTime));
 
         isDayStarted = true;
+
+        dayStartTime = Time.time;
         
         SpawnAnimal();
     }
@@ -253,8 +256,10 @@ public class GameSystem : MonoBehaviour
             gameProgression++;
         }
 
-		// Tell animal to leave
-		DespawnAnimal(Constants.GameSystem.AnimalDespawnReason.OutOfTime);
+        StopAllCoroutines();
+        
+        // Tell animal to leave
+        DespawnAnimal(Constants.GameSystem.AnimalDespawnReason.OutOfTime);
 
         Constants.GameSystem.DayEndCode dayEndCode = currentDayQuota >= Constants.GameSystem.RequiredQuotaPerDay ? Constants.GameSystem.DayEndCode.Success : Constants.GameSystem.DayEndCode.Fail;
 		totalQuota += currentDayQuota;
@@ -286,6 +291,12 @@ public class GameSystem : MonoBehaviour
 			// So on the next day, we despawn the old animal and spawn in a new one
             Debug.LogWarning("An animal is already spawned... spawning a new one");
 			DespawnAnimal(Constants.GameSystem.AnimalDespawnReason.Error);
+        }
+
+        if (!isDayStarted)
+        {
+            Debug.Log("Tried to spawn when day is over.");
+            return;
         }
 
         // Determine what animal to Spawn
@@ -355,7 +366,14 @@ public class GameSystem : MonoBehaviour
 
     private Constants.Animals.AnimalType GetRandomAnimalType()
     {
-        return possibleAnimalTypes[UnityEngine.Random.Range(0, possibleAnimalCostumes.Count - 1)];
+        if (randomAnimalTypesBag.Count == 0)
+        {
+            randomAnimalTypesBag.AddRange(possibleAnimalTypes);
+        }
+        int index = UnityEngine.Random.Range(0, randomAnimalTypesBag.Count - 1);
+        Constants.Animals.AnimalType selectedAnimalType = randomAnimalTypesBag[index];
+        randomAnimalTypesBag.RemoveAt(index);
+        return selectedAnimalType;
     }
 
     private AnimalSpriteInfo GetAnimalSpriteInfoFromAnimalType(Constants.Animals.AnimalType animalType, AnimalCostume animalCostume)
