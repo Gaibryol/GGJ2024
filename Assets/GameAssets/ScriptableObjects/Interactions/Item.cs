@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Item : MonoBehaviour
@@ -11,6 +12,8 @@ public class Item : MonoBehaviour
 
     private Material material;
     private float dissolveSeconds = 1f;
+
+    private bool isDissolving = false;
 
     private void Start()
     {
@@ -29,11 +32,13 @@ public class Item : MonoBehaviour
 
     private void OnClearTable(BrokerEvent<GameSystemEvents.ClearTable> @event)
     {
-        StartCoroutine(DissolveSprite());
+        StartCoroutine(DissolveSprite(dissolveSeconds));
     }
 
-    private IEnumerator DissolveSprite()
+    public IEnumerator DissolveSprite(float dissolveSeconds)
     {
+        if (isDissolving) yield break;
+        isDissolving = true;
         // Must be using DissolveMaterial for this to work.
         for (float dissolveTime = 0f; dissolveTime <= dissolveSeconds; dissolveTime += Time.deltaTime)
         {

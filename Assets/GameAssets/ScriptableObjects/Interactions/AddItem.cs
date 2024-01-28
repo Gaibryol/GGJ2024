@@ -8,11 +8,16 @@ public class AddItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Ingredient" && collision.gameObject.GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)
+        
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ingredient" && collision.gameObject.GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)
         {
             GameObject collisionGO = collision.gameObject;
+            StartCoroutine(collisionGO.GetComponent<Item>().DissolveSprite(.5f));
             eventBrokerComponent.Publish(this, new GameSystemEvents.ItemDroppedInMixer(collisionGO.GetComponent<Item>().GetItem()));
-            Destroy(collisionGO);
         }
     }
 }

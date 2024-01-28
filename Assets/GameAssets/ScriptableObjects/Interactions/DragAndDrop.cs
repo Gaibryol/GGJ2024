@@ -28,6 +28,7 @@ public class DragAndDrop : MonoBehaviour
             if (inDropZone)
             {
                 gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+                gameObject.GetComponent<Collider2D>().isTrigger = false;
             }
         }
   
