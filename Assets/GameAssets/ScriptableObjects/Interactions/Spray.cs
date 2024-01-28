@@ -103,6 +103,8 @@ public class Spray : MonoBehaviour
             flowMutex = true;
         }
 
+		eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.Straw1s));
+
         double currentFlow = spline.clipTo;
         double targetValue = forward ? 1 : 0;
 

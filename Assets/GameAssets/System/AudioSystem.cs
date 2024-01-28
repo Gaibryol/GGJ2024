@@ -18,6 +18,7 @@ public class AudioSystem : MonoBehaviour
 	[SerializeField] private AudioClip mixer;
 	[SerializeField] private AudioClip reset;
 	[SerializeField] private AudioClip strawSpiral;
+	[SerializeField] private AudioClip straw1s;
 
 	[SerializeField] private AudioClip duckLaugh;
 	[SerializeField] private AudioClip fishLaugh;
@@ -58,6 +59,7 @@ public class AudioSystem : MonoBehaviour
 		sfx.Add(Constants.Audio.SFX.Mixer, mixer);
 		sfx.Add(Constants.Audio.SFX.Reset, reset);
 		sfx.Add(Constants.Audio.SFX.StrawSpiral, strawSpiral);
+		sfx.Add(Constants.Audio.SFX.Straw1s, straw1s);
 
 		sfx.Add(Constants.Audio.Animals.Laughs.Duck, duckLaugh);
 		sfx.Add(Constants.Audio.Animals.Laughs.Fish, fishLaugh);
