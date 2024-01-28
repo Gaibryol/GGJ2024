@@ -69,11 +69,6 @@ public class UIManager : MonoBehaviour
 		}
 	}
 
-	public void PressSprayButton()
-	{
-		eventBroker.Publish(this, new GameSystemEvents.AnimalSprayed(Constants.GameSystem.SprayLevel.Medium));
-	}
-
 	private void StartDayHandler(BrokerEvent<GameSystemEvents.StartDay> inEvent)
 	{
 		middleOfDay = true;

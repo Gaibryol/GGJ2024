@@ -42,8 +42,18 @@ public class GameSystemEvents
         }
     }
 
+	public class ChangeAnimalSprite
+	{
+		public readonly Constants.GameSystem.AnimalDespawnReason AnimalDespawnReason;
 
-    public class StartDay
+		public ChangeAnimalSprite(Constants.GameSystem.AnimalDespawnReason animalDespawnReason)
+		{
+			AnimalDespawnReason = animalDespawnReason;
+		}
+	}
+
+
+	public class StartDay
     {
         public readonly int Day;
         public readonly float StartTime;

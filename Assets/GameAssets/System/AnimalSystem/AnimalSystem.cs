@@ -81,15 +81,32 @@ public class AnimalSystem : MonoBehaviour
 		StartCoroutine(SizeOut());
 	}
 
+	private void HandleChangeAnimalSprite(BrokerEvent<GameSystemEvents.ChangeAnimalSprite> inEvent)
+	{
+		switch (inEvent.Payload.AnimalDespawnReason)
+		{
+			case Constants.GameSystem.AnimalDespawnReason.Success:
+				Success();
+				break;
+
+			case Constants.GameSystem.AnimalDespawnReason.OutOfTime:
+			case Constants.GameSystem.AnimalDespawnReason.Fail:
+				Failure();
+				break;
+		}
+	}
+
 	private void OnEnable()
 	{
 		eventBroker.Subscribe<GameSystemEvents.SpawnAnimal>(HandleSpawnAnimal);
 		eventBroker.Subscribe<GameSystemEvents.DespawnAnimal>(HandleDespawnAnimal);
+		eventBroker.Subscribe<GameSystemEvents.ChangeAnimalSprite>(HandleChangeAnimalSprite);
 	}
 
 	private void OnDisable()
 	{
 		eventBroker.Unsubscribe<GameSystemEvents.SpawnAnimal>(HandleSpawnAnimal);
 		eventBroker.Unsubscribe<GameSystemEvents.DespawnAnimal>(HandleDespawnAnimal);
+		eventBroker.Unsubscribe<GameSystemEvents.ChangeAnimalSprite>(HandleChangeAnimalSprite);
 	}
 }

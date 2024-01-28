@@ -110,8 +110,6 @@ public class GameSystem : MonoBehaviour
 	{
 		smokeSystem.Play();
 
-		yield return new WaitForSeconds(Constants.GameSystem.DelayAfterSpray);
-
 		// Get mixer items
 		List<Constants.GameSystem.RecipeItems> requiredItems = CompileRecipeItems(currentAnimal, currentAnimalCostume);
 
@@ -121,11 +119,15 @@ public class GameSystem : MonoBehaviour
 		// Call either animal success or animal fail
 		Constants.GameSystem.AnimalDespawnReason animalDespawnReason = IsCorrectRecipe(requiredItems, mixerItems) && isCorrectSprayDuration ? Constants.GameSystem.AnimalDespawnReason.Success : Constants.GameSystem.AnimalDespawnReason.Fail;
 
+		eventBrokerComponent.Publish(this, new GameSystemEvents.ChangeAnimalSprite(animalDespawnReason));
+
 		// Increment the day quota if a success
 		if (animalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Success)
 		{
 			currentDayQuota++;
 		}
+
+		yield return new WaitForSeconds(Constants.GameSystem.DelayAfterSpray);
 
 		// clear items
 		mixerItems.Clear();
