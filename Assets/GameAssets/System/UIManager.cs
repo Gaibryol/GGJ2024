@@ -89,7 +89,7 @@ public class UIManager : MonoBehaviour
 	private void DespawnAnimalHandler(BrokerEvent<GameSystemEvents.DespawnAnimal> inEvent)
 	{
 		
-		if (inEvent.Payload.AnimalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Fail)
+		if (inEvent.Payload.AnimalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Success)
 		{
 			score += 1;
 			scoreText.text = score.ToString();
