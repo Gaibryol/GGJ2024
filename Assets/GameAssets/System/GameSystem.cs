@@ -91,8 +91,11 @@ public class GameSystem : MonoBehaviour
 
     private void OnResetMixer(BrokerEvent<GameSystemEvents.ResetMixer> @event)
     {
-        mixerItems.Clear();
-		eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.Reset));
+		if (mixerItems.Count > 0)
+		{
+			mixerItems.Clear();
+			eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.Reset));
+		}
     }
 
     private void OnAnimalSprayed(BrokerEvent<GameSystemEvents.AnimalSprayed> @event)
