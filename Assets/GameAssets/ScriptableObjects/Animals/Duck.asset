@@ -15,11 +15,11 @@ MonoBehaviour:
   recipeItems: 01000000
   animalType: 1
   animalDiet: 2
-  weightRange: {x: 3, y: 5}
+  weightRange: {x: 2, y: 6}
   sprayRanges:
   - sprayLevel: 0
-    weightRange: {x: 3, y: 3}
+    weightRange: {x: 2, y: 2}
   - sprayLevel: 1
     weightRange: {x: 4, y: 4}
   - sprayLevel: 2
-    weightRange: {x: 5, y: 5}
+    weightRange: {x: 6, y: 6}
