@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
 	private EventBrokerComponent eventBroker = new EventBrokerComponent();
 
 	[SerializeField, Header("Main Menu")] private GameObject mainMenuScreen;
+	[SerializeField] private Button startButton;
 
 	[SerializeField, Header("Game Screen")] private TMP_Text timeText;
 	[SerializeField] private TMP_Text scoreText;
@@ -51,6 +52,9 @@ public class UIManager : MonoBehaviour
 		currentDateTime = Constants.GameSystem.startingDateTime;
 		timeText.text = FormatCurrentTime();
 		scoreText.text = score.ToString();
+
+		eventBroker.Publish(this, new AudioEvents.PlayMusic(Constants.Audio.Music.MainMenuTheme, true));
+		mainMenuScreen.SetActive(true);
 	}
 
 	// Update is called once per frame
@@ -73,7 +77,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private string  FormatCurrentTime()
+    private string FormatCurrentTime()
 	{
 		if (currentDateTime.Hour < 12)
 		{
@@ -93,6 +97,7 @@ public class UIManager : MonoBehaviour
 	{
 		eventBroker.Publish(this, new GameSystemEvents.StartNextDay());
 		eventBroker.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.ButtonPress));
+		mainMenuScreen.SetActive(false);
 	}
 
 	private void MainMenu()
@@ -205,6 +210,7 @@ public class UIManager : MonoBehaviour
 
 		nextDayButton.onClick.AddListener(StartNextDay);
 		mainMenuButton.onClick.AddListener(MainMenu);
+		startButton.onClick.AddListener(StartNextDay);
 	}
 
 	private void OnDisable()
@@ -217,5 +223,6 @@ public class UIManager : MonoBehaviour
 
 		nextDayButton.onClick.RemoveListener(StartNextDay);
 		mainMenuButton.onClick.RemoveListener(MainMenu);
+		startButton.onClick.RemoveListener(StartNextDay);
 	}
 }

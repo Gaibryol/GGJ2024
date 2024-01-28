@@ -42,9 +42,6 @@ public class GameSystem : MonoBehaviour
     {
         gameProgression = Constants.GameSystem.Progression.Animal;
 
-		// Remove once we have main menu
-        StartDay();
-
 		totalQuota = 0;
     }
 
