@@ -12,14 +12,26 @@ public class CloseCabinet : MonoBehaviour
         gameObject.SetActive(false);
         closedCabinet.SetActive(true);
         if (lowerCabinet != null)
+        {
             lowerCabinet.layer = 0;
+            foreach (Transform child in lowerCabinet.transform)
+            {
+                child.gameObject.layer = 0;
+            }
+        }
     }
     private void DayEnd(BrokerEvent<GameSystemEvents.EndDay> @event)
     {
         gameObject.SetActive(false);
         closedCabinet.SetActive(true);
         if (lowerCabinet != null)
+        {
             lowerCabinet.layer = 0;
+            foreach (Transform child in lowerCabinet.transform)
+            {
+                child.gameObject.layer = 0;
+            }
+        }
     }
     private void OnEnable()
     {

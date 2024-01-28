@@ -11,15 +11,27 @@ public class OpenCabinet : MonoBehaviour
     {
         gameObject.SetActive(false);
         openedCabinet.SetActive(true);
-        if(lowerCabinet != null)
+        if (lowerCabinet != null)
+        {
             lowerCabinet.layer = 2;
+            foreach (Transform child in lowerCabinet.transform)
+            {
+                child.gameObject.layer = 2;
+            }
+        }
     }
     private void DayEnd(BrokerEvent<GameSystemEvents.EndDay> @event)
     {
         gameObject.SetActive(true);
         openedCabinet.SetActive(false);
-        if(lowerCabinet != null)
+        if (lowerCabinet != null)
+        {
             lowerCabinet.layer = 0;
+            foreach (Transform child in lowerCabinet.transform)
+            {
+                child.gameObject.layer = 0;
+            }
+        }
     }
     private void OnEnable()
     {
