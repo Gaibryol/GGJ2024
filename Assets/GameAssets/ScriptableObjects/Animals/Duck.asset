@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Duck
   m_EditorClassIdentifier: 
   recipeItems: 01000000
-  animalType: 2
+  animalType: 1
   animalDiet: 2
   weightRange: {x: 3, y: 5}
   sprayRanges:

@@ -89,7 +89,7 @@ public class UIManager : MonoBehaviour
 	private void DespawnAnimalHandler(BrokerEvent<GameSystemEvents.DespawnAnimal> inEvent)
 	{
 		
-		if (inEvent.Payload.AnimalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Fail)
+		if (inEvent.Payload.AnimalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Success)
 		{
 			score += 1;
 			scoreText.text = score.ToString();
@@ -98,7 +98,7 @@ public class UIManager : MonoBehaviour
 
 	private void SpawnAnimalHandler(BrokerEvent<GameSystemEvents.SpawnAnimal> inEvent) 
 	{
-		weightText.text = inEvent.Payload.AnimalWeight.ToString();
+		weightText.text = inEvent.Payload.AnimalWeight.ToString() + " kg";
 		typeText.text = inEvent.Payload.AnimalDiet.ToString();
 
 		switch (inEvent.Payload.AnimalCostumeType)
