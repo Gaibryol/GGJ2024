@@ -35,6 +35,7 @@ public class GameSystem : MonoBehaviour
 	#endregion
 
 	[SerializeField] private ParticleSystem smokeSystem;
+    private List<Constants.Animals.AnimalType> randomAnimalTypesBag; // Used for fake random
 
     void Start()
     {
@@ -212,6 +213,7 @@ public class GameSystem : MonoBehaviour
 	#region Day Logic
 	public void StartDay()
     {
+        randomAnimalTypesBag = new List<Constants.Animals.AnimalType>();
 
         mixerItems = new List<Constants.GameSystem.RecipeItems>();
 
@@ -346,7 +348,14 @@ public class GameSystem : MonoBehaviour
 
     private Constants.Animals.AnimalType GetRandomAnimalType()
     {
-        return possibleAnimalTypes[UnityEngine.Random.Range(0, possibleAnimalCostumes.Count - 1)];
+        if (randomAnimalTypesBag.Count == 0)
+        {
+            randomAnimalTypesBag.AddRange(possibleAnimalTypes);
+        }
+        int index = UnityEngine.Random.Range(0, randomAnimalTypesBag.Count - 1);
+        Constants.Animals.AnimalType selectedAnimalType = randomAnimalTypesBag[index];
+        randomAnimalTypesBag.RemoveAt(index);
+        return selectedAnimalType;
     }
 
     private AnimalSpriteInfo GetAnimalSpriteInfoFromAnimalType(Constants.Animals.AnimalType animalType, AnimalCostume animalCostume)
