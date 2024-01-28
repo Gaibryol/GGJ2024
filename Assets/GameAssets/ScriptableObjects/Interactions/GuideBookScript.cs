@@ -15,6 +15,8 @@ public class GuideBookScript : MonoBehaviour, IPointerDownHandler
 
 	private int pageIndex;
 
+	private EventBrokerComponent eventBroker = new EventBrokerComponent();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,5 +62,6 @@ public class GuideBookScript : MonoBehaviour, IPointerDownHandler
 	{
 		pageIndex = 0;
 		gameObject.SetActive(false);
+		eventBroker.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.BookFlip));
 	}
 }

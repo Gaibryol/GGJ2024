@@ -18,6 +18,7 @@ public class ButtonSwitch : MonoBehaviour
 	private void OpenBook()
 	{
 		itemsGO.SetActive(true);
+		eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.BookFlip));
 	}
 
     private void DayEnd(BrokerEvent<GameSystemEvents.EndDay> @event)

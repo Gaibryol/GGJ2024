@@ -92,12 +92,14 @@ public class UIManager : MonoBehaviour
 	private void StartNextDay()
 	{
 		eventBroker.Publish(this, new GameSystemEvents.StartNextDay());
+		eventBroker.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.ButtonPress));
 	}
 
 	private void MainMenu()
 	{
 		// Go to main menu
 		eventBroker.Publish(this, new AudioEvents.PlayMusic(Constants.Audio.Music.MainMenuTheme, false));
+		eventBroker.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.ButtonPress));
 	}
 
 	private void StartDayHandler(BrokerEvent<GameSystemEvents.StartDay> inEvent)
