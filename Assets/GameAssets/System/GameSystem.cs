@@ -42,6 +42,8 @@ public class GameSystem : MonoBehaviour
     {
         gameProgression = Constants.GameSystem.Progression.Animal;
         StartDay();
+
+		eventBrokerComponent.Publish(this, new AudioEvents.PlayMusic(Constants.Audio.Music.Farmyard));
     }
 
     // Update is called once per frame

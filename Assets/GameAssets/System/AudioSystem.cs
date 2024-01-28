@@ -9,10 +9,15 @@ public class AudioSystem : MonoBehaviour
 	[SerializeField] private AudioSource musicSource;
 	[SerializeField] private AudioSource sfxSource;
 
-	//[SerializeField, Header("Music")] private AudioClip mainMenuTrack;
+	[SerializeField, Header("Music")] private AudioClip farmyard;
 
 	[SerializeField, Header("SFX")] private AudioClip drawer;
 	[SerializeField] private AudioClip spray;
+	[SerializeField] private AudioClip bookflip;
+	[SerializeField] private AudioClip buttonPress;
+	[SerializeField] private AudioClip mixer;
+	[SerializeField] private AudioClip reset;
+	[SerializeField] private AudioClip strawSpiral;
 
 	private float musicVolume;
 	private float sfxVolume;
@@ -28,10 +33,15 @@ public class AudioSystem : MonoBehaviour
 	private void Awake()
 	{
 		// Set up music and sfx dictionaries
-		//music.Add(Constants.Audio.Music.Main, mainMenuTrack);
+		music.Add(Constants.Audio.Music.Farmyard, farmyard);
 
 		sfx.Add(Constants.Audio.SFX.Drawer, drawer);
 		sfx.Add(Constants.Audio.SFX.Spray, spray);
+		sfx.Add(Constants.Audio.SFX.BookFlip, bookflip);
+		sfx.Add(Constants.Audio.SFX.ButtonPress, buttonPress);
+		sfx.Add(Constants.Audio.SFX.Mixer, mixer);
+		sfx.Add(Constants.Audio.SFX.Reset, reset);
+		sfx.Add(Constants.Audio.SFX.StrawSpiral, strawSpiral);
 	}
 
 	private void OnEnable()
