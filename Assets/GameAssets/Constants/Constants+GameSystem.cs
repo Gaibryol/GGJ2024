@@ -31,5 +31,7 @@ public partial class Constants
 		// Should be something else later, for now just set to 0, 0 for testing
 		public const int RentCost = 0;
 		public const int IngredientsCost = 0;
+
+		public const float DialogueCycleTime = 5f;
 	}
 }

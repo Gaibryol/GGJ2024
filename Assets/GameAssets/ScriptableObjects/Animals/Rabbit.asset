@@ -23,3 +23,11 @@ MonoBehaviour:
     weightRange: {x: 4, y: 6}
   - sprayLevel: 2
     weightRange: {x: 6, y: 8}
+  AnimalDialgues:
+    SuccessMessages:
+    - 'Fff fff fff, that''s fffantastic! '
+    FailureMessages:
+    - Hop to it, that's not right!
+    ChatMessages:
+    - Rabbit Chat
+    - Rabbit Chat1

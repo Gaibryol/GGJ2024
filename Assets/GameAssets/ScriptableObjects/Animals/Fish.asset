@@ -23,3 +23,11 @@ MonoBehaviour:
     weightRange: {x: 3, y: 7}
   - sprayLevel: 2
     weightRange: {x: 7, y: 10}
+  AnimalDialgues:
+    SuccessMessages:
+    - '*blub, blub* It''s going swimmingly!'
+    FailureMessages:
+    - No good, *glub*, no good at all.
+    ChatMessages:
+    - Fish Chat
+    - Fish Chat1

@@ -10,6 +10,8 @@ public class Animal : ScriptableObject
 
     public Vector2Int weightRange;
     public List<SprayRanges> sprayRanges;
+
+    public AnimalDialogue AnimalDialgues;
 }
 
 [System.Serializable]
@@ -17,4 +19,12 @@ public class SprayRanges
 {
     public Constants.GameSystem.SprayLevel sprayLevel;
     public Vector2Int weightRange;
+}
+
+[System.Serializable]
+public class AnimalDialogue
+{
+    public List<string> SuccessMessages;
+    public List<string> FailureMessages;
+    public List<string> ChatMessages;
 }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public partial class Constants
 {
 	public class Animals
@@ -14,5 +16,7 @@ public partial class Constants
 		public const string BeachIdentity = "Beach Visitor";
 
 		public const float lerpTime = 1.5f;
+
+		public static readonly string[] GenericAnimalDialogues = { "Generic" };
 	}
 }

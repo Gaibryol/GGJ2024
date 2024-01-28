@@ -10,15 +10,17 @@ public class GameSystemEvents
         public readonly Constants.Animals.AnimalCostumeType AnimalCostumeType;
         public readonly Constants.Animals.AnimalDiet AnimalDiet;
         public readonly Constants.Animals.AnimalType AnimalType;
+        public readonly AnimalDialogue AnimalDialogue;
 
         public SpawnAnimal(AnimalSpriteInfo animalSpriteInfo, int animalWeight, Constants.Animals.AnimalCostumeType animalCostumeType, 
-            Constants.Animals.AnimalDiet animalDiet, Constants.Animals.AnimalType animalType) 
+            Constants.Animals.AnimalDiet animalDiet, Constants.Animals.AnimalType animalType, AnimalDialogue animalDialogue) 
         { 
             AnimalSpriteInfo = animalSpriteInfo;
             AnimalWeight = animalWeight;
             AnimalType = animalType;
             AnimalCostumeType = animalCostumeType;
             AnimalDiet = animalDiet;
+            AnimalDialogue = animalDialogue;
         }
     }
 

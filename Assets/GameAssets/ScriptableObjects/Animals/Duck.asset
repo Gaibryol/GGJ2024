@@ -23,3 +23,11 @@ MonoBehaviour:
     weightRange: {x: 4, y: 4}
   - sprayLevel: 2
     weightRange: {x: 5, y: 5}
+  AnimalDialgues:
+    SuccessMessages:
+    - Quack! Quack! Quack! Thanks so much!
+    FailureMessages:
+    - I don't think that's right, quack.
+    ChatMessages:
+    - Duck Chat
+    - Duck Chat1

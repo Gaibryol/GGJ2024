@@ -23,3 +23,11 @@ MonoBehaviour:
     weightRange: {x: 165, y: 235}
   - sprayLevel: 2
     weightRange: {x: 235, y: 300}
+  AnimalDialgues:
+    SuccessMessages:
+    - A roaring success, rowrowrowr!
+    FailureMessages:
+    - Grr, that didn't help me...
+    ChatMessages:
+    - Tiger Chat
+    - Tiger Chat1

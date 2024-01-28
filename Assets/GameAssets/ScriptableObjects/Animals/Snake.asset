@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipeItems: 06000000
   animalType: 5
+  animalDiet: 0
   weightRange: {x: 10, y: 30}
   sprayRanges:
   - sprayLevel: 0
@@ -22,3 +23,11 @@ MonoBehaviour:
     weightRange: {x: 17, y: 24}
   - sprayLevel: 2
     weightRange: {x: 24, y: 30}
+  AnimalDialgues:
+    SuccessMessages:
+    - That'sss the ssstuff! Thanksss!
+    FailureMessages:
+    - I sssense sssomething isss off...
+    ChatMessages:
+    - Snake Chat
+    - Snake Chat1

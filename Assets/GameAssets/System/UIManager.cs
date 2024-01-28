@@ -25,8 +25,11 @@ public class UIManager : MonoBehaviour
 	[SerializeField] private TMP_Text endDayRent;
 	[SerializeField] private TMP_Text endDayCosts;
 	[SerializeField] private TMP_Text endDaySavings;
+	[SerializeField] private TMP_Text dialogueText;
+	[SerializeField] private GameObject dialogueTextScreen;
 	[SerializeField] private Button nextDayButton;
 	[SerializeField] private Button mainMenuButton;
+
 
 	private DateTime currentDateTime;
 	private bool middleOfDay;
@@ -35,6 +38,9 @@ public class UIManager : MonoBehaviour
 	private int score;
 
 	private int day;
+
+	private AnimalDialogue currentAnimalDialogues;
+	private Coroutine dialogueCoroutine;
 
 	private void Awake()
 	{
@@ -117,8 +123,10 @@ public class UIManager : MonoBehaviour
     private void EndDayHandler(BrokerEvent<GameSystemEvents.EndDay> inEvent)
 	{
 		middleOfDay = false;
+        SetDialogueText("");
+		StopCoroutine(dialogueCoroutine);
 
-		endDayScreen.SetActive(true);
+        endDayScreen.SetActive(true);
 		endDayScore.text = scoreText.text;
 
 		if (inEvent.Payload.DayEndCode == Constants.GameSystem.DayEndCode.Success)
@@ -153,7 +161,26 @@ public class UIManager : MonoBehaviour
 		UpdateTimer();
 	}
 
-	private void DespawnAnimalHandler(BrokerEvent<GameSystemEvents.DespawnAnimal> inEvent)
+	private void SetDialogueText(string text)
+	{
+		dialogueText.text = text;
+		dialogueTextScreen.SetActive(text.Length > 0);
+	}
+
+    private void HandleChangeAnimalSprite(BrokerEvent<GameSystemEvents.ChangeAnimalSprite> inEvent)
+    {
+		StopCoroutine(dialogueCoroutine);
+        if (inEvent.Payload.AnimalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Success)
+        {
+			SetDialogueText(currentAnimalDialogues.SuccessMessages[UnityEngine.Random.Range(0, currentAnimalDialogues.SuccessMessages.Count)]);
+        }
+        else if (inEvent.Payload.AnimalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Fail)
+        {
+            SetDialogueText(currentAnimalDialogues.FailureMessages[UnityEngine.Random.Range(0, currentAnimalDialogues.FailureMessages.Count)]);
+        }
+    }
+
+    private void DespawnAnimalHandler(BrokerEvent<GameSystemEvents.DespawnAnimal> inEvent)
 	{
 		
 		if (inEvent.Payload.AnimalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Success)
@@ -161,7 +188,9 @@ public class UIManager : MonoBehaviour
 			score += 1;
 			scoreText.text = score.ToString();
 		}
-	}
+        currentAnimalDialogues = null;
+		SetDialogueText("");
+    }
 
 	private void SpawnAnimalHandler(BrokerEvent<GameSystemEvents.SpawnAnimal> inEvent) 
 	{
@@ -190,7 +219,21 @@ public class UIManager : MonoBehaviour
 				occupationText.text = Constants.Animals.WorkerIdentity;
 				break;
 		}
+		currentAnimalDialogues = inEvent.Payload.AnimalDialogue;
+		dialogueCoroutine = StartCoroutine(CycleAnimalChatDialogue());
+	}
 
+
+	private IEnumerator CycleAnimalChatDialogue()
+	{
+		List<string> possibleDialogues = new List<string>();
+		possibleDialogues.AddRange(currentAnimalDialogues.ChatMessages);
+		possibleDialogues.AddRange(Constants.Animals.GenericAnimalDialogues);
+		while (currentAnimalDialogues != null)
+		{
+			SetDialogueText(possibleDialogues[UnityEngine.Random.Range(0, possibleDialogues.Count)]);
+			yield return new WaitForSeconds(Constants.GameSystem.DialogueCycleTime);
+		}
 	}
 
 	private void OnEnable()
@@ -201,11 +244,14 @@ public class UIManager : MonoBehaviour
 		eventBroker.Subscribe<GameSystemEvents.DespawnAnimal>(DespawnAnimalHandler);
 		eventBroker.Subscribe<GameSystemEvents.SpawnAnimal>(SpawnAnimalHandler);
 
-		nextDayButton.onClick.AddListener(StartNextDay);
+        eventBroker.Subscribe<GameSystemEvents.ChangeAnimalSprite>(HandleChangeAnimalSprite);
+
+        nextDayButton.onClick.AddListener(StartNextDay);
 		mainMenuButton.onClick.AddListener(MainMenu);
 	}
 
-	private void OnDisable()
+
+    private void OnDisable()
 	{
 		eventBroker.Unsubscribe<GameSystemEvents.StartDay>(StartDayHandler);
 		eventBroker.Unsubscribe<GameSystemEvents.EndDay>(EndDayHandler);
@@ -213,7 +259,9 @@ public class UIManager : MonoBehaviour
 		eventBroker.Unsubscribe<GameSystemEvents.DespawnAnimal>(DespawnAnimalHandler);
 		eventBroker.Unsubscribe<GameSystemEvents.SpawnAnimal>(SpawnAnimalHandler);
 
-		nextDayButton.onClick.RemoveListener(StartNextDay);
+        eventBroker.Unsubscribe<GameSystemEvents.ChangeAnimalSprite>(HandleChangeAnimalSprite);
+
+        nextDayButton.onClick.RemoveListener(StartNextDay);
 		mainMenuButton.onClick.RemoveListener(MainMenu);
 	}
 }

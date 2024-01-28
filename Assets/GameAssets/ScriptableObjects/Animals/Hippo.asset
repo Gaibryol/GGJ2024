@@ -23,3 +23,11 @@ MonoBehaviour:
     weightRange: {x: 2000, y: 2700}
   - sprayLevel: 2
     weightRange: {x: 2700, y: 3200}
+  AnimalDialgues:
+    SuccessMessages:
+    - Feels great, wuahaha!
+    FailureMessages:
+    - Bua, I'm not so sure about that.
+    ChatMessages:
+    - Hippo Chat
+    - Hippo Chat1

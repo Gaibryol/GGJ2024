@@ -23,3 +23,11 @@ MonoBehaviour:
     weightRange: {x: 150, y: 250}
   - sprayLevel: 2
     weightRange: {x: 250, y: 350}
+  AnimalDialgues:
+    SuccessMessages:
+    - Squeeee, you've got it! Oink, oink!
+    FailureMessages:
+    - Oink? Are you sure?
+    ChatMessages:
+    - Pig Chat
+    - Pig Chat1
