@@ -26,5 +26,6 @@ public class AnimalDialogue
 {
     public List<string> SuccessMessages;
     public List<string> FailureMessages;
+    public List<string> PatienceMessages;
     public List<string> ChatMessages;
 }

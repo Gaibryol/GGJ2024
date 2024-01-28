@@ -242,8 +242,13 @@ public class UIManager : MonoBehaviour
 			yield return new WaitForSeconds(Constants.GameSystem.DialogueCycleTime);
 		}
 	}
+    private void AnimalGettingImpatientHandler(BrokerEvent<GameSystemEvents.AnimalGettingImpatient> @event)
+    {
+        StopCoroutine(dialogueCoroutine);
+        SetDialogueText(currentAnimalDialogues.PatienceMessages[UnityEngine.Random.Range(0, currentAnimalDialogues.PatienceMessages.Count)]);
+    }
 
-	private void OnEnable()
+    private void OnEnable()
 	{
 		eventBroker.Subscribe<GameSystemEvents.StartDay>(StartDayHandler);
 		eventBroker.Subscribe<GameSystemEvents.EndDay>(EndDayHandler);
@@ -252,7 +257,7 @@ public class UIManager : MonoBehaviour
 		eventBroker.Subscribe<GameSystemEvents.SpawnAnimal>(SpawnAnimalHandler);
 
         eventBroker.Subscribe<GameSystemEvents.ChangeAnimalSprite>(HandleChangeAnimalSprite);
-
+		eventBroker.Subscribe<GameSystemEvents.AnimalGettingImpatient>(AnimalGettingImpatientHandler);
         nextDayButton.onClick.AddListener(StartNextDay);
 		mainMenuButton.onClick.AddListener(MainMenu);
 		startButton.onClick.AddListener(StartNextDay);
@@ -268,6 +273,7 @@ public class UIManager : MonoBehaviour
 		eventBroker.Unsubscribe<GameSystemEvents.SpawnAnimal>(SpawnAnimalHandler);
 
         eventBroker.Unsubscribe<GameSystemEvents.ChangeAnimalSprite>(HandleChangeAnimalSprite);
+        eventBroker.Unsubscribe<GameSystemEvents.AnimalGettingImpatient>(AnimalGettingImpatientHandler);
 
         nextDayButton.onClick.RemoveListener(StartNextDay);
 		mainMenuButton.onClick.RemoveListener(MainMenu);

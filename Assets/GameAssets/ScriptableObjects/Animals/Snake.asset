@@ -28,6 +28,9 @@ MonoBehaviour:
     - That'sss the ssstuff! Thanksss!
     FailureMessages:
     - I sssense sssomething isss off...
+    PatienceMessages:
+    - Need sssome help there?
+    - Isss it almossst done?
     ChatMessages:
-    - Snake Chat
-    - Snake Chat1
+    - Sssomething isss wrong with me today.
+    - I may have had one too many sssnacksss...

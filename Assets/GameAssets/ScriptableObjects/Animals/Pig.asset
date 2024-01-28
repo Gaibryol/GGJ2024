@@ -28,6 +28,10 @@ MonoBehaviour:
     - Squeeee, you've got it! Oink, oink!
     FailureMessages:
     - Oink? Are you sure?
+    PatienceMessages:
+    - The mud hole calls to me...
+    - Look at this curly queue, oink.
     ChatMessages:
-    - Pig Chat
-    - Pig Chat1
+    - Oink, I need your help, doc.
+    - I think the mud was off this morning, oink.
+    - Does my tail look extra curly, oink?

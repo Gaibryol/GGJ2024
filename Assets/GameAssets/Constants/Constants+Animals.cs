@@ -17,6 +17,11 @@ public partial class Constants
 
 		public const float lerpTime = 1.5f;
 
-		public static readonly string[] GenericAnimalDialogues = { "Generic" };
+		public static readonly string[] GenericAnimalDialogues = { "Here for my regular...",
+            "Hey, I'm not feeling well today. Think you could help?", 
+			"Something feels off today...",
+            "Can you help me?",
+            "Doc, I don't feel so good...",
+        };
 	}
 }

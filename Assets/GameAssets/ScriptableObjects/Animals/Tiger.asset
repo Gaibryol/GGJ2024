@@ -28,6 +28,10 @@ MonoBehaviour:
     - A roaring success, rowrowrowr!
     FailureMessages:
     - Grr, that didn't help me...
+    PatienceMessages:
+    - Rowr, are you done yet?
+    - I'm getting hungrier and hungrier, grr.
     ChatMessages:
-    - Tiger Chat
-    - Tiger Chat1
+    - Rowr ow ow, it's a hard day today.
+    - I think some of my stripes are crooked, rowr.
+    - Rowr, my sweet tooth is hurting.
