@@ -44,6 +44,8 @@ public class AnimalSystem : MonoBehaviour
 	{
 		float timer = 0f;
 
+		eventBroker.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.Swoosh));
+
 		// Lerp animal into view
 		while (timer < Constants.Animals.lerpTime)
 		{
@@ -58,6 +60,8 @@ public class AnimalSystem : MonoBehaviour
 	private IEnumerator SizeOut()
 	{
 		float timer = 0f;
+
+		eventBroker.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.Swoosh));
 
 		// Lerp animal out of view
 		while (timer < Constants.Animals.lerpTime)

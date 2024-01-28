@@ -29,6 +29,7 @@ public partial class Constants
 			public const string Reset = "Reset";
 			public const string StrawSpiral = "StrawSpiral";
 			public const string Straw1s = "Straw1s";
+			public const string Swoosh = "Swoosh";
 		}
 
 		public class Animals
