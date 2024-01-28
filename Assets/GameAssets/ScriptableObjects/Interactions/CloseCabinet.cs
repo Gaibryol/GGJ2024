@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CloseCabinet : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class CloseCabinet : MonoBehaviour
     private EventBrokerComponent eventBrokerComponent = new EventBrokerComponent();
     private void OnMouseDown()
     {
+		if (EventSystem.current.IsPointerOverGameObject()) return;
+
         gameObject.SetActive(false);
         closedCabinet.SetActive(true);
         if (lowerCabinet != null)
