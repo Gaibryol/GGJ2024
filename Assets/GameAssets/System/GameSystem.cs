@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameSystem : MonoBehaviour
@@ -391,8 +389,8 @@ public class GameSystem : MonoBehaviour
             counter[(int)a[i]]++;
             counter[(int)b[i]]--;
         }
-
-        return counter.Sum() == 0;
+        
+        return !counter.Any(x => x != 0);
     }
 
 
@@ -405,6 +403,16 @@ public class GameSystem : MonoBehaviour
         if (currentAnimalWeight < sprayRange.weightRange.x || currentAnimalWeight  > sprayRange.weightRange.y) { return false; }
 
         return true;
+    }
+
+    private void DebugPrintRecipe(List<Constants.GameSystem.RecipeItems> a)
+    {
+        string p = "";
+        foreach (Constants.GameSystem.RecipeItems recipeItems in a)
+        {
+            p += recipeItems.ToString() + ", ";
+        }
+        Debug.Log(p);
     }
     #endregion
 }
