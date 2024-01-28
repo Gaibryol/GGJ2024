@@ -52,8 +52,8 @@ public class Item : MonoBehaviour
     {
         return item;
     }
-    public void SetSprite()
+    public void SetSprite(Sprite sprite)
     {
-        gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+        gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
     }
 }

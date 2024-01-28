@@ -14,6 +14,6 @@ public class InstantiateItem : MonoBehaviour
         GameObject itemGO = Instantiate(itemPrefab, transform.position, Quaternion.identity);
         Item itemComponent = itemGO.GetComponent<Item>();
         itemComponent.SetItem(item);
-        itemComponent.SetSprite();
+        itemComponent.SetSprite(itemSprite);
     }
 }
