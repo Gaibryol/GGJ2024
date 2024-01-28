@@ -12,11 +12,13 @@ public partial class Constants
 		public const float DefaultMusicVolume = 0.15f;
 		public const float DefaultSFXVolume = 0.45f;
 
-		public const float MusicFadeSpeed = 0.25f;
+		public const float MusicFadeSpeed = 0.1f;
 
 		public class Music
 		{
-			public const string Farmyard = "Farmyard";
+			public const string GameTheme = "GameTheme";
+			public const string MainMenuTheme = "MainMenuTheme";
+			public const string EndDayTheme = "EndDayTheme";
 		}
 
 		public class SFX

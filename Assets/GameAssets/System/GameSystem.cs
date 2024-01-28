@@ -41,11 +41,11 @@ public class GameSystem : MonoBehaviour
     void Start()
     {
         gameProgression = Constants.GameSystem.Progression.Animal;
+
+		// Remove once we have main menu
         StartDay();
 
 		totalQuota = 0;
-
-		eventBrokerComponent.Publish(this, new AudioEvents.PlayMusic(Constants.Audio.Music.Farmyard));
     }
 
     // Update is called once per frame
@@ -236,6 +236,7 @@ public class GameSystem : MonoBehaviour
         currentDayQuota = 0;
 
         eventBrokerComponent.Publish(this, new GameSystemEvents.StartDay(day, dayStartTime));
+		eventBrokerComponent.Publish(this, new AudioEvents.PlayMusic(Constants.Audio.Music.GameTheme, true));
 
         isDayStarted = true;
 
@@ -251,7 +252,9 @@ public class GameSystem : MonoBehaviour
         // Increment day
         day += 1;
 
-        if (ShouldAdvanceProgress())
+		eventBrokerComponent.Publish(this, new AudioEvents.PlayMusic(Constants.Audio.Music.EndDayTheme, true));
+
+		if (ShouldAdvanceProgress())
         {
             gameProgression++;
         }
@@ -261,7 +264,7 @@ public class GameSystem : MonoBehaviour
         // Tell animal to leave
         DespawnAnimal(Constants.GameSystem.AnimalDespawnReason.OutOfTime);
 
-        Constants.GameSystem.DayEndCode dayEndCode = currentDayQuota >= Constants.GameSystem.RequiredQuotaPerDay ? Constants.GameSystem.DayEndCode.Success : Constants.GameSystem.DayEndCode.Fail;
+        Constants.GameSystem.DayEndCode dayEndCode = currentDayQuota >= (Constants.GameSystem.RentCost + Constants.GameSystem.IngredientsCost) ? Constants.GameSystem.DayEndCode.Success : Constants.GameSystem.DayEndCode.Fail;
 		totalQuota += currentDayQuota;
 
         eventBrokerComponent.Publish(this, new GameSystemEvents.EndDay(dayEndCode));

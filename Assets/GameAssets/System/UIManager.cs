@@ -9,15 +9,24 @@ public class UIManager : MonoBehaviour
 {
 	private EventBrokerComponent eventBroker = new EventBrokerComponent();
 
-	[SerializeField] private TMP_Text timeText;
+	[SerializeField, Header("Main Menu")] private GameObject mainMenuScreen;
+
+	[SerializeField, Header("Game Screen")] private TMP_Text timeText;
 	[SerializeField] private TMP_Text scoreText;
 	[SerializeField] private TMP_Text typeText;
 	[SerializeField] private TMP_Text weightText;
 	[SerializeField] private TMP_Text occupationText;
 
-	[SerializeField] private GameObject endDayScreen;
+	[SerializeField, Header("End Screen")] private GameObject endDayScreen;
+	[SerializeField] private Sprite endDaySuccess;
+	[SerializeField] private Sprite endDayFail;
+	[SerializeField] private TMP_Text endDayDay;
 	[SerializeField] private TMP_Text endDayScore;
+	[SerializeField] private TMP_Text endDayRent;
+	[SerializeField] private TMP_Text endDayCosts;
+	[SerializeField] private TMP_Text endDaySavings;
 	[SerializeField] private Button nextDayButton;
+	[SerializeField] private Button mainMenuButton;
 
 	private DateTime currentDateTime;
 	private bool middleOfDay;
@@ -25,12 +34,15 @@ public class UIManager : MonoBehaviour
 	private float timer;
 	private int score;
 
+	private int day;
+
 	private void Awake()
 	{
 		middleOfDay = false;
 		timer = 0f;
 		score = 0;
 
+		day = 0;
 	}
 
 	// Start is called before the first frame update
@@ -82,6 +94,12 @@ public class UIManager : MonoBehaviour
 		eventBroker.Publish(this, new GameSystemEvents.StartNextDay());
 	}
 
+	private void MainMenu()
+	{
+		// Go to main menu
+		eventBroker.Publish(this, new AudioEvents.PlayMusic(Constants.Audio.Music.MainMenuTheme, false));
+	}
+
 	private void StartDayHandler(BrokerEvent<GameSystemEvents.StartDay> inEvent)
 	{
 		middleOfDay = true;
@@ -90,6 +108,9 @@ public class UIManager : MonoBehaviour
 		timeText.text = FormatCurrentTime();
 		scoreText.text = "0";
 		score = 0;
+
+		day += 1;
+
 		endDayScreen.SetActive(false);
     }
 
@@ -97,8 +118,32 @@ public class UIManager : MonoBehaviour
 	{
 		middleOfDay = false;
 
-		endDayScore.text = scoreText.text;
 		endDayScreen.SetActive(true);
+		endDayScore.text = scoreText.text;
+
+		if (inEvent.Payload.DayEndCode == Constants.GameSystem.DayEndCode.Success)
+		{
+			endDayScreen.GetComponent<Image>().sprite = endDaySuccess;
+
+			endDayRent.text = Constants.GameSystem.RentCost.ToString();
+			endDayCosts.text = Constants.GameSystem.IngredientsCost.ToString();
+			endDaySavings.text = (score - Constants.GameSystem.RentCost - Constants.GameSystem.IngredientsCost).ToString();
+			endDayDay.text = day.ToString();
+			nextDayButton.gameObject.SetActive(true);
+			mainMenuButton.gameObject.SetActive(false);
+		}
+		else if (inEvent.Payload.DayEndCode == Constants.GameSystem.DayEndCode.Fail)
+		{
+			endDayScreen.GetComponent<Image>().sprite = endDayFail;
+
+			endDayRent.text = Constants.GameSystem.RentCost.ToString();
+			endDayCosts.text = Constants.GameSystem.IngredientsCost.ToString();
+			endDaySavings.text = (score - Constants.GameSystem.RentCost - Constants.GameSystem.IngredientsCost).ToString();
+			endDayDay.text = day.ToString();
+			mainMenuButton.gameObject.SetActive(true);
+			nextDayButton.gameObject.SetActive(false);
+		}
+		
 
 		if (timer < Constants.GameSystem.SecondsPerHour && timer > 9.5f)
 		{
@@ -157,6 +202,7 @@ public class UIManager : MonoBehaviour
 		eventBroker.Subscribe<GameSystemEvents.SpawnAnimal>(SpawnAnimalHandler);
 
 		nextDayButton.onClick.AddListener(StartNextDay);
+		mainMenuButton.onClick.AddListener(MainMenu);
 	}
 
 	private void OnDisable()
@@ -168,5 +214,6 @@ public class UIManager : MonoBehaviour
 		eventBroker.Unsubscribe<GameSystemEvents.SpawnAnimal>(SpawnAnimalHandler);
 
 		nextDayButton.onClick.RemoveListener(StartNextDay);
+		mainMenuButton.onClick.RemoveListener(MainMenu);
 	}
 }

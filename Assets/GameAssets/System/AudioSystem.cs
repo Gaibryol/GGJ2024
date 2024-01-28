@@ -9,7 +9,9 @@ public class AudioSystem : MonoBehaviour
 	[SerializeField] private AudioSource musicSource;
 	[SerializeField] private AudioSource sfxSource;
 
-	[SerializeField, Header("Music")] private AudioClip farmyard;
+	[SerializeField, Header("Music")] private AudioClip gameTheme;
+	[SerializeField] private AudioClip mainMenuTheme;
+	[SerializeField] private AudioClip endDayTheme;
 
 	[SerializeField, Header("SFX")] private AudioClip drawer;
 	[SerializeField] private AudioClip spray;
@@ -51,7 +53,9 @@ public class AudioSystem : MonoBehaviour
 	private void Awake()
 	{
 		// Set up music and sfx dictionaries
-		music.Add(Constants.Audio.Music.Farmyard, farmyard);
+		music.Add(Constants.Audio.Music.GameTheme, gameTheme);
+		music.Add(Constants.Audio.Music.MainMenuTheme, mainMenuTheme);
+		music.Add(Constants.Audio.Music.EndDayTheme, endDayTheme);
 
 		sfx.Add(Constants.Audio.SFX.Drawer, drawer);
 		sfx.Add(Constants.Audio.SFX.Spray, spray);

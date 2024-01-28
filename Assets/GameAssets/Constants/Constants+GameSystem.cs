@@ -19,8 +19,6 @@ public partial class Constants
         public const int MinDayToUnlockWeight = 10;
 		public const int MinDayToUnlockPatience = 15;
 
-        public const int RequiredQuotaPerDay = 5;
-
 		public static DateTime startingDateTime = new DateTime(2024, 1, 1, 8, 0, 0);
 
 		public const float DelayBeforeResult = 0.5f;
@@ -28,5 +26,10 @@ public partial class Constants
 		public const float DelayForNextAnimal = 1.5f;
 
 		public const int MaxSortingOrder = 99;
+
+		// These combined is the required quota
+		// Should be something else later, for now just set to 0, 0 for testing
+		public const int RentCost = 0;
+		public const int IngredientsCost = 0;
 	}
 }
