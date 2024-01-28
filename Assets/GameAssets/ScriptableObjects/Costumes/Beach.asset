@@ -31,14 +31,6 @@ MonoBehaviour:
     Neutral: {fileID: 21300000, guid: d83c15870538a4a4287a9207a5c5abdc, type: 3}
     Happy: {fileID: 21300000, guid: 6af246819eb0bb3408ad10885f0d4220, type: 3}
     Sad: {fileID: 21300000, guid: d83c15870538a4a4287a9207a5c5abdc, type: 3}
-  - AnimalType: 4
-    Neutral: {fileID: 0}
-    Happy: {fileID: 0}
-    Sad: {fileID: 0}
-  - AnimalType: 6
-    Neutral: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
-    Happy: {fileID: 21300000, guid: a63b4c416d1fb8c448c00bf1b79f6ef4, type: 3}
-    Sad: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
   - AnimalType: 5
     Neutral: {fileID: 21300000, guid: 8b1b114a1b9fa2f4ca15e255ca6e8af2, type: 3}
     Happy: {fileID: 21300000, guid: 133a5e81d84e5404eb90360d2cc856c2, type: 3}

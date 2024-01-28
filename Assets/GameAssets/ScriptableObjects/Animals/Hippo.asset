@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32772955d8d860b4f8d1f9d988ed185e, type: 3}
   m_Name: Hippo
   m_EditorClassIdentifier: 
-  recipeItems: 02000000
+  recipeItems: 03000000
   animalType: 2
   animalDiet: 1
   weightRange: {x: 1500, y: 3200}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32772955d8d860b4f8d1f9d988ed185e, type: 3}
   m_Name: Tiger
   m_EditorClassIdentifier: 
-  recipeItems: 03000000
+  recipeItems: 02000000
   animalType: 3
   animalDiet: 0
   weightRange: {x: 100, y: 300}

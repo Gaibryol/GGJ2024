@@ -15,10 +15,6 @@ MonoBehaviour:
   recipeItems: 07000000
   CostumeType: 0
   animalSprites:
-  - AnimalType: 0
-    Neutral: {fileID: 0}
-    Happy: {fileID: 21300000, guid: a63b4c416d1fb8c448c00bf1b79f6ef4, type: 3}
-    Sad: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
   - AnimalType: 1
     Neutral: {fileID: 21300000, guid: 32ba94356763372429a128754fa59fc4, type: 3}
     Happy: {fileID: 21300000, guid: bd9b391e8ee6f88499fa1896e1664aba, type: 3}
@@ -27,18 +23,10 @@ MonoBehaviour:
     Neutral: {fileID: 21300000, guid: 89ce908c4daac7847b30643c03a083df, type: 3}
     Happy: {fileID: 21300000, guid: 5b978ce85da67dc48a689e34831e51f4, type: 3}
     Sad: {fileID: 21300000, guid: 89ce908c4daac7847b30643c03a083df, type: 3}
-  - AnimalType: 3
-    Neutral: {fileID: 0}
-    Happy: {fileID: 21300000, guid: 02eb7832e5db0494ea8d3eca131f46a3, type: 3}
-    Sad: {fileID: 21300000, guid: 8512da98e7864024f84cdd57aa9d0e93, type: 3}
   - AnimalType: 4
     Neutral: {fileID: 21300000, guid: b39054218f2369a4682310c1a25bf206, type: 3}
     Happy: {fileID: 21300000, guid: 10059eae35bd45b4f9da78872d69b0ef, type: 3}
     Sad: {fileID: 21300000, guid: b39054218f2369a4682310c1a25bf206, type: 3}
-  - AnimalType: 6
-    Neutral: {fileID: 0}
-    Happy: {fileID: 21300000, guid: a63b4c416d1fb8c448c00bf1b79f6ef4, type: 3}
-    Sad: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
   - AnimalType: 5
     Neutral: {fileID: 21300000, guid: 91c6c39bedb029843a1c31e9cd871fc4, type: 3}
     Happy: {fileID: 21300000, guid: cc2d232a860779944bcb0ea908232a17, type: 3}

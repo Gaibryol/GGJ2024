@@ -260,7 +260,12 @@ public class GameSystem : MonoBehaviour
 
     private AnimalCostume GetRandomAnimalCostume()
     {
-        return possibleAnimalCostumes[UnityEngine.Random.Range(0, possibleAnimalCostumes.Count - 1)];
+		AnimalCostume costume = possibleAnimalCostumes[UnityEngine.Random.Range(0, possibleAnimalCostumes.Count - 1)];
+		while (!costume.HasAnimalType(currentAnimalType))
+		{
+			costume = possibleAnimalCostumes[UnityEngine.Random.Range(0, possibleAnimalCostumes.Count - 1)];
+		}
+		return costume;
     }
 
     private Constants.Animals.AnimalType GetRandomAnimalType()

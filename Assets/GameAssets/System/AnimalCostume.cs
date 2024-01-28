@@ -9,6 +9,19 @@ public class AnimalCostume : ScriptableObject
     public Constants.Animals.AnimalCostumeType CostumeType;
 
     public List<AnimalSpriteInfo> animalSprites;
+
+	public bool HasAnimalType(Constants.Animals.AnimalType type)
+	{
+		foreach(AnimalSpriteInfo spriteInfo in animalSprites)
+		{
+			if (type == spriteInfo.AnimalType)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
 
 [System.Serializable]
