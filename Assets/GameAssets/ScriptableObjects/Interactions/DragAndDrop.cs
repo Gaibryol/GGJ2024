@@ -7,7 +7,6 @@ public class DragAndDrop : MonoBehaviour
     // Start is called before the first frame update
     private bool isDragging = true;
     private bool inDropZone = false;
-    private Vector2 offset;
     private EventBrokerComponent eventBrokerComponent = new EventBrokerComponent();
 
 	private int originalSortingOrder;
@@ -23,7 +22,7 @@ public class DragAndDrop : MonoBehaviour
         if (isDragging)
         {
             // Update the object's position based on the mouse position
-            transform.position = GetMouseWorldPos() + offset;
+            transform.position = GetMouseWorldPos();
         }
 
         if (Input.GetMouseButtonUp(0))
