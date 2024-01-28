@@ -13,7 +13,7 @@ public class Item : MonoBehaviour
     private Material material;
     private float dissolveSeconds = 1f;
 
-    private bool isDissolving = false;
+    public bool IsDissolving = false;
 
     private void Start()
     {
@@ -37,8 +37,8 @@ public class Item : MonoBehaviour
 
     public IEnumerator DissolveSprite(float dissolveSeconds)
     {
-        if (isDissolving) yield break;
-        isDissolving = true;
+        if (IsDissolving) yield break;
+        IsDissolving = true;
         // Must be using DissolveMaterial for this to work.
         for (float dissolveTime = 0f; dissolveTime <= dissolveSeconds; dissolveTime += Time.deltaTime)
         {

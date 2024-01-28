@@ -13,6 +13,8 @@ public class AddItem : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+		if (collision.gameObject.GetComponent<Item>().IsDissolving) return;
+
         if (collision.gameObject.tag == "Ingredient" && collision.gameObject.GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)
         {
             GameObject collisionGO = collision.gameObject;
