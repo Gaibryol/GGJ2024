@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32772955d8d860b4f8d1f9d988ed185e, type: 3}
-  m_Name: Cow
+  m_Name: Tiger
   m_EditorClassIdentifier: 
   recipeItems: 03000000
   animalType: 3
   animalDiet: 1
-  weightRange: {x: 450, y: 1800}
+  weightRange: {x: 100, y: 300}
   sprayRanges:
   - sprayLevel: 0
-    weightRange: {x: 450, y: 850}
+    weightRange: {x: 100, y: 165}
   - sprayLevel: 1
-    weightRange: {x: 850, y: 1400}
+    weightRange: {x: 165, y: 235}
   - sprayLevel: 2
-    weightRange: {x: 1400, y: 1800}
+    weightRange: {x: 235, y: 300}

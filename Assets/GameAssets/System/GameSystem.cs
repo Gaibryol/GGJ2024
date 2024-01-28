@@ -34,8 +34,9 @@ public class GameSystem : MonoBehaviour
     private Constants.Animals.AnimalType currentAnimalType;
     private AnimalCostume currentAnimalCostume;
     private int currentAnimalWeight;
-    #endregion
-    
+	#endregion
+
+	[SerializeField] private ParticleSystem smokeSystem;
 
     void Start()
     {
@@ -100,37 +101,45 @@ public class GameSystem : MonoBehaviour
             //return;
         }
 
-        // Get mixer items
-        List<Constants.GameSystem.RecipeItems> requiredItems = CompileRecipeItems(currentAnimal, currentAnimalCostume);
-
-        bool isCorrectSprayDuration = IsCorrectSprayDuration(@event.Payload.SprayLevel, currentAnimal);
-
-        // Compare required items with items in mixer
-        // Call either animal success or animal fail
-        Constants.GameSystem.AnimalDespawnReason animalDespawnReason = IsCorrectRecipe(requiredItems, mixerItems) && isCorrectSprayDuration ? Constants.GameSystem.AnimalDespawnReason.Success : Constants.GameSystem.AnimalDespawnReason.Fail;
-
-        // Increment the day quota if a success
-        if (animalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Success)
-        {
-            currentDayQuota++;
-        }
-
-        // clear items
-        mixerItems.Clear();
-
-        DespawnAnimal(animalDespawnReason);
-
-        // Delay
-
-        // Spawn in next animal
-        Invoke("SpawnAnimal", 3f);
-        //SpawnAnimal();
-
+		StartCoroutine(AnimalSprayed(@event.Payload.SprayLevel));
     }
-    #endregion
 
-    #region Day Logic
-    private void StartDay()
+	private IEnumerator AnimalSprayed(Constants.GameSystem.SprayLevel sprayLevel)
+	{
+		smokeSystem.Play();
+
+		yield return new WaitForSeconds(Constants.GameSystem.DelayAfterSpray);
+
+		// Get mixer items
+		List<Constants.GameSystem.RecipeItems> requiredItems = CompileRecipeItems(currentAnimal, currentAnimalCostume);
+
+		bool isCorrectSprayDuration = IsCorrectSprayDuration(sprayLevel, currentAnimal);
+
+		// Compare required items with items in mixer
+		// Call either animal success or animal fail
+		Constants.GameSystem.AnimalDespawnReason animalDespawnReason = IsCorrectRecipe(requiredItems, mixerItems) && isCorrectSprayDuration ? Constants.GameSystem.AnimalDespawnReason.Success : Constants.GameSystem.AnimalDespawnReason.Fail;
+
+		// Increment the day quota if a success
+		if (animalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Success)
+		{
+			currentDayQuota++;
+		}
+
+		// clear items
+		mixerItems.Clear();
+
+		DespawnAnimal(animalDespawnReason);
+
+		// Delay
+
+		// Spawn in next animal
+		Invoke("SpawnAnimal", Constants.GameSystem.DelayForNextAnimal);
+		//SpawnAnimal();
+	}
+	#endregion
+
+	#region Day Logic
+	private void StartDay()
     {
         dayStartTime = Time.time;
 
@@ -239,7 +248,7 @@ public class GameSystem : MonoBehaviour
 				// Despawn animal
 				Debug.Log("Ran out of patience! Next animal");
 				DespawnAnimal(Constants.GameSystem.AnimalDespawnReason.OutOfTime);
-				Invoke("SpawnAnimal", 3f);
+				Invoke("SpawnAnimal", Constants.GameSystem.DelayForNextAnimal);
 			}
 			yield return null;
 		}

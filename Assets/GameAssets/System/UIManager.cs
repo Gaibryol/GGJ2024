@@ -19,10 +19,7 @@ public class UIManager : MonoBehaviour
 	private bool middleOfDay;
 
 	private float timer;
-
 	private int score;
-
-	
 
 	private void Awake()
 	{
@@ -54,10 +51,6 @@ public class UIManager : MonoBehaviour
 				timer = 0f;
 			}
 		}
-
-
-
-
     }
 
 	private string  FormatCurrentTime()
@@ -106,10 +99,30 @@ public class UIManager : MonoBehaviour
 	private void SpawnAnimalHandler(BrokerEvent<GameSystemEvents.SpawnAnimal> inEvent) 
 	{
 		weightText.text = inEvent.Payload.AnimalWeight.ToString();
-
 		typeText.text = inEvent.Payload.AnimalDiet.ToString();
 
-		occupationText.text = inEvent.Payload.AnimalCostumeType.ToString();
+		switch (inEvent.Payload.AnimalCostumeType)
+		{
+			case Constants.Animals.AnimalCostumeType.Beach:
+				occupationText.text = Constants.Animals.BeachIdentity;
+				break;
+
+			case Constants.Animals.AnimalCostumeType.Gang:
+				occupationText.text = Constants.Animals.GangIdentity;
+				break;
+
+			case Constants.Animals.AnimalCostumeType.Policeman:
+				occupationText.text = Constants.Animals.PoliceIdentity;
+				break;
+
+			case Constants.Animals.AnimalCostumeType.Student:
+				occupationText.text = Constants.Animals.StudentIdentity;
+				break;
+
+			case Constants.Animals.AnimalCostumeType.Worker:
+				occupationText.text = Constants.Animals.WorkerIdentity;
+				break;
+		}
 
 	}
 

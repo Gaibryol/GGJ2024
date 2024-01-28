@@ -8,6 +8,7 @@ public class Spray : MonoBehaviour
     private float timer = 0f;
 
     private EventBrokerComponent eventBrokerComponent = new EventBrokerComponent();
+
     // Update is called once per frame
     void Update()
     {
@@ -43,7 +44,7 @@ public class Spray : MonoBehaviour
     {
         // Stop the timer and save the duration when the mouse button is released
         isButtonPressed = false;
-        float buttonPressDuration = Mathf.Floor(timer);
+        float buttonPressDuration = Mathf.Clamp(timer, 1, 3);
 
         switch (buttonPressDuration)
         {

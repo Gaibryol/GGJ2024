@@ -8,16 +8,17 @@ public class AnimalSystem : MonoBehaviour
 	private EventBrokerComponent eventBroker = new EventBrokerComponent();
 
 	[SerializeField] private GameObject animal;
-	[SerializeField] private SpriteRenderer animalSR;
+	[SerializeField] private Transform upPosition;
+	[SerializeField] private Transform downPosition;
+
+	private SpriteRenderer animalSR;
 
 	private AnimalSpriteInfo currentSpriteInfo;
-
-	private Vector3 animalScale;
 
     // Start is called before the first frame update
     void Start()
     {
-		animalScale = animal.transform.localScale;
+		animalSR = animal.GetComponent<SpriteRenderer>();
     }
 
 	private void Spawn(AnimalSpriteInfo spriteInfo)
@@ -41,31 +42,32 @@ public class AnimalSystem : MonoBehaviour
 
 	private IEnumerator SizeIn()
 	{
+		float timer = 0f;
+
 		// Lerp animal into view
-		animalScale = new Vector3(animalScale.x, 0f, animalScale.z);
-		while (animalScale.y < 1f)
+		while (timer < Constants.Animals.lerpTime)
 		{
-			animalScale = new Vector3(animalScale.x, animalScale.y + Time.deltaTime, animalScale.z);
-			animal.transform.localScale = animalScale;
+			timer += Time.deltaTime;
+			animal.transform.position = Vector3.Lerp(animal.transform.position, upPosition.position, timer / Constants.Animals.lerpTime);
 			yield return null;
 		}
 
-		animalScale = new Vector3(animalScale.x, 1f, animalScale.z);
-		animal.transform.localScale = animalScale;
+		animal.transform.position = upPosition.position;
 	}
 
 	private IEnumerator SizeOut()
 	{
+		float timer = 0f;
+
 		// Lerp animal out of view
-		while (animalScale.y > 0)
+		while (timer < Constants.Animals.lerpTime)
 		{
-			animalScale = new Vector3(animalScale.x, animalScale.y - Time.deltaTime, animalScale.z);
-			animal.transform.localScale = animalScale;
+			timer += Time.deltaTime;
+			animal.transform.position = Vector3.Lerp(animal.transform.position, downPosition.position, timer / Constants.Animals.lerpTime);
 			yield return null;
 		}
 
-		animalScale = new Vector3(animalScale.x, 0, animalScale.z);
-		animal.transform.localScale = animalScale;
+		animal.transform.position = downPosition.position;
 	}
 
 	private void HandleSpawnAnimal(BrokerEvent<GameSystemEvents.SpawnAnimal> inEvent)

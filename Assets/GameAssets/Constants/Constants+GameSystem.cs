@@ -22,5 +22,8 @@ public partial class Constants
         public const int RequiredQuotaPerDay = 5;
 
 		public static DateTime startingDateTime = new DateTime(2024, 1, 1, 8, 0, 0);
+
+		public const float DelayAfterSpray = 1.5f;
+		public const float DelayForNextAnimal = 2f;
 	}
 }
