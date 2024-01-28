@@ -10,10 +10,14 @@ PrefabInstance:
     - target: {fileID: 1300636395179889377, guid: b4eec7d81e9cb8b4f830c8ece81370d2, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 3da58d109ffa7a94bbf2e14afcd78578, type: 3}
+      objectReference: {fileID: 21300000, guid: 6b2fe82092b94f843a5d63ea7970ebb9, type: 3}
     - target: {fileID: 4120678828098523126, guid: b4eec7d81e9cb8b4f830c8ece81370d2, type: 3}
       propertyPath: m_Name
       value: Flowers
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323752462018167204, guid: b4eec7d81e9cb8b4f830c8ece81370d2, type: 3}
+      propertyPath: randomStartRotation
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7772077993880104818, guid: b4eec7d81e9cb8b4f830c8ece81370d2, type: 3}
       propertyPath: m_RootOrder

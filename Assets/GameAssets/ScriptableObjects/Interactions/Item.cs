@@ -15,8 +15,12 @@ public class Item : MonoBehaviour
 
     public bool IsDissolving = false;
 
+    [SerializeField] private bool randomStartRotation = false;
+
     private void Start()
     {
+        if (randomStartRotation)
+            transform.Rotate(new Vector3(0, 0, UnityEngine.Random.Range(0, 360)));
         material = GetComponent<SpriteRenderer>().material;
     }
 

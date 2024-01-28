@@ -5,7 +5,7 @@ using UnityEngine;
 public class InstantiateItem : MonoBehaviour
 {
     [SerializeField] private Constants.GameSystem.RecipeItems item;
-    [SerializeField] private Sprite itemSprite;
+    //[SerializeField] private Sprite itemSprite;
     [SerializeField] private GameObject itemPrefab;
 
 
@@ -14,7 +14,7 @@ public class InstantiateItem : MonoBehaviour
         GameObject itemGO = Instantiate(itemPrefab, transform.position, Quaternion.identity);
         Item itemComponent = itemGO.GetComponent<Item>();
         itemComponent.SetItem(item);
-        itemComponent.SetSprite(itemSprite);
+        //itemComponent.SetSprite(itemSprite);
 		itemComponent.GetComponent<SpriteRenderer>().sortingOrder = Constants.GameSystem.MaxSortingOrder;
     }
 }
