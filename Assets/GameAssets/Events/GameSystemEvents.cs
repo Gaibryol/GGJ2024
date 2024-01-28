@@ -109,4 +109,13 @@ public class GameSystemEvents
 	{
 		public StartNextDay() { }
 	}
+
+	public class GetProgression
+	{
+		public readonly Action<Constants.GameSystem.Progression> ProcessData;
+		public GetProgression(Action<Constants.GameSystem.Progression> processData)
+		{
+			ProcessData = processData;
+		}
+	}
 }

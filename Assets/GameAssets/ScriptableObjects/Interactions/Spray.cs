@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Spray : MonoBehaviour
 {
@@ -55,7 +56,8 @@ public class Spray : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!canBePressed) return;
+		if (EventSystem.current.IsPointerOverGameObject()) return;
+		if (!canBePressed) return;
 
         if (sprayTriggered) return;
 
@@ -69,7 +71,8 @@ public class Spray : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (!canBePressed) return;
+		if (EventSystem.current.IsPointerOverGameObject()) return;
+		if (!canBePressed) return;
         if (!sprayTriggered) return;
         // Stop the timer and save the duration when the mouse button is released
         isButtonPressed = false;

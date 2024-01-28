@@ -63,6 +63,7 @@ public class GameSystem : MonoBehaviour
         eventBrokerComponent.Subscribe<GameSystemEvents.ResetMixer>(OnResetMixer);
 		eventBrokerComponent.Subscribe<GameSystemEvents.GetTotalQuota>(OnGetTotalQuota);
 		eventBrokerComponent.Subscribe<GameSystemEvents.StartNextDay>(OnStartNextDay);
+		eventBrokerComponent.Subscribe<GameSystemEvents.GetProgression>(OnGetProgression);
     }
 
 	private void OnDisable()
@@ -72,8 +73,15 @@ public class GameSystem : MonoBehaviour
         eventBrokerComponent.Unsubscribe<GameSystemEvents.ResetMixer>(OnResetMixer);
 		eventBrokerComponent.Unsubscribe<GameSystemEvents.GetTotalQuota>(OnGetTotalQuota);
 		eventBrokerComponent.Unsubscribe<GameSystemEvents.StartNextDay>(OnStartNextDay);
+		eventBrokerComponent.Unsubscribe<GameSystemEvents.GetProgression>(OnGetProgression);
 	}
+
 	#region Events
+	private void OnGetProgression(BrokerEvent<GameSystemEvents.GetProgression> inEvent)
+	{
+		inEvent.Payload.ProcessData.DynamicInvoke(gameProgression);
+	}
+
 	private void OnItemDropped(BrokerEvent<GameSystemEvents.ItemDroppedInMixer> @event)
     {
         mixerItems.Add(@event.Payload.RecipeItem);

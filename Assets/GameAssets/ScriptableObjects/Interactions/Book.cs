@@ -60,6 +60,7 @@ public class Book : MonoBehaviour
     {
         displayGO.SetActive(false);
     }
+
     private void OnEnable()
     {
         eventBrokerComponent.Subscribe<GameSystemEvents.EndDay>(DayEnd);

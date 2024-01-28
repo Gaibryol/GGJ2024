@@ -31,7 +31,6 @@ public class UIManager : MonoBehaviour
 	[SerializeField] private Button nextDayButton;
 	[SerializeField] private Button mainMenuButton;
 
-
 	private DateTime currentDateTime;
 	private bool middleOfDay;
 
@@ -59,7 +58,7 @@ public class UIManager : MonoBehaviour
 		timeText.text = FormatCurrentTime();
 		scoreText.text = score.ToString();
 
-		eventBroker.Publish(this, new AudioEvents.PlayMusic(Constants.Audio.Music.MainMenuTheme, true));
+		eventBroker.Publish(this, new AudioEvents.PlayMusic(Constants.Audio.Music.MainMenuTheme));
 		mainMenuScreen.SetActive(true);
 	}
 
@@ -111,6 +110,8 @@ public class UIManager : MonoBehaviour
 		// Go to main menu
 		eventBroker.Publish(this, new AudioEvents.PlayMusic(Constants.Audio.Music.MainMenuTheme, false));
 		eventBroker.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.ButtonPress));
+
+		day = 0;
 	}
 
 	private void StartDayHandler(BrokerEvent<GameSystemEvents.StartDay> inEvent)
@@ -230,7 +231,6 @@ public class UIManager : MonoBehaviour
 		dialogueCoroutine = StartCoroutine(CycleAnimalChatDialogue());
 	}
 
-
 	private IEnumerator CycleAnimalChatDialogue()
 	{
 		List<string> possibleDialogues = new List<string>();
@@ -258,8 +258,7 @@ public class UIManager : MonoBehaviour
 		startButton.onClick.AddListener(StartNextDay);
 	}
 
-
-    private void OnDisable()
+	private void OnDisable()
 	{
 		eventBroker.Unsubscribe<GameSystemEvents.StartDay>(StartDayHandler);
 		eventBroker.Unsubscribe<GameSystemEvents.EndDay>(EndDayHandler);
@@ -269,7 +268,7 @@ public class UIManager : MonoBehaviour
 
         eventBroker.Unsubscribe<GameSystemEvents.ChangeAnimalSprite>(HandleChangeAnimalSprite);
 
-        nextDayButton.onClick.RemoveListener(StartNextDay);
+		nextDayButton.onClick.RemoveListener(StartNextDay);
 		mainMenuButton.onClick.RemoveListener(MainMenu);
 		startButton.onClick.RemoveListener(StartNextDay);
 	}
