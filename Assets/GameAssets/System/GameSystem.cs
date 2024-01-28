@@ -18,6 +18,7 @@ public class GameSystem : MonoBehaviour
     private List<Constants.GameSystem.RecipeItems> mixerItems;
 
     private int currentDayQuota;
+	private int totalQuota;
 	private float currentAnimalPatience = 12f;
     #endregion
 
@@ -41,6 +42,8 @@ public class GameSystem : MonoBehaviour
         gameProgression = Constants.GameSystem.Progression.Animal;
         StartDay();
 
+		totalQuota = 0;
+
 		eventBrokerComponent.Publish(this, new AudioEvents.PlayMusic(Constants.Audio.Music.Farmyard));
     }
 
@@ -51,9 +54,8 @@ public class GameSystem : MonoBehaviour
 
         if (IsDayOver())
         {
-            EndDay();
-        }
-
+			EndDay();
+		}
     }
 
     private void OnEnable()
@@ -61,17 +63,20 @@ public class GameSystem : MonoBehaviour
         eventBrokerComponent.Subscribe<GameSystemEvents.AnimalSprayed>(OnAnimalSprayed);
         eventBrokerComponent.Subscribe<GameSystemEvents.ItemDroppedInMixer>(OnItemDropped);
         eventBrokerComponent.Subscribe<GameSystemEvents.ResetMixer>(OnResetMixer);
+		eventBrokerComponent.Subscribe<GameSystemEvents.GetTotalQuota>(OnGetTotalQuota);
+		eventBrokerComponent.Subscribe<GameSystemEvents.StartNextDay>(OnStartNextDay);
     }
 
-    private void OnDisable()
+	private void OnDisable()
     {
         eventBrokerComponent.Unsubscribe<GameSystemEvents.AnimalSprayed>(OnAnimalSprayed);
         eventBrokerComponent.Unsubscribe<GameSystemEvents.ItemDroppedInMixer>(OnItemDropped);
         eventBrokerComponent.Unsubscribe<GameSystemEvents.ResetMixer>(OnResetMixer);
-    }
-
-    #region Events
-    private void OnItemDropped(BrokerEvent<GameSystemEvents.ItemDroppedInMixer> @event)
+		eventBrokerComponent.Unsubscribe<GameSystemEvents.GetTotalQuota>(OnGetTotalQuota);
+		eventBrokerComponent.Unsubscribe<GameSystemEvents.StartNextDay>(OnStartNextDay);
+	}
+	#region Events
+	private void OnItemDropped(BrokerEvent<GameSystemEvents.ItemDroppedInMixer> @event)
     {
         mixerItems.Add(@event.Payload.RecipeItem);
     }
@@ -201,11 +206,22 @@ public class GameSystem : MonoBehaviour
 
 		DespawnAnimal(animalDespawnReason);
 
-		// Delay
+		// Check if day is still going
+		if (isDayStarted)
+		{
+			// Spawn in next animal
+			Invoke("SpawnAnimal", Constants.GameSystem.DelayForNextAnimal);
+		}
+	}
 
-		// Spawn in next animal
-		Invoke("SpawnAnimal", Constants.GameSystem.DelayForNextAnimal);
-		//SpawnAnimal();
+	private void OnGetTotalQuota(BrokerEvent<GameSystemEvents.GetTotalQuota> inEvent)
+	{
+		inEvent.Payload.ProcessData.Invoke(totalQuota);
+	}
+
+	private void OnStartNextDay(BrokerEvent<GameSystemEvents.StartNextDay> inEvent)
+	{
+		StartDay();
 	}
 	#endregion
 
@@ -223,7 +239,6 @@ public class GameSystem : MonoBehaviour
         isDayStarted = true;
         
         SpawnAnimal();
-
     }
     
     private void EndDay()
@@ -238,14 +253,13 @@ public class GameSystem : MonoBehaviour
             gameProgression++;
         }
 
-        // Tell animal to leave
-        DespawnAnimal(Constants.GameSystem.AnimalDespawnReason.OutOfTime);
-        // Show progress UI
+		// Tell animal to leave
+		DespawnAnimal(Constants.GameSystem.AnimalDespawnReason.OutOfTime);
 
         Constants.GameSystem.DayEndCode dayEndCode = currentDayQuota >= Constants.GameSystem.RequiredQuotaPerDay ? Constants.GameSystem.DayEndCode.Success : Constants.GameSystem.DayEndCode.Fail;
+		totalQuota += currentDayQuota;
 
         eventBrokerComponent.Publish(this, new GameSystemEvents.EndDay(dayEndCode));
-
     }
 
     private bool IsDayOver()
@@ -268,8 +282,10 @@ public class GameSystem : MonoBehaviour
     {
         if (currentAnimal != null)
         {
-            Debug.LogError("An animal is already spawned...");
-            return;
+			// This will happen sometimes when an animal spawns in at the very end of the day
+			// So on the next day, we despawn the old animal and spawn in a new one
+            Debug.LogWarning("An animal is already spawned... spawning a new one");
+			DespawnAnimal(Constants.GameSystem.AnimalDespawnReason.Error);
         }
 
         // Determine what animal to Spawn
@@ -296,6 +312,8 @@ public class GameSystem : MonoBehaviour
 
     private void DespawnAnimal(Constants.GameSystem.AnimalDespawnReason animalDespawnReason)
     {
+		if (currentAnimal == null) return;
+
 		// Destroy animal
         eventBrokerComponent.Publish(this, new GameSystemEvents.DespawnAnimal(animalDespawnReason));
         eventBrokerComponent.Publish(this, new GameSystemEvents.ClearTable());

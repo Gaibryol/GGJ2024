@@ -97,6 +97,9 @@ public class AnimalSystem : MonoBehaviour
 			case Constants.GameSystem.AnimalDespawnReason.Fail:
 				Failure();
 				break;
+
+			case Constants.GameSystem.AnimalDespawnReason.Error:
+				break;
 		}
 	}
 

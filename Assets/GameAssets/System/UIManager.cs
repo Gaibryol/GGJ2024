@@ -15,6 +15,10 @@ public class UIManager : MonoBehaviour
 	[SerializeField] private TMP_Text weightText;
 	[SerializeField] private TMP_Text occupationText;
 
+	[SerializeField] private GameObject endDayScreen;
+	[SerializeField] private TMP_Text endDayScore;
+	[SerializeField] private Button nextDayButton;
+
 	private DateTime currentDateTime;
 	private bool middleOfDay;
 
@@ -42,7 +46,6 @@ public class UIManager : MonoBehaviour
     {
 		if (middleOfDay)
 		{
-			
 			timer += Time.deltaTime;
 			if (timer > Constants.GameSystem.SecondsPerHour)
 			{
@@ -69,17 +72,28 @@ public class UIManager : MonoBehaviour
 		}
 	}
 
+	private void StartNextDay()
+	{
+		eventBroker.Publish(this, new GameSystemEvents.StartNextDay());
+	}
+
 	private void StartDayHandler(BrokerEvent<GameSystemEvents.StartDay> inEvent)
 	{
 		middleOfDay = true;
 		timer = 0f;
 		currentDateTime = Constants.GameSystem.startingDateTime;
+		timeText.text = FormatCurrentTime();
 		scoreText.text = "0";
+
+		endDayScreen.SetActive(false);
     }
 
 	private void EndDayHandler(BrokerEvent<GameSystemEvents.EndDay> inEvent)
 	{
 		middleOfDay = false;
+
+		endDayScore.text = scoreText.text;
+		endDayScreen.SetActive(true);
 	}
 
 	private void DespawnAnimalHandler(BrokerEvent<GameSystemEvents.DespawnAnimal> inEvent)
@@ -129,6 +143,8 @@ public class UIManager : MonoBehaviour
 
 		eventBroker.Subscribe<GameSystemEvents.DespawnAnimal>(DespawnAnimalHandler);
 		eventBroker.Subscribe<GameSystemEvents.SpawnAnimal>(SpawnAnimalHandler);
+
+		nextDayButton.onClick.AddListener(StartNextDay);
 	}
 
 	private void OnDisable()
@@ -138,5 +154,7 @@ public class UIManager : MonoBehaviour
 
 		eventBroker.Unsubscribe<GameSystemEvents.DespawnAnimal>(DespawnAnimalHandler);
 		eventBroker.Unsubscribe<GameSystemEvents.SpawnAnimal>(SpawnAnimalHandler);
+
+		nextDayButton.onClick.RemoveListener(StartNextDay);
 	}
 }

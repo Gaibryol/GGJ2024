@@ -4,7 +4,7 @@ public partial class Constants
 {
     public class GameSystem
     {
-        public enum AnimalDespawnReason { OutOfTime, Success, Fail };
+        public enum AnimalDespawnReason { OutOfTime, Success, Fail, Error };
 		public enum RecipeItems { Corn, BatWings, Beatles, Flowers, FrogLegs, Worms, Lizards, Brain, Eyeballs, Donuts, MysteryMeat, Seashells }
         public enum SprayLevel { Low, Medium, High };
 
@@ -12,8 +12,8 @@ public partial class Constants
 
         public enum DayEndCode { Success, Fail };
 
-        public const float SecondsPerDay = 120;
-		public const float SecondsPerHour = 10;
+        public const float SecondsPerDay = 12;
+		public const float SecondsPerHour = 2;
 
         public const int MinDayToUnlockCostume = 5;
         public const int MinDayToUnlockWeight = 10;

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 
 public class GameSystemEvents
 {
@@ -31,7 +32,6 @@ public class GameSystemEvents
         }
     }
 
-
     public class AnimalSprayed
     {
         public readonly Constants.GameSystem.SprayLevel SprayLevel;
@@ -51,7 +51,6 @@ public class GameSystemEvents
 			AnimalDespawnReason = animalDespawnReason;
 		}
 	}
-
 
 	public class StartDay
     {
@@ -94,4 +93,18 @@ public class GameSystemEvents
     {
         public ResetMixer() { }
     }
+
+	public class GetTotalQuota
+	{
+		public readonly Action<int> ProcessData;
+		public GetTotalQuota(Action<int> processData)
+		{
+			ProcessData = processData;
+		}
+	}
+
+	public class StartNextDay
+	{
+		public StartNextDay() { }
+	}
 }
