@@ -75,6 +75,9 @@ public class Spray : MonoBehaviour
         isButtonPressed = false;
         canBePressed = false;
 
+        gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+
+
         StartCoroutine(Flow(false, () =>
         {
             float buttonPressDuration = timer;
