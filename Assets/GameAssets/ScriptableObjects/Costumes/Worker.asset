@@ -16,30 +16,30 @@ MonoBehaviour:
   CostumeType: 1
   animalSprites:
   - AnimalType: 0
-    Neutral: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
+    Neutral: {fileID: 0}
     Happy: {fileID: 21300000, guid: a63b4c416d1fb8c448c00bf1b79f6ef4, type: 3}
     Sad: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
   - AnimalType: 1
-    Neutral: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
+    Neutral: {fileID: 0}
     Happy: {fileID: 21300000, guid: a63b4c416d1fb8c448c00bf1b79f6ef4, type: 3}
     Sad: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
   - AnimalType: 2
-    Neutral: {fileID: 21300000, guid: 8512da98e7864024f84cdd57aa9d0e93, type: 3}
-    Happy: {fileID: 21300000, guid: 02eb7832e5db0494ea8d3eca131f46a3, type: 3}
-    Sad: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
+    Neutral: {fileID: 21300000, guid: 83f7d38654a47fa4aba1aad665169ff9, type: 3}
+    Happy: {fileID: 21300000, guid: 11dee6efdbc01084bb4fbba99068adf8, type: 3}
+    Sad: {fileID: 21300000, guid: 83f7d38654a47fa4aba1aad665169ff9, type: 3}
   - AnimalType: 3
-    Neutral: {fileID: 21300000, guid: 8512da98e7864024f84cdd57aa9d0e93, type: 3}
-    Happy: {fileID: 21300000, guid: 02eb7832e5db0494ea8d3eca131f46a3, type: 3}
-    Sad: {fileID: 21300000, guid: 8512da98e7864024f84cdd57aa9d0e93, type: 3}
+    Neutral: {fileID: 21300000, guid: 35a6548b1d09dbf42bdae65f0cd3914c, type: 3}
+    Happy: {fileID: 21300000, guid: e3b20db22e705d54db7870e9315a3324, type: 3}
+    Sad: {fileID: 21300000, guid: 35a6548b1d09dbf42bdae65f0cd3914c, type: 3}
   - AnimalType: 4
-    Neutral: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
-    Happy: {fileID: 21300000, guid: a63b4c416d1fb8c448c00bf1b79f6ef4, type: 3}
-    Sad: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
+    Neutral: {fileID: 21300000, guid: 4e457895d974ae5409454bbe903a0751, type: 3}
+    Happy: {fileID: 21300000, guid: 15a56142456cf064fb809abffcd928cc, type: 3}
+    Sad: {fileID: 21300000, guid: 4e457895d974ae5409454bbe903a0751, type: 3}
   - AnimalType: 6
-    Neutral: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
-    Happy: {fileID: 21300000, guid: a63b4c416d1fb8c448c00bf1b79f6ef4, type: 3}
-    Sad: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
+    Neutral: {fileID: 21300000, guid: 6bb29b1c770d89548a6fd0b0ef6a2043, type: 3}
+    Happy: {fileID: 21300000, guid: 0e547697760963c43a222a35af723e84, type: 3}
+    Sad: {fileID: 21300000, guid: 6bb29b1c770d89548a6fd0b0ef6a2043, type: 3}
   - AnimalType: 5
-    Neutral: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
-    Happy: {fileID: 21300000, guid: a63b4c416d1fb8c448c00bf1b79f6ef4, type: 3}
-    Sad: {fileID: 21300000, guid: 24c86eb4f675470419469aef25ea12f1, type: 3}
+    Neutral: {fileID: 21300000, guid: cb7f40294798db34ca443d2833203abe, type: 3}
+    Happy: {fileID: 21300000, guid: b55974384a8fffc4a8a28a8084d504b8, type: 3}
+    Sad: {fileID: 21300000, guid: cb7f40294798db34ca443d2833203abe, type: 3}
