@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ButtonSwitch : MonoBehaviour
 {
     [SerializeField] private GameObject itemsGO;
-    private bool active = false;
     private EventBrokerComponent eventBrokerComponent = new EventBrokerComponent();
 
     private void OnMouseDown()
     {
-        active = !active;
-        itemsGO.SetActive(active);
-    }
+		if (EventSystem.current.IsPointerOverGameObject()) return;
+
+		Debug.Log("open book: " + itemsGO.activeSelf);
+		itemsGO.SetActive(true);
+		itemsGO.GetComponent<GuideBookScript>().enabled = true;
+	}
 
     private void DayEnd(BrokerEvent<GameSystemEvents.EndDay> @event)
     {
