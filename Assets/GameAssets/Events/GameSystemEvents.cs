@@ -44,6 +44,14 @@ public class GameSystemEvents
         }
     }
 
+    public class AnimalGettingImpatient
+    {
+        public AnimalGettingImpatient()
+        {
+            
+        }
+    }
+
 	public class ChangeAnimalSprite
 	{
 		public readonly Constants.GameSystem.AnimalDespawnReason AnimalDespawnReason;

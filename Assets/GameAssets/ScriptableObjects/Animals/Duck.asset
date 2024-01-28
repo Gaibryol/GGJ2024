@@ -28,6 +28,10 @@ MonoBehaviour:
     - Quack! Quack! Quack! Thanks so much!
     FailureMessages:
     - I don't think that's right, quack.
+    PatienceMessages:
+    - I could've built a nest by now, quack.
+    - Should I come back later?
     ChatMessages:
-    - Duck Chat
-    - Duck Chat1
+    - Quack, it's been a rough day.
+    - My feathers feel real stiff, quack.
+    - Quack, I couldn't hold formation this morning.

@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 9011654420274943589}
   - component: {fileID: 9011654420274943584}
   - component: {fileID: 9011654420274943591}
-  - component: {fileID: 9011654420274943590}
+  - component: {fileID: 1678702265}
   m_Layer: 5
   m_Name: DialogueBox
   m_TagString: Untagged
@@ -138,8 +138,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.75, y: 3.83}
-  m_SizeDelta: {x: 2, y: 1}
+  m_AnchoredPosition: {x: 3.3588, y: 3.7311}
+  m_SizeDelta: {x: 3.187, y: 1.08}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9011654420274943584
 CanvasRenderer:
@@ -163,14 +163,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: ed5648e11080db149ac316fa2abefe65, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -178,8 +178,8 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!114 &9011654420274943590
+  m_PixelsPerUnitMultiplier: 100
+--- !u!114 &1678702265
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,23 +188,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 9011654420274943588}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Script: {fileID: 11500000, guid: 546c9dcee134bc241993fe94e2e8a219, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
+  TextComponent: {fileID: 9011654421931689025}
+  BackgroundTransform: {fileID: 9011654420274943589}
 --- !u!1 &9011654421931689024
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,6 +204,7 @@ GameObject:
   - component: {fileID: 9011654421931689025}
   - component: {fileID: 9011654421931689027}
   - component: {fileID: 9011654421931689026}
+  - component: {fileID: 1678702262}
   m_Layer: 5
   m_Name: DialogueText
   m_TagString: Untagged
@@ -238,10 +227,10 @@ RectTransform:
   m_Father: {fileID: 9011654420274943589}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 1.0800002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9011654421931689027
 CanvasRenderer:
@@ -271,9 +260,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Hello, my name is bob
-
-'
+  m_text: 'Hey, I''m not feeling well today. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 42095648fd040ed44b959fac9eaa4850, type: 2}
   m_sharedMaterial: {fileID: 3145499491559985438, guid: 42095648fd040ed44b959fac9eaa4850, type: 2}
@@ -336,9 +323,23 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0.2, y: 0.2, z: 0.2, w: 0.2}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1678702262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9011654421931689024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2

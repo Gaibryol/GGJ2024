@@ -28,6 +28,10 @@ MonoBehaviour:
     - 'Fff fff fff, that''s fffantastic! '
     FailureMessages:
     - Hop to it, that's not right!
+    PatienceMessages:
+    - Fff, can you go any faster?
+    - Anytime now, fff...
     ChatMessages:
-    - Rabbit Chat
-    - Rabbit Chat1
+    - Fff, I'm feeling funny...
+    - Does my ear look bent to you, fff?
+    - Fff, got anything for me?

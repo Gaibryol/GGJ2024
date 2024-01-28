@@ -28,6 +28,10 @@ MonoBehaviour:
     - '*blub, blub* It''s going swimmingly!'
     FailureMessages:
     - No good, *glub*, no good at all.
+    PatienceMessages:
+    - '*glub, glub* Something wrong?'
+    - Well, *glub*, I guess I can wait...
     ChatMessages:
-    - Fish Chat
-    - Fish Chat1
+    - '*glub, glub* I''m not feeling so hot...'
+    - '*blub* What''s on tap today?'
+    - The bubbles were strong last night, *glub*

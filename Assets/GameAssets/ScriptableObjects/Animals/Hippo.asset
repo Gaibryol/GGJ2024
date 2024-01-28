@@ -28,6 +28,10 @@ MonoBehaviour:
     - Feels great, wuahaha!
     FailureMessages:
     - Bua, I'm not so sure about that.
+    PatienceMessages:
+    - Bua, you'll still help me, right?
+    - I'm dozing off, bua.
     ChatMessages:
-    - Hippo Chat
-    - Hippo Chat1
+    - Will you help me out, bua?
+    - Bua, my wife says I should lay off the grass.
+    - Bua, I'm so hungry, hungry today.

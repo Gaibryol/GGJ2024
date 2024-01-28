@@ -38,6 +38,8 @@ public class GameSystem : MonoBehaviour
 	[SerializeField] private ParticleSystem smokeSystem;
     private List<Constants.Animals.AnimalType> randomAnimalTypesBag; // Used for fake random
 
+    private Coroutine PatienceCoroutine;
+
     void Start()
     {
         gameProgression = Constants.GameSystem.Progression.Animal;
@@ -120,7 +122,7 @@ public class GameSystem : MonoBehaviour
 	{
 		smokeSystem.Play();
 		eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.Spray));
-
+        StopCoroutine(PatienceCoroutine);
 		// Get mixer items
 		List<Constants.GameSystem.RecipeItems> requiredItems = CompileRecipeItems(currentAnimal, currentAnimalCostume);
 
@@ -324,7 +326,7 @@ public class GameSystem : MonoBehaviour
 		// Check if progression has unlocked patience or gone past it
 		if (gameProgression >= Constants.GameSystem.Progression.Patience)
 		{
-			StartCoroutine(AnimalPatienceHandler(currentAnimalPatience));
+			PatienceCoroutine = StartCoroutine(AnimalPatienceHandler(currentAnimalPatience));
 		}
 
     }
@@ -344,11 +346,18 @@ public class GameSystem : MonoBehaviour
 	{
 		float timer = 0f;
 
+        bool warningSent = false;
 		// Run timer while there is a current animal
 		while (currentAnimal != null)
 		{
 			// Increment patience timer
 			timer += Time.deltaTime;
+
+            if (!warningSent && timer > patienceTime - Constants.GameSystem.PatienceWarningTime)
+            {
+                eventBrokerComponent.Publish(this, new GameSystemEvents.AnimalGettingImpatient());
+                warningSent = true;
+            }
 
 			// If timer goes over max patience of the animal
 			if (timer >= patienceTime)

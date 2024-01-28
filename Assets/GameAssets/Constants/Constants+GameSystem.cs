@@ -33,5 +33,6 @@ public partial class Constants
 		public const int IngredientsCost = 0;
 
 		public const float DialogueCycleTime = 5f;
+		public const float PatienceWarningTime = 5f;
 	}
 }
