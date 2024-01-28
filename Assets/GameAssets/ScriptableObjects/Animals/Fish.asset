@@ -18,11 +18,11 @@ MonoBehaviour:
   weightRange: {x: 1, y: 10}
   sprayRanges:
   - sprayLevel: 0
-    weightRange: {x: 1, y: 3}
+    weightRange: {x: 1, y: 2}
   - sprayLevel: 1
-    weightRange: {x: 3, y: 7}
+    weightRange: {x: 4, y: 6}
   - sprayLevel: 2
-    weightRange: {x: 7, y: 10}
+    weightRange: {x: 8, y: 10}
   AnimalDialgues:
     SuccessMessages:
     - '*blub, blub* It''s going swimmingly!'

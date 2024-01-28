@@ -18,11 +18,11 @@ MonoBehaviour:
   weightRange: {x: 2, y: 8}
   sprayRanges:
   - sprayLevel: 0
-    weightRange: {x: 2, y: 4}
+    weightRange: {x: 2, y: 3}
   - sprayLevel: 1
-    weightRange: {x: 4, y: 6}
+    weightRange: {x: 5, y: 5}
   - sprayLevel: 2
-    weightRange: {x: 6, y: 8}
+    weightRange: {x: 7, y: 8}
   AnimalDialgues:
     SuccessMessages:
     - 'Fff fff fff, that''s fffantastic! '

@@ -42,9 +42,6 @@ public class GameSystem : MonoBehaviour
     {
         gameProgression = Constants.GameSystem.Progression.Animal;
 
-		// Remove once we have main menu
-        StartDay();
-
 		totalQuota = 0;
     }
 
@@ -396,7 +393,17 @@ public class GameSystem : MonoBehaviour
             Debug.LogError("tried to initialize animal but animal is null");
             return;
         }
-        currentAnimalWeight = UnityEngine.Random.Range(animal.weightRange.x, animal.weightRange.y);
+
+		Array sprayLevels = Enum.GetValues(typeof(Constants.GameSystem.SprayLevel));
+		Constants.GameSystem.SprayLevel sprayLevel = (Constants.GameSystem.SprayLevel)sprayLevels.GetValue(UnityEngine.Random.Range(0, sprayLevels.Length));
+
+		foreach (SprayRanges sprayRange in animal.sprayRanges)
+		{
+			if (sprayRange.sprayLevel == sprayLevel)
+			{
+				currentAnimalWeight = UnityEngine.Random.Range(sprayRange.weightRange.x, sprayRange.weightRange.y);
+			}
+		}
     }
     #endregion
 

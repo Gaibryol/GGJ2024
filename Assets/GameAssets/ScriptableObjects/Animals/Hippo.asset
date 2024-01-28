@@ -15,14 +15,14 @@ MonoBehaviour:
   recipeItems: 03000000
   animalType: 2
   animalDiet: 1
-  weightRange: {x: 1500, y: 3200}
+  weightRange: {x: 1500, y: 3150}
   sprayRanges:
   - sprayLevel: 0
-    weightRange: {x: 1500, y: 2000}
+    weightRange: {x: 1500, y: 1950}
   - sprayLevel: 1
-    weightRange: {x: 2000, y: 2700}
+    weightRange: {x: 2050, y: 2650}
   - sprayLevel: 2
-    weightRange: {x: 2700, y: 3200}
+    weightRange: {x: 2750, y: 3150}
   AnimalDialgues:
     SuccessMessages:
     - Feels great, wuahaha!

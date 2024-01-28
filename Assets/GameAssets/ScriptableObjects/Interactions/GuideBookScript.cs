@@ -15,6 +15,8 @@ public class GuideBookScript : MonoBehaviour, IPointerDownHandler
 
 	private int pageIndex;
 
+	private EventBrokerComponent eventBroker = new EventBrokerComponent();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,10 +26,15 @@ public class GuideBookScript : MonoBehaviour, IPointerDownHandler
 
     private void PreviousPage()
 	{
-		pageIndex -= 1;
-		if (pageIndex < 0)
+		if (pageIndex > 0)
 		{
-			pageIndex = pages.Count - 1;
+			pageIndex -= 1;
+			nextPage.gameObject.SetActive(true);
+		}
+		else
+		{
+			pageIndex = 0;
+			prevPage.gameObject.SetActive(false);
 		}
 
 		book.sprite = pages[pageIndex];
@@ -35,10 +42,15 @@ public class GuideBookScript : MonoBehaviour, IPointerDownHandler
 
 	private void NextPage()
 	{
-		pageIndex += 1;
-		if (pageIndex > pages.Count - 1)
+		if (pageIndex < pages.Count - 1)
 		{
-			pageIndex = 0;
+			pageIndex += 1;
+			prevPage.gameObject.SetActive(true);
+		}
+		else
+		{
+			pageIndex = pages.Count - 1;
+			nextPage.gameObject.SetActive(false);
 		}
 
 		book.sprite = pages[pageIndex];
@@ -60,5 +72,6 @@ public class GuideBookScript : MonoBehaviour, IPointerDownHandler
 	{
 		pageIndex = 0;
 		gameObject.SetActive(false);
+		eventBroker.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.BookFlip));
 	}
 }
