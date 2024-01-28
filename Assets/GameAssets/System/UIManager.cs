@@ -11,6 +11,9 @@ public class UIManager : MonoBehaviour
 
 	[SerializeField] private TMP_Text timeText;
 	[SerializeField] private TMP_Text scoreText;
+	[SerializeField] private TMP_Text typeText;
+	[SerializeField] private TMP_Text weightText;
+	[SerializeField] private TMP_Text occupationText;
 
 	private DateTime currentDateTime;
 	private bool middleOfDay;
@@ -19,11 +22,14 @@ public class UIManager : MonoBehaviour
 
 	private int score;
 
+	
+
 	private void Awake()
 	{
 		middleOfDay = false;
 		timer = 0f;
 		score = 0;
+
 	}
 
 	// Start is called before the first frame update
@@ -39,7 +45,7 @@ public class UIManager : MonoBehaviour
     {
 		if (middleOfDay)
 		{
-			Debug.Log(timer);
+			
 			timer += Time.deltaTime;
 			if (timer > Constants.GameSystem.SecondsPerHour)
 			{
@@ -97,12 +103,23 @@ public class UIManager : MonoBehaviour
 		}
 	}
 
+	private void SpawnAnimalHandler(BrokerEvent<GameSystemEvents.SpawnAnimal> inEvent) 
+	{
+		weightText.text = inEvent.Payload.AnimalWeight.ToString();
+
+		typeText.text = inEvent.Payload.AnimalDiet.ToString();
+
+		occupationText.text = inEvent.Payload.AnimalCostumeType.ToString();
+
+	}
+
 	private void OnEnable()
 	{
 		eventBroker.Subscribe<GameSystemEvents.StartDay>(StartDayHandler);
 		eventBroker.Subscribe<GameSystemEvents.EndDay>(EndDayHandler);
 
 		eventBroker.Subscribe<GameSystemEvents.DespawnAnimal>(DespawnAnimalHandler);
+		eventBroker.Subscribe<GameSystemEvents.SpawnAnimal>(SpawnAnimalHandler);
 	}
 
 	private void OnDisable()
@@ -111,5 +128,6 @@ public class UIManager : MonoBehaviour
 		eventBroker.Unsubscribe<GameSystemEvents.EndDay>(EndDayHandler);
 
 		eventBroker.Unsubscribe<GameSystemEvents.DespawnAnimal>(DespawnAnimalHandler);
+		eventBroker.Unsubscribe<GameSystemEvents.SpawnAnimal>(SpawnAnimalHandler);
 	}
 }
