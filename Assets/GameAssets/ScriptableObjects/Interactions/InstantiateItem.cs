@@ -15,5 +15,6 @@ public class InstantiateItem : MonoBehaviour
         Item itemComponent = itemGO.GetComponent<Item>();
         itemComponent.SetItem(item);
         itemComponent.SetSprite(itemSprite);
+		itemComponent.GetComponent<SpriteRenderer>().sortingOrder = Constants.GameSystem.MaxSortingOrder;
     }
 }
