@@ -122,7 +122,12 @@ public class GameSystem : MonoBehaviour
 	{
 		smokeSystem.Play();
 		eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.Spray));
-        StopCoroutine(PatienceCoroutine);
+
+		if (PatienceCoroutine != null)
+		{
+			StopCoroutine(PatienceCoroutine);
+		}
+        
 		// Get mixer items
 		List<Constants.GameSystem.RecipeItems> requiredItems = CompileRecipeItems(currentAnimal, currentAnimalCostume);
 
