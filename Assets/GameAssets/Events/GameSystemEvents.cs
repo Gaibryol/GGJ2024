@@ -79,4 +79,9 @@ public class GameSystemEvents
     {
         public ClearTable() { }
     }
+
+    public class ResetMixer
+    {
+        public ResetMixer() { }
+    }
 }

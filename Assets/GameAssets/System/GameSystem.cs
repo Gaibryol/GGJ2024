@@ -59,18 +59,25 @@ public class GameSystem : MonoBehaviour
     {
         eventBrokerComponent.Subscribe<GameSystemEvents.AnimalSprayed>(OnAnimalSprayed);
         eventBrokerComponent.Subscribe<GameSystemEvents.ItemDroppedInMixer>(OnItemDropped);
+        eventBrokerComponent.Subscribe<GameSystemEvents.ResetMixer>(OnResetMixer);
     }
 
     private void OnDisable()
     {
         eventBrokerComponent.Unsubscribe<GameSystemEvents.AnimalSprayed>(OnAnimalSprayed);
         eventBrokerComponent.Unsubscribe<GameSystemEvents.ItemDroppedInMixer>(OnItemDropped);
+        eventBrokerComponent.Unsubscribe<GameSystemEvents.ResetMixer>(OnResetMixer);
     }
 
     #region Events
     private void OnItemDropped(BrokerEvent<GameSystemEvents.ItemDroppedInMixer> @event)
     {
         mixerItems.Add(@event.Payload.RecipeItem);
+    }
+
+    private void OnResetMixer(BrokerEvent<GameSystemEvents.ResetMixer> @event)
+    {
+        mixerItems.Clear();
     }
 
     private void OnAnimalSprayed(BrokerEvent<GameSystemEvents.AnimalSprayed> @event)
