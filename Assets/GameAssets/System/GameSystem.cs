@@ -210,9 +210,8 @@ public class GameSystem : MonoBehaviour
 	#endregion
 
 	#region Day Logic
-	private void StartDay()
+	public void StartDay()
     {
-        dayStartTime = Time.time;
 
         mixerItems = new List<Constants.GameSystem.RecipeItems>();
 
@@ -221,6 +220,8 @@ public class GameSystem : MonoBehaviour
         eventBrokerComponent.Publish(this, new GameSystemEvents.StartDay(day, dayStartTime));
 
         isDayStarted = true;
+
+        dayStartTime = Time.time;
         
         SpawnAnimal();
 
@@ -238,6 +239,8 @@ public class GameSystem : MonoBehaviour
             gameProgression++;
         }
 
+        StopAllCoroutines();
+        
         // Tell animal to leave
         DespawnAnimal(Constants.GameSystem.AnimalDespawnReason.OutOfTime);
         // Show progress UI
@@ -269,6 +272,12 @@ public class GameSystem : MonoBehaviour
         if (currentAnimal != null)
         {
             Debug.LogError("An animal is already spawned...");
+            return;
+        }
+
+        if (!isDayStarted)
+        {
+            Debug.Log("Tried to spawn when day is over.");
             return;
         }
 

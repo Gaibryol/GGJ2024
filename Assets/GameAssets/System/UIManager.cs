@@ -41,19 +41,23 @@ public class UIManager : MonoBehaviour
 	void Update()
     {
 		if (middleOfDay)
-		{
-			
-			timer += Time.deltaTime;
-			if (timer > Constants.GameSystem.SecondsPerHour)
-			{
-				currentDateTime = currentDateTime.AddHours(1);
-				timeText.text = FormatCurrentTime();
-				timer = 0f;
-			}
-		}
+        {
+            UpdateTimer();
+        }
     }
 
-	private string  FormatCurrentTime()
+    private void UpdateTimer()
+    {
+        timer += Time.deltaTime;
+        if (timer > Constants.GameSystem.SecondsPerHour)
+        {
+            currentDateTime = currentDateTime.AddHours(1);
+            timeText.text = FormatCurrentTime();
+            timer = 0f;
+        }
+    }
+
+    private string  FormatCurrentTime()
 	{
 		if (currentDateTime.Hour < 12)
 		{
@@ -75,11 +79,19 @@ public class UIManager : MonoBehaviour
 		timer = 0f;
 		currentDateTime = Constants.GameSystem.startingDateTime;
 		scoreText.text = "0";
+		score = 0;
+        timeText.text = FormatCurrentTime();
     }
 
-	private void EndDayHandler(BrokerEvent<GameSystemEvents.EndDay> inEvent)
+    private void EndDayHandler(BrokerEvent<GameSystemEvents.EndDay> inEvent)
 	{
 		middleOfDay = false;
+		if (timer < Constants.GameSystem.SecondsPerHour && timer > 9.5f)
+		{
+			// Should be fine, day ends always on the hour
+			timer = Constants.GameSystem.SecondsPerHour;
+		}
+		UpdateTimer();
 	}
 
 	private void DespawnAnimalHandler(BrokerEvent<GameSystemEvents.DespawnAnimal> inEvent)
