@@ -74,7 +74,8 @@ public class UIManager : MonoBehaviour
 		middleOfDay = true;
 		timer = 0f;
 		currentDateTime = Constants.GameSystem.startingDateTime;
-	}
+		scoreText.text = "0";
+    }
 
 	private void EndDayHandler(BrokerEvent<GameSystemEvents.EndDay> inEvent)
 	{
