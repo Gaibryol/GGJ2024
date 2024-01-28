@@ -126,6 +126,7 @@ public class GameSystem : MonoBehaviour
 		eventBrokerComponent.Publish(this, new GameSystemEvents.ChangeAnimalSprite(animalDespawnReason));
 
 		// Increment the day quota if a success
+		Debug.Log("success: " + (animalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Success));
 		if (animalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Success)
 		{
 			currentDayQuota++;
