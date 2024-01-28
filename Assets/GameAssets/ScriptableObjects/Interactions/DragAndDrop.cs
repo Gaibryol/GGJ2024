@@ -10,8 +10,15 @@ public class DragAndDrop : MonoBehaviour
     private Vector2 offset;
     private EventBrokerComponent eventBrokerComponent = new EventBrokerComponent();
 
-    // Update is called once per frame
-    void Update()
+	private int originalSortingOrder;
+
+	private void Start()
+	{
+		originalSortingOrder = GetComponent<SpriteRenderer>().sortingOrder;
+	}
+
+	// Update is called once per frame
+	void Update()
     {
         if (isDragging)
         {
@@ -22,6 +29,7 @@ public class DragAndDrop : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             isDragging = false;
+			GetComponent<SpriteRenderer>().sortingOrder = originalSortingOrder;
 
             RaycastHit2D hit = Physics2D.Raycast(GetMouseWorldPos(), Vector2.zero);
 
@@ -37,7 +45,8 @@ public class DragAndDrop : MonoBehaviour
     private void OnMouseDown()
     {
         isDragging = true;
-    }
+		GetComponent<SpriteRenderer>().sortingOrder = Constants.GameSystem.MaxSortingOrder;
+	}
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Check if the other GameObject has the specified name

@@ -26,5 +26,7 @@ public partial class Constants
 		public const float DelayBeforeResult = 0.5f;
 		public const float DelayAfterSpray = 3f;
 		public const float DelayForNextAnimal = 1.5f;
+
+		public const int MaxSortingOrder = 99;
 	}
 }
