@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipeItems: 03000000
   animalType: 3
+  animalDiet: 1
   weightRange: {x: 450, y: 1800}
   sprayRanges:
   - sprayLevel: 0

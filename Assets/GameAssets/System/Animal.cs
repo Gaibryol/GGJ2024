@@ -6,6 +6,7 @@ public class Animal : ScriptableObject
 {
     public List<Constants.GameSystem.RecipeItems> recipeItems;
     public Constants.Animals.AnimalType animalType;
+    public Constants.Animals.AnimalDiet animalDiet;
 
     public Vector2Int weightRange;
     public List<SprayRanges> sprayRanges;
