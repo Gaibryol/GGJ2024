@@ -98,7 +98,7 @@ public class UIManager : MonoBehaviour
 
 	private void SpawnAnimalHandler(BrokerEvent<GameSystemEvents.SpawnAnimal> inEvent) 
 	{
-		weightText.text = inEvent.Payload.AnimalWeight.ToString();
+		weightText.text = inEvent.Payload.AnimalWeight.ToString() + " kg";
 		typeText.text = inEvent.Payload.AnimalDiet.ToString();
 
 		switch (inEvent.Payload.AnimalCostumeType)
