@@ -7,15 +7,15 @@ public class Indicator : MonoBehaviour
     private EventBrokerComponent eventBrokerComponent = new EventBrokerComponent();
     private float growDuration = 3f;
     private float resetDuration = 0.5f;
-    private float elapsedTime = 0.0f;
-    private float originalHeight;
+    private float growTime = 0.0f;
+    private float originalHeight ;
     private float maxHeight;
     private bool buttonHeld;
 
     private void Start()
     {
-        originalHeight = transform.localScale.y;
-        maxHeight = 4 * originalHeight;
+        originalHeight = 0f;
+        maxHeight = 1f;
 
     }
     private void IsButtonHeld(BrokerEvent<IndicatorEvent.SprayPressed> @event)
@@ -24,13 +24,13 @@ public class Indicator : MonoBehaviour
     }
     public IEnumerator ResetIndicatorLevel()
     {
+        growTime = 0f;
         float elapsedTime = 0.0f;
         float currentHeight = transform.localScale.y;
-        float scaleResetDuration = resetDuration * (currentHeight / maxHeight);
 
-        while (elapsedTime < scaleResetDuration)
+        while (elapsedTime < resetDuration)
         {
-            float newHeight = Mathf.Lerp(currentHeight, originalHeight, elapsedTime / scaleResetDuration);
+            float newHeight = Mathf.Lerp(currentHeight, originalHeight, elapsedTime / resetDuration);
 
             Vector3 newScale = transform.localScale;
             newScale.y = newHeight;
@@ -40,7 +40,6 @@ public class Indicator : MonoBehaviour
             yield return null;
         }
 
-        // Ensure the final scale is set to the minimum height
         Vector3 finalScale = transform.localScale;
         finalScale.y = originalHeight;
         transform.localScale = finalScale;
@@ -53,10 +52,10 @@ public class Indicator : MonoBehaviour
     {
         if (buttonHeld)
         {
-            elapsedTime += Time.deltaTime;
+            growTime += Time.deltaTime;
 
             // Calculate the new height using lerp
-            float newHeight = Mathf.Lerp(originalHeight, maxHeight, elapsedTime / resetDuration);
+            float newHeight = Mathf.Lerp(originalHeight, maxHeight, growTime / growDuration);
 
             // Set the new scale of the GameObject
             Vector3 newScale = transform.localScale;
@@ -64,10 +63,10 @@ public class Indicator : MonoBehaviour
             transform.localScale = newScale;
 
             // Check if the scaling is complete
-            if (elapsedTime >= resetDuration)
+            if (growTime >= growDuration)
             {
                 buttonHeld = false; // Reset the variable to stop scaling
-                elapsedTime = 0.0f;   // Reset the elapsed time
+                growTime = 0.0f;   // Reset the elapsed time
             }
         }
     }

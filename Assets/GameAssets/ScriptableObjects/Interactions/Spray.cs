@@ -43,14 +43,6 @@ public class Spray : MonoBehaviour
         {
             // Increment the timer while the button is pressed
             timer += Time.deltaTime;
-
-            if (timer < 1)
-                gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
-            else if (timer < 2)
-                gameObject.GetComponent<SpriteRenderer>().color = Color.green;
-            else
-                gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
-
         }
     }
 
@@ -65,7 +57,7 @@ public class Spray : MonoBehaviour
         isButtonPressed = true;
         sprayTriggered = true;
         timer = 0f;
-
+        eventBrokerComponent.Publish(this, new IndicatorEvent.SprayPressed(true));
         StartCoroutine(Flow(true));
     }
 
@@ -77,13 +69,14 @@ public class Spray : MonoBehaviour
         // Stop the timer and save the duration when the mouse button is released
         isButtonPressed = false;
         canBePressed = false;
-
+        eventBrokerComponent.Publish(this, new IndicatorEvent.SprayPressed(false));
         gameObject.GetComponent<SpriteRenderer>().color = Color.white;
 
 
         StartCoroutine(Flow(false, () =>
         {
             float buttonPressDuration = timer;
+            Debug.Log(buttonPressDuration);
 
             if(buttonPressDuration < 1)
                 eventBrokerComponent.Publish(this, new GameSystemEvents.AnimalSprayed(Constants.GameSystem.SprayLevel.Low));
