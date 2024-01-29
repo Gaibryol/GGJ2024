@@ -21,7 +21,7 @@ MonoBehaviour:
     Sad: {fileID: 21300000, guid: 0e7ca228464f1924c96036253f4f7426, type: 3}
   - AnimalType: 3
     Neutral: {fileID: 21300000, guid: c543886294d9abf47b164c2c89384e99, type: 3}
-    Happy: {fileID: 21300000, guid: 9405162699745a84284d9522b7b11ae7, type: 3}
+    Happy: {fileID: 21300000, guid: edbbfbde4ad5dc944b26674a5fd5f499, type: 3}
     Sad: {fileID: 21300000, guid: c543886294d9abf47b164c2c89384e99, type: 3}
   - AnimalType: 4
     Neutral: {fileID: 21300000, guid: 380c1a1afb02e324b96c877f06975714, type: 3}
