@@ -107,7 +107,8 @@ public class UIManager : MonoBehaviour
 
 	private void MainMenu()
 	{
-		// Go to main menu
+		endDayScreen.SetActive(false);
+		mainMenuScreen.SetActive(true);
 		eventBroker.Publish(this, new AudioEvents.PlayMusic(Constants.Audio.Music.MainMenuTheme, false));
 		eventBroker.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.ButtonPress));
 
