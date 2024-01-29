@@ -12,12 +12,12 @@ public partial class Constants
 
         public enum DayEndCode { Success, Fail };
 
-        public const float SecondsPerDay = 120;
+        public const float SecondsPerDay = 160;
 		public const float SecondsPerHour = 20;
 
-        public const int MinDayToUnlockCostume = 5;
-        public const int MinDayToUnlockWeight = 10;
-		public const int MinDayToUnlockPatience = 15;
+        public const int MinDayToUnlockCostume = 3;
+        public const int MinDayToUnlockWeight = 5;
+		public const int MinDayToUnlockPatience = 7;
 
 		public static DateTime startingDateTime = new DateTime(2024, 1, 1, 8, 0, 0);
 
