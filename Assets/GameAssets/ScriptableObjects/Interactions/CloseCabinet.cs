@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,14 +40,30 @@ public class CloseCabinet : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+	private void RestartHandler(BrokerEvent<GameSystemEvents.Restart> inEvent)
+	{
+		gameObject.SetActive(false);
+		closedCabinet.SetActive(true);
+		if (lowerCabinet != null)
+		{
+			lowerCabinet.layer = 0;
+			foreach (Transform child in lowerCabinet.transform)
+			{
+				child.gameObject.layer = 0;
+			}
+		}
+	}
+
+	private void OnEnable()
     {
         eventBrokerComponent.Subscribe<GameSystemEvents.EndDay>(DayEnd);
+		eventBrokerComponent.Subscribe<GameSystemEvents.Restart>(RestartHandler);
     }
 
-    private void OnDisable()
+	private void OnDisable()
     {
         eventBrokerComponent.Unsubscribe<GameSystemEvents.EndDay>(DayEnd);
-    }
+		eventBrokerComponent.Unsubscribe<GameSystemEvents.Restart>(RestartHandler);
+	}
 
 }

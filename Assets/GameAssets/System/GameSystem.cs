@@ -19,6 +19,7 @@ public class GameSystem : MonoBehaviour
 
     private int currentDayQuota;
 	private int totalQuota;
+	private int savedQuota;
 	private float currentAnimalPatience = 12f;
     #endregion
 
@@ -46,7 +47,7 @@ public class GameSystem : MonoBehaviour
     void Start()
     {
         gameProgression = Constants.GameSystem.Progression.Animal;
-
+		savedQuota = 0;
 		totalQuota = 0;
     }
 
@@ -69,6 +70,7 @@ public class GameSystem : MonoBehaviour
 		eventBrokerComponent.Subscribe<GameSystemEvents.GetTotalQuota>(OnGetTotalQuota);
 		eventBrokerComponent.Subscribe<GameSystemEvents.StartNextDay>(OnStartNextDay);
 		eventBrokerComponent.Subscribe<GameSystemEvents.GetProgression>(OnGetProgression);
+		eventBrokerComponent.Subscribe<GameSystemEvents.Restart>(OnRestart);
     }
 
 	private void OnDisable()
@@ -79,9 +81,20 @@ public class GameSystem : MonoBehaviour
 		eventBrokerComponent.Unsubscribe<GameSystemEvents.GetTotalQuota>(OnGetTotalQuota);
 		eventBrokerComponent.Unsubscribe<GameSystemEvents.StartNextDay>(OnStartNextDay);
 		eventBrokerComponent.Unsubscribe<GameSystemEvents.GetProgression>(OnGetProgression);
+		eventBrokerComponent.Unsubscribe<GameSystemEvents.Restart>(OnRestart);
 	}
 
 	#region Events
+	private void OnRestart(BrokerEvent<GameSystemEvents.Restart> inEvent)
+	{
+		StopAllCoroutines();
+		gameProgression = Constants.GameSystem.Progression.Animal;
+		day = 0;
+		totalQuota = 0;
+		savedQuota = 0;
+		isDayStarted = false;
+	}
+
 	private void OnGetProgression(BrokerEvent<GameSystemEvents.GetProgression> inEvent)
 	{
 		inEvent.Payload.ProcessData.DynamicInvoke(gameProgression);
@@ -251,9 +264,9 @@ public class GameSystem : MonoBehaviour
 
         mixerItems = new List<Constants.GameSystem.RecipeItems>();
 
-        currentDayQuota = 0;
+        currentDayQuota = savedQuota;
 
-        eventBrokerComponent.Publish(this, new GameSystemEvents.StartDay(day, dayStartTime));
+        eventBrokerComponent.Publish(this, new GameSystemEvents.StartDay(day, dayStartTime, savedQuota));
 		eventBrokerComponent.Publish(this, new AudioEvents.PlayMusic(Constants.Audio.Music.GameTheme, true));
 
         isDayStarted = true;
@@ -283,6 +296,7 @@ public class GameSystem : MonoBehaviour
         DespawnAnimal(Constants.GameSystem.AnimalDespawnReason.OutOfTime);
 
         Constants.GameSystem.DayEndCode dayEndCode = currentDayQuota >= (Constants.GameSystem.RentCost + Constants.GameSystem.IngredientsCost) ? Constants.GameSystem.DayEndCode.Success : Constants.GameSystem.DayEndCode.Fail;
+		savedQuota = currentDayQuota - (Constants.GameSystem.RentCost + Constants.GameSystem.IngredientsCost);
 		totalQuota += currentDayQuota;
 
         eventBrokerComponent.Publish(this, new GameSystemEvents.EndDay(dayEndCode, gameProgression));

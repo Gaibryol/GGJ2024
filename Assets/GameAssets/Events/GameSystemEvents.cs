@@ -66,11 +66,13 @@ public class GameSystemEvents
     {
         public readonly int Day;
         public readonly float StartTime;
+		public readonly int SavedQuota;
 
-        public StartDay(int day, float startTime)
+        public StartDay(int day, float startTime, int savedQuota)
         {
             Day = day;
             StartTime = startTime;
+			SavedQuota = savedQuota;
         }
     }
 
@@ -127,5 +129,10 @@ public class GameSystemEvents
 		{
 			ProcessData = processData;
 		}
+	}
+
+	public class Restart
+	{
+		public Restart() { }
 	}
 }

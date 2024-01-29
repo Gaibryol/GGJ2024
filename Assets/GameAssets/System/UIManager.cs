@@ -116,9 +116,11 @@ public class UIManager : MonoBehaviour
 		mainMenuScreen.SetActive(true);
 		eventBroker.Publish(this, new AudioEvents.PlayMusic(Constants.Audio.Music.MainMenuTheme, false));
 		eventBroker.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.ButtonPress));
+		eventBroker.Publish(this, new GameSystemEvents.Restart());
 
 		day = 0;
 		gameProgression = Constants.GameSystem.Progression.Animal;
+		score = 0;
 	}
 
 	private void StartDayHandler(BrokerEvent<GameSystemEvents.StartDay> inEvent)
@@ -127,8 +129,8 @@ public class UIManager : MonoBehaviour
 		timer = 0f;
 		currentDateTime = Constants.GameSystem.startingDateTime;
 		timeText.text = FormatCurrentTime();
-		scoreText.text = "0";
-		score = 0;
+		score = inEvent.Payload.SavedQuota;
+		scoreText.text = score.ToString();
 
 		day += 1;
 
@@ -147,7 +149,6 @@ public class UIManager : MonoBehaviour
 		if (inEvent.Payload.DayEndCode == Constants.GameSystem.DayEndCode.Success)
 		{
 			endDayScreen.GetComponent<Image>().sprite = endDaySuccess;
-
 			if (inEvent.Payload.Progression != gameProgression)
 			{
 				// Progression has increased, show unlock message;
@@ -183,7 +184,7 @@ public class UIManager : MonoBehaviour
 		else if (inEvent.Payload.DayEndCode == Constants.GameSystem.DayEndCode.Fail)
 		{
 			endDayScreen.GetComponent<Image>().sprite = endDayFail;
-
+			progressionHint.gameObject.SetActive(false);
 			endDayRent.text = Constants.GameSystem.RentCost.ToString();
 			endDayCosts.text = Constants.GameSystem.IngredientsCost.ToString();
 			endDaySavings.text = (score - Constants.GameSystem.RentCost - Constants.GameSystem.IngredientsCost).ToString();
