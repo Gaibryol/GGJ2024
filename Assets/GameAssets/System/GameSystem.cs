@@ -26,6 +26,9 @@ public class GameSystem : MonoBehaviour
     [SerializeField] private List<Animal> possibleAnimals;  // Stores specific animal recipies, weight, height, etc.
     [SerializeField] private List<Constants.Animals.AnimalType> possibleAnimalTypes;    // Linking agent between Animal, AnimalCostume, AnimalSpriteInfo
     [SerializeField] private List<AnimalCostume> possibleAnimalCostumes;  // "Costumes"
+
+    [SerializeField] private List<Animator> smokes;
+
     #endregion
 
     #region Current Animal State
@@ -120,7 +123,8 @@ public class GameSystem : MonoBehaviour
 
 	private IEnumerator AnimalSprayed(Constants.GameSystem.SprayLevel sprayLevel)
 	{
-		smokeSystem.Play();
+		//smokeSystem.Play();
+        Spray();
 		eventBrokerComponent.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.Spray));
 
 		if (PatienceCoroutine != null)
@@ -430,6 +434,14 @@ public class GameSystem : MonoBehaviour
     #endregion
 
     #region Recipe
+
+    private void Spray()
+    {
+        foreach (var anim in smokes)
+        {
+            anim.Play("SmokeGrow");
+        }
+    }
     private List<Constants.GameSystem.RecipeItems> CompileRecipeItems(Animal animal, AnimalCostume animalCostume)
     {
         List<Constants.GameSystem.RecipeItems> recipeItems = new List<Constants.GameSystem.RecipeItems>();
