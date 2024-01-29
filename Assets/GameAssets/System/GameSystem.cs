@@ -149,7 +149,6 @@ public class GameSystem : MonoBehaviour
 		eventBrokerComponent.Publish(this, new GameSystemEvents.ChangeAnimalSprite(animalDespawnReason));
 
 		// Increment the day quota if a success
-		Debug.Log("success: " + (animalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Success));
 		if (animalDespawnReason == Constants.GameSystem.AnimalDespawnReason.Success)
 		{
 			currentDayQuota++;
@@ -286,7 +285,7 @@ public class GameSystem : MonoBehaviour
         Constants.GameSystem.DayEndCode dayEndCode = currentDayQuota >= (Constants.GameSystem.RentCost + Constants.GameSystem.IngredientsCost) ? Constants.GameSystem.DayEndCode.Success : Constants.GameSystem.DayEndCode.Fail;
 		totalQuota += currentDayQuota;
 
-        eventBrokerComponent.Publish(this, new GameSystemEvents.EndDay(dayEndCode));
+        eventBrokerComponent.Publish(this, new GameSystemEvents.EndDay(dayEndCode, gameProgression));
     }
 
     private bool IsDayOver()
@@ -328,7 +327,7 @@ public class GameSystem : MonoBehaviour
         currentAnimalCostume = GetRandomAnimalCostume();
         InitializeRandomWeightHeight(currentAnimal);
 
-		Debug.Log("Spawning in a " + currentAnimalType + " in a " + currentAnimalCostume.name + " costume");
+		//Debug.Log("Spawning in a " + currentAnimalType + " in a " + currentAnimalCostume.name + " costume");
 
         // Spawn in Animal
         // Pass in AnimalCostume to AnimalSystem

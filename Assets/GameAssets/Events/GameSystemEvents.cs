@@ -77,10 +77,12 @@ public class GameSystemEvents
     public class EndDay
     {
         public readonly Constants.GameSystem.DayEndCode DayEndCode;
+		public readonly Constants.GameSystem.Progression Progression;
 
-        public EndDay(Constants.GameSystem.DayEndCode dayEndCode)
+        public EndDay(Constants.GameSystem.DayEndCode dayEndCode, Constants.GameSystem.Progression progression)
         {
             DayEndCode = dayEndCode;
+			Progression = progression;
         }
     }
 

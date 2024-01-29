@@ -76,7 +76,6 @@ public class Spray : MonoBehaviour
         StartCoroutine(Flow(false, () =>
         {
             float buttonPressDuration = timer;
-            Debug.Log(buttonPressDuration);
 
             if(buttonPressDuration < 1)
                 eventBrokerComponent.Publish(this, new GameSystemEvents.AnimalSprayed(Constants.GameSystem.SprayLevel.Low));

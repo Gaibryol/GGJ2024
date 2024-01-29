@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
 	[SerializeField] private GameObject dialogueTextScreen;
 	[SerializeField] private Button nextDayButton;
 	[SerializeField] private Button mainMenuButton;
+	[SerializeField] private TMP_Text progressionHint;
 
 	private DateTime currentDateTime;
 	private bool middleOfDay;
@@ -41,6 +42,8 @@ public class UIManager : MonoBehaviour
 
 	private AnimalDialogue currentAnimalDialogues;
 	private Coroutine dialogueCoroutine;
+
+	private Constants.GameSystem.Progression gameProgression;
 
 	private void Awake()
 	{
@@ -60,6 +63,8 @@ public class UIManager : MonoBehaviour
 
 		eventBroker.Publish(this, new AudioEvents.PlayMusic(Constants.Audio.Music.MainMenuTheme));
 		mainMenuScreen.SetActive(true);
+
+		gameProgression = Constants.GameSystem.Progression.Animal;
 	}
 
 	// Update is called once per frame
@@ -113,6 +118,7 @@ public class UIManager : MonoBehaviour
 		eventBroker.Publish(this, new AudioEvents.PlaySFX(Constants.Audio.SFX.ButtonPress));
 
 		day = 0;
+		gameProgression = Constants.GameSystem.Progression.Animal;
 	}
 
 	private void StartDayHandler(BrokerEvent<GameSystemEvents.StartDay> inEvent)
@@ -141,6 +147,31 @@ public class UIManager : MonoBehaviour
 		if (inEvent.Payload.DayEndCode == Constants.GameSystem.DayEndCode.Success)
 		{
 			endDayScreen.GetComponent<Image>().sprite = endDaySuccess;
+
+			if (inEvent.Payload.Progression != gameProgression)
+			{
+				// Progression has increased, show unlock message;
+				progressionHint.gameObject.SetActive(true);
+				gameProgression = inEvent.Payload.Progression;
+				switch (gameProgression)
+				{
+					case Constants.GameSystem.Progression.Costume:
+						progressionHint.text = Constants.GameSystem.CostumeHint;
+						break;
+
+					case Constants.GameSystem.Progression.Patience:
+						progressionHint.text = Constants.GameSystem.PatienceHint;
+						break;
+
+					case Constants.GameSystem.Progression.Weight:
+						progressionHint.text = Constants.GameSystem.WeightHint;
+						break;
+				}
+			}
+			else
+			{
+				progressionHint.gameObject.SetActive(false);
+			}
 
 			endDayRent.text = Constants.GameSystem.RentCost.ToString();
 			endDayCosts.text = Constants.GameSystem.IngredientsCost.ToString();

@@ -34,5 +34,9 @@ public partial class Constants
 
 		public const float DialogueCycleTime = 7f;
 		public const float PatienceWarningTime = 5f;
+
+		public const string CostumeHint = "Different identities will need different ingredients in their formula! Keep that in mind!";
+		public const string WeightHint = "Species vary, but so do the weights for each individual animal! Adjust the doses for each one!";
+		public const string PatienceHint = "The animals are starting to get impatient, they might leave early! Time to work faster!";
 	}
 }
