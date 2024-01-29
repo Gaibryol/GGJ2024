@@ -29,10 +29,10 @@ public partial class Constants
 
 		// These combined is the required quota
 		// Should be something else later, for now just set to 0, 0 for testing
-		public const int RentCost = 0;
-		public const int IngredientsCost = 0;
+		public const int RentCost = 5;
+		public const int IngredientsCost = 5;
 
-		public const float DialogueCycleTime = 5f;
+		public const float DialogueCycleTime = 7f;
 		public const float PatienceWarningTime = 5f;
 	}
 }
